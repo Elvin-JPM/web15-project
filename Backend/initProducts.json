@@ -1,0 +1,44 @@
+{
+    "initialProducts": [
+        {
+            "name": "Bicicleta",
+            "photo": "bici.jpg",
+            "description": "Bicicleta de montaña sin estrenar",
+            "sale": true,
+            "price": 50,
+            "tags": [ "lifestyle", "motor"],
+            "date": "02-02-2024",
+            "owner": "user1"
+        },
+        {
+            "name": "Portátil",
+            "photo": "pc.jpg",
+            "description": "Portátil i5",
+            "sale": false,
+            "price":650,
+            "tags": [ "lifestyle","work"],
+            "date": "02-02-2024",
+            "owner": "user1"
+        },
+        {
+            "name": "Aspirador",
+            "photo": "aspirador.jpg",
+            "description": "Aspirador sin cable con 10 horas de autonomía",
+            "sale": true,
+            "price": 150,
+            "tags": ["home"],
+            "date": "02-02-2024",
+            "owner": "user1"
+        },
+        {
+            "name": "Patines",
+            "photo": "patines.jpg",
+            "description": 70,
+            "sale": false,
+            "price": 50,
+            "tags": ["motor"],
+            "date": "02-02-2024",
+            "owner": "user1"
+        }
+    ]
+}
