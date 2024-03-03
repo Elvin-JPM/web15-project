@@ -1,1 +1,6 @@
-Read me file for the FrontEnd
+# React + Vite
+
+# Iniciar proyecto
+
+npm install
+npm run dev
