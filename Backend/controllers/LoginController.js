@@ -5,8 +5,8 @@ class LoginController {
   
   async postJWT(req, res, next) {
     try {
-      const { email, password } = req.body;
-      const user = await User.findOne({ email: email });
+      const { username, password } = req.body;
+      const user = await User.findOne({ username: username });
 
       // If user doesnt exit shows an error
       if (!user || !(await user.comparePassword(password)) ) {

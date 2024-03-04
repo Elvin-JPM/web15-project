@@ -9,16 +9,15 @@ class ProductDetailController {
 
         // If product doesnt exits shows an error
         if (!product) {
-          return res.status(404).json({ error: 'Producto no encontrado' });
+          return res.status(404).json({ error: 'Product not found' });
         }
 
         // Replace hyphens from the product name for ' ' 
         const productNameWithoutHyphens = productName.replace(/-/g, ' ');
-        console.log(productNameWithoutHyphens)
 
         // Check if name is correct
         if (product.name !== productNameWithoutHyphens) {
-          return res.status(400).json({ error: 'El nombre del producto no coincide' });
+          return res.status(400).json({ error: 'Invalid name' });
         }
 
         res.json(product);    

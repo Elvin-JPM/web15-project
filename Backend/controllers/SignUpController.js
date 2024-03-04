@@ -15,7 +15,7 @@ class SignUpController {
 
             // If user doesnt exit create it
             const hashedPassword = await bcrypt.hash(password, 7);
-            const newUser = new User({ username, email, password: hashedPassword, active});
+            const newUser = new User({ username, email, password: hashedPassword, active: true});
             await newUser.save();
             
             res.json({ user: newUser });

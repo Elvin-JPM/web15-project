@@ -13,6 +13,7 @@ const SignUpController = require('./controllers/SignUpController');
 const ListProductsController = require('./controllers/ListProductsController');
 const CreateProductController = require('./controllers/CreateProductController');
 const ProductDetailController = require('./controllers/ProductDetailController');
+const jwtAuthMiddleware = require('./lib/jwtAuthMiddleware');
 
 var app = express();
 
@@ -35,11 +36,12 @@ const listProductsController = new ListProductsController();
 const createProductController = new CreateProductController();
 const productDetailController = new ProductDetailController();
 
+
 // API routes
 app.post('/api/authenticate',loginController.postJWT);
 app.post('/api/signup',signUpController.signUpUser);
 app.get('/api/products',listProductsController.listProducts)
-app.post('/api/products',createProductController.createProduct)
+app.post('/api/products',jwtAuthMiddleware,createProductController.createProduct)
 app.get('/api/products/:id/:name',productDetailController.getProductDetail);
 
 // catch 404 and forward to error handler
