@@ -14,7 +14,10 @@ const ListProductsController = require("./controllers/ListProductsController");
 const CreateProductController = require("./controllers/CreateProductController");
 const ProductDetailController = require("./controllers/ProductDetailController");
 const ProductsByOwnerController = require("./controllers/ProductsByOwnerController");
+const DeleteProductController = require("./controllers/DeleteProductController");
+const EditProductController = require("./controllers/EditProductController");
 const jwtAuthMiddleware = require("./lib/jwtAuthMiddleware");
+
 
 var app = express();
 
@@ -37,22 +40,52 @@ const listProductsController = new ListProductsController();
 const productsByOwnerController = new ProductsByOwnerController();
 const createProductController = new CreateProductController();
 const productDetailController = new ProductDetailController();
+const deleteProductController = new DeleteProductController();
+const editProductController = new EditProductController();
 
 // API routes
-app.post("/api/authenticate", loginController.postJWT);
-app.post("/api/signup", signUpController.signUpUser);
-app.get("/api/products", listProductsController.listProducts);
-app.get(
-  "/api/products/:owner",
-  jwtAuthMiddleware,
-  productsByOwnerController.listProducts
+app.post(
+  "/api/authenticate", 
+  loginController.postJWT
 );
+
+app.post(
+  "/api/signup", 
+  signUpController.signUpUser
+);
+
+app.get("/api/products", 
+listProductsController.listProducts
+);
+
 app.post(
   "/api/products",
   jwtAuthMiddleware,
   createProductController.createProduct
 );
-app.get("/api/products/:id/:name", productDetailController.getProductDetail);
+
+app.get(
+  "/api/products/:owner",
+  jwtAuthMiddleware,
+  productsByOwnerController.listProducts
+);
+
+app.delete(
+  "/api/products/:owner/:id",
+  jwtAuthMiddleware,
+  deleteProductController.deleteProduct
+);
+
+app.put(
+  "/api/products/:owner/:id",
+  jwtAuthMiddleware,
+  editProductController.editProduct
+);
+
+app.get(
+  "/api/products/:id/:name", 
+  productDetailController.getProductDetail
+);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
