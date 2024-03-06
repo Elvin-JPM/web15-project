@@ -1,14 +1,13 @@
-
+import Signup from "./Pages/Signup";
 
 function App() {
   return (
     <>
       <div>
-       <h1>Proyecto web 15</h1>
+        <Signup />
       </div>
-
     </>
-  )
+  );
 }
 
-export default App
+export default App;
