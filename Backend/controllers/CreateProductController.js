@@ -10,7 +10,6 @@ class CreateProductController {
         
         const userId = req.userId;
         const user = await User.findOne({_id: new ObjectId(userId)});
-        console.log(user)
         const username = user.username;
         productData.owner = username;
         
