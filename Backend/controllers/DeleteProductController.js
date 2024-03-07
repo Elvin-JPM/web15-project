@@ -1,6 +1,5 @@
+const { getUserInfo } = require("../lib/authUtils");
 const Product = require("../models/Product");
-const User = require('../models/User');
-const ObjectId = require('mongodb').ObjectId;
 
 class DeleteProductController {
   async deleteProduct(req, res, next) {
@@ -8,10 +7,9 @@ class DeleteProductController {
       const productId = req.params.id;
 
       // Check user's logged info
-      const userId = req.userId;
-      const user = await User.findOne({_id: new ObjectId(userId)});
-      const username = user.username;
+      const { username } = await getUserInfo(req);
 
+      // Search product
       const product = await Product.findById(productId);
 
       // If products doesnt exist show an error
@@ -27,7 +25,7 @@ class DeleteProductController {
       // If owner is correct delete product
       await Product.findOneAndDelete({ _id: productId });
 
-      res.json({ error: 'Producto eliminado correctamente' });
+      res.json({ message: 'Producto eliminado correctamente' });
 
     } catch (err) {
       next(err);

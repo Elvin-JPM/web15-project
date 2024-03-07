@@ -8,8 +8,6 @@ class ProductListController {
       const filterMinPrice = req.query.minPrice;
       const filterMaxPrice = req.query.maxPrice;
 
-      console.log("NAME:", req.query.name);
-
       const filter = {};
 
       if (filterByName) {
