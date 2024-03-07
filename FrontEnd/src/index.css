@@ -1,9 +1,16 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
 .app {
   background-color: powderblue;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
 form {

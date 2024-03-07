@@ -1,6 +1,7 @@
 import { useState } from "react";
 import FormInput from "../Components/FormInput";
-
+import { useNavigate } from "react-router-dom";
+import { postData } from "../Api/api";
 const Signup = () => {
   const [values, setValues] = useState({
     username: "",
@@ -8,6 +9,9 @@ const Signup = () => {
     password: "",
     confirmPassword: "",
   });
+
+  const navigate = useNavigate();
+  const requestBody = values;
 
   const inputs = [
     {
@@ -51,8 +55,16 @@ const Signup = () => {
     },
   ];
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    console.log("Submit clicked!");
     e.preventDefault();
+    try {
+      const response = await postData("/signup", requestBody);
+      console.log("From signup component:", response);
+      navigate("/login");
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   const onChange = (e) => {
