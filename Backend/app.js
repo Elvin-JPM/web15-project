@@ -1,10 +1,11 @@
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
+const createError = require("http-errors");
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const indexRouter = require("./routes/index");
+const usersRouter = require("./routes/users");
+const cors = require("cors");
 
 require("./lib/connectMongoose");
 
@@ -14,11 +15,14 @@ const ListProductsController = require("./controllers/ListProductsController");
 const CreateProductController = require("./controllers/CreateProductController");
 const ProductDetailController = require("./controllers/ProductDetailController");
 const ProductsByOwnerController = require("./controllers/ProductsByOwnerController");
+const DeleteProductController = require("./controllers/DeleteProductController");
+const EditProductController = require("./controllers/EditProductController");
 const jwtAuthMiddleware = require("./lib/jwtAuthMiddleware");
 
-var app = express();
+const app = express();
 
 // view engine setup
+app.use(cors());
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
@@ -37,21 +41,40 @@ const listProductsController = new ListProductsController();
 const productsByOwnerController = new ProductsByOwnerController();
 const createProductController = new CreateProductController();
 const productDetailController = new ProductDetailController();
+const deleteProductController = new DeleteProductController();
+const editProductController = new EditProductController();
 
 // API routes
 app.post("/api/authenticate", loginController.postJWT);
+
 app.post("/api/signup", signUpController.signUpUser);
+
 app.get("/api/products", listProductsController.listProducts);
-app.get(
-  "/api/products/:owner",
-  jwtAuthMiddleware,
-  productsByOwnerController.listProducts
-);
+
 app.post(
   "/api/products",
   jwtAuthMiddleware,
   createProductController.createProduct
 );
+
+app.get(
+  "/api/products/:owner",
+  jwtAuthMiddleware,
+  productsByOwnerController.listProducts
+);
+
+app.delete(
+  "/api/products/:owner/:id",
+  jwtAuthMiddleware,
+  deleteProductController.deleteProduct
+);
+
+app.put(
+  "/api/products/:owner/:id",
+  jwtAuthMiddleware,
+  editProductController.editProduct
+);
+
 app.get("/api/products/:id/:name", productDetailController.getProductDetail);
 
 // catch 404 and forward to error handler

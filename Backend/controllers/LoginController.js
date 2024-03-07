@@ -10,13 +10,13 @@ class LoginController {
 
       // If user doesnt exit shows an error
       if (!user || !(await user.comparePassword(password)) ) {
-        res.json({ error: 'Invalid credentials' });
+        res.json({ error: 'Credenciales incorrectas' });
         return;
       }
 
       // Check if user its active
       if (user.active === false){
-        res.json({ error: 'User inactive' });
+        res.json({ error: 'Usuario inactivo' });
         return;
       }
 
