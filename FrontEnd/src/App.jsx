@@ -3,7 +3,7 @@ import Signup from "./Pages/Signup";
 function App() {
   return (
     <>
-      <div>
+      <div className="app">
         <Signup />
       </div>
     </>
