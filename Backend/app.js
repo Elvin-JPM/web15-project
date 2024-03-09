@@ -12,6 +12,7 @@ require("./lib/connectMongoose");
 const LoginController = require("./controllers/LoginController");
 const SignUpController = require("./controllers/SignUpController");
 const ListProductsController = require("./controllers/ListProductsController");
+const ListProductsControllerrAuth = require("./controllers/ListProductsControllerAuth");
 const CreateProductController = require("./controllers/CreateProductController");
 const ProductDetailController = require("./controllers/ProductDetailController");
 const ProductsByOwnerController = require("./controllers/ProductsByOwnerController");
@@ -38,6 +39,7 @@ app.use("/users", usersRouter);
 const loginController = new LoginController();
 const signUpController = new SignUpController();
 const listProductsController = new ListProductsController();
+const listProductsControllerrAuth = new ListProductsControllerrAuth();
 const productsByOwnerController = new ProductsByOwnerController();
 const createProductController = new CreateProductController();
 const productDetailController = new ProductDetailController();
@@ -50,6 +52,8 @@ app.post("/api/authenticate", loginController.postJWT);
 app.post("/api/signup", signUpController.signUpUser);
 
 app.get("/api/products", listProductsController.listProducts);
+
+app.get("/api/products/auth", jwtAuthMiddleware, listProductsControllerrAuth.listProductsAuth);
 
 app.post(
   "/api/products",
