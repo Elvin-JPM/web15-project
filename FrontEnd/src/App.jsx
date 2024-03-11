@@ -1,4 +1,7 @@
-
+import Signup from "./Pages/Signup";
+import Login from "./Pages/Login";
+import { Products } from "./Pages/ProductPage";
+import { RequireAuth } from "./RequireAuth";
 
 function App() {
   return (
