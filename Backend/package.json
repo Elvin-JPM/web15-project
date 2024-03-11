@@ -10,14 +10,7 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cookie-parser": "~1.4.4",
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
     "cors": "^2.8.5",
->>>>>>> Backend
-=======
-    "cors": "^2.8.5",
->>>>>>> 97dde39417cfb4d46827931711fe82e9d43b4cc1
     "debug": "~2.6.9",
     "ejs": "~2.6.1",
     "express": "~4.16.1",

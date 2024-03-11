@@ -1,16 +1,5 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-const Product = require("../models/Product");
-const User = require('../models/User');
-const ObjectId = require('mongodb').ObjectId;
-=======
 const { getUserInfo } = require("../lib/authUtils");
 const Product = require("../models/Product");
->>>>>>> Backend
-=======
-const { getUserInfo } = require("../lib/authUtils");
-const Product = require("../models/Product");
->>>>>>> 97dde39417cfb4d46827931711fe82e9d43b4cc1
 
 class EditProductController {
   async editProduct(req, res, next) {
@@ -26,17 +15,7 @@ class EditProductController {
       }
 
       // Check user's logged info
-<<<<<<< HEAD
-<<<<<<< HEAD
-      const userId = req.userId;
-      const user = await User.findOne({_id: new ObjectId(userId)});
-      const username = user.username;
-=======
       const { username } = await getUserInfo(req);
->>>>>>> Backend
-=======
-      const { username } = await getUserInfo(req);
->>>>>>> 97dde39417cfb4d46827931711fe82e9d43b4cc1
 
       if (product.owner !== username) {
         return res.json({ error: 'Permisos no válidos' });
