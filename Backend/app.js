@@ -21,7 +21,6 @@ const LoginController = require("./controllers/LoginController");
 const SignUpController = require("./controllers/SignUpController");
 const ListProductsController = require("./controllers/ListProductsController");
 const ProductsByOwnerPublicController = require("./controllers/ProductsByOwnerPublicController");
-const ListProductsControllerrAuth = require("./controllers/ListProductsControllerAuth");
 const CreateProductController = require("./controllers/CreateProductController");
 const ProductDetailController = require("./controllers/ProductDetailController");
 const ProductsByOwnerController = require("./controllers/ProductsByOwnerController");
