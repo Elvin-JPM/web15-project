@@ -1,11 +1,3 @@
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
-
 const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
@@ -26,6 +18,7 @@ const ProductDetailController = require("./controllers/ProductDetailController")
 const ProductsByOwnerController = require("./controllers/ProductsByOwnerController");
 const DeleteProductController = require("./controllers/DeleteProductController");
 const EditProductController = require("./controllers/EditProductController");
+const UnsuscribeUserController = require("./controllers/UnsuscribeUser");
 const jwtAuthMiddleware = require("./lib/jwtAuthMiddleware");
 
 const app = express();
@@ -53,6 +46,7 @@ const createProductController = new CreateProductController();
 const productDetailController = new ProductDetailController();
 const deleteProductController = new DeleteProductController();
 const editProductController = new EditProductController();
+const unsuscribeUserController = new UnsuscribeUserController();
 
 // API routes
 app.post(
@@ -61,12 +55,8 @@ app.post(
 );
 
 app.post(
-  "/api/signup",
+  "/api/signup", 
   signUpController.signUpUser
-);
-
-app.get("/api/products", 
-listProductsController.listProducts
 );
 
 app.get(
@@ -77,11 +67,6 @@ app.get(
 app.get(
   "/api/products/list/:owner", 
   productsByOwnerPublicController.listProductsPublic
-);
-
-app.get(
-  "/api/products", 
-  listProductsController.listProducts
 );
 
 app.post(
@@ -110,13 +95,12 @@ app.put(
 
 app.get(
   "/api/products/:id/:name", 
-  productDetailController.getProductDetail
-);
+  productDetailController.getProductDetail);
 
-app.get(
-  "/api/products/:id/:name", 
-  productDetailController.getProductDetail
-);
+app.delete(
+  "/api/:username", 
+  jwtAuthMiddleware, 
+  unsuscribeUserController.unsuscribe);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
