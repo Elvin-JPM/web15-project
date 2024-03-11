@@ -1,3 +1,11 @@
+var createError = require("http-errors");
+var express = require("express");
+var path = require("path");
+var cookieParser = require("cookie-parser");
+var logger = require("morgan");
+var indexRouter = require("./routes/index");
+var usersRouter = require("./routes/users");
+
 const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
@@ -12,6 +20,7 @@ require("./lib/connectMongoose");
 const LoginController = require("./controllers/LoginController");
 const SignUpController = require("./controllers/SignUpController");
 const ListProductsController = require("./controllers/ListProductsController");
+const ProductsByOwnerPublicController = require("./controllers/ProductsByOwnerPublicController");
 const ListProductsControllerrAuth = require("./controllers/ListProductsControllerAuth");
 const CreateProductController = require("./controllers/CreateProductController");
 const ProductDetailController = require("./controllers/ProductDetailController");
@@ -39,7 +48,7 @@ app.use("/users", usersRouter);
 const loginController = new LoginController();
 const signUpController = new SignUpController();
 const listProductsController = new ListProductsController();
-const listProductsControllerrAuth = new ListProductsControllerrAuth();
+const productsByOwnerPublicController = new ProductsByOwnerPublicController();
 const productsByOwnerController = new ProductsByOwnerController();
 const createProductController = new CreateProductController();
 const productDetailController = new ProductDetailController();
@@ -47,13 +56,34 @@ const deleteProductController = new DeleteProductController();
 const editProductController = new EditProductController();
 
 // API routes
-app.post("/api/authenticate", loginController.postJWT);
+app.post(
+  "/api/authenticate", 
+  loginController.postJWT
+);
 
-app.post("/api/signup", signUpController.signUpUser);
+app.post(
+  "/api/signup",
+  signUpController.signUpUser
+);
 
-app.get("/api/products", listProductsController.listProducts);
+app.get("/api/products", 
+listProductsController.listProducts
+);
 
-app.get("/api/products/auth", jwtAuthMiddleware, listProductsControllerrAuth.listProductsAuth);
+app.get(
+  "/api/products", 
+  listProductsController.listProducts
+);
+
+app.get(
+  "/api/products/list/:owner", 
+  productsByOwnerPublicController.listProductsPublic
+);
+
+app.get(
+  "/api/products", 
+  listProductsController.listProducts
+);
 
 app.post(
   "/api/products",
@@ -79,7 +109,15 @@ app.put(
   editProductController.editProduct
 );
 
-app.get("/api/products/:id/:name", productDetailController.getProductDetail);
+app.get(
+  "/api/products/:id/:name", 
+  productDetailController.getProductDetail
+);
+
+app.get(
+  "/api/products/:id/:name", 
+  productDetailController.getProductDetail
+);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
