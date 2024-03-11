@@ -1,16 +1,13 @@
-
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 
 import Signup from "./Pages/Signup";
 import Login from "./Pages/Login";
-import {Products} from "./Pages/ProductPage";
+import { Products } from "../src/Pages/ProductPage/ProductsList";
 import { RequireAuth } from "./RequireAuth";
-
 
 function App() {
   return (
     <>
-
       <div className="app">
         <BrowserRouter>
           <Routes>

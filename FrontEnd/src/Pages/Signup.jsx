@@ -2,6 +2,7 @@ import { useState } from "react";
 import FormInput from "../Components/FormInput";
 import { useNavigate } from "react-router-dom";
 import { postData } from "../Api/api";
+
 const Signup = () => {
   const [values, setValues] = useState({
     username: "",
