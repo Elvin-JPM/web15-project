@@ -1,7 +1,9 @@
 const Product = require('../models/Product');
 const ObjectId = require('mongodb').ObjectId;
 const User = require('../models/User');
+const Jimp = require('jimp'); // Importar Jimp
 const upload = require('../lib/uploadConfigure');
+const path = require('path');
 
 class CreateProductController {
   async createProduct(req, res, next) {
@@ -21,9 +23,19 @@ class CreateProductController {
 
         productData.owner = username;
 
+        const originalName = path.basename(req.file.filename);
+
         if (req.file) {
-          productData.photo = req.file.filename;
+          // Resize image with Jimp
+          const image = await Jimp.read(req.file.path);
+          
+          // Redimensionar la imagen manteniendo la proporción original
+          await image.scaleToFit(300, 200);
+
+          await image.writeAsync(`../Backend/uploads/final_images/${originalName}`); // Guardar la imagen redimensionada con el mismo nombre
         }
+
+        productData.photo = originalName; // Asignar el nombre de la imagen redimensionada
         
         const product = new Product(productData);
 
