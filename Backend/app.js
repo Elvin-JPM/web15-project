@@ -12,7 +12,7 @@ require("./lib/connectMongoose");
 const LoginController = require("./controllers/LoginController");
 const SignUpController = require("./controllers/SignUpController");
 const ListProductsController = require("./controllers/ListProductsController");
-const ProductsByOwnerPublicController = require("./controllers/ProductsByOwnerPublicController");
+const ListProductsControllerrAuth = require("./controllers/ListProductsControllerAuth");
 const CreateProductController = require("./controllers/CreateProductController");
 const ProductDetailController = require("./controllers/ProductDetailController");
 const ProductsByOwnerController = require("./controllers/ProductsByOwnerController");
@@ -40,7 +40,7 @@ app.use("/users", usersRouter);
 const loginController = new LoginController();
 const signUpController = new SignUpController();
 const listProductsController = new ListProductsController();
-const productsByOwnerPublicController = new ProductsByOwnerPublicController();
+const listProductsControllerrAuth = new ListProductsControllerrAuth();
 const productsByOwnerController = new ProductsByOwnerController();
 const createProductController = new CreateProductController();
 const productDetailController = new ProductDetailController();
@@ -49,24 +49,16 @@ const editProductController = new EditProductController();
 const unsuscribeUserController = new UnsuscribeUserController();
 
 // API routes
-app.post(
-  "/api/authenticate", 
-  loginController.postJWT
-);
+app.post("/api/authenticate", loginController.postJWT);
 
-app.post(
-  "/api/signup", 
-  signUpController.signUpUser
-);
+app.post("/api/signup", signUpController.signUpUser);
+
+app.get("/api/products", listProductsController.listProducts);
 
 app.get(
-  "/api/products", 
-  listProductsController.listProducts
-);
-
-app.get(
-  "/api/products/list/:owner", 
-  productsByOwnerPublicController.listProductsPublic
+  "/api/products/auth",
+  jwtAuthMiddleware,
+  listProductsControllerrAuth.listProductsAuth
 );
 
 app.post(
@@ -93,14 +85,13 @@ app.put(
   editProductController.editProduct
 );
 
-app.get(
-  "/api/products/:id/:name", 
-  productDetailController.getProductDetail);
+app.get("/api/products/:id/:name", productDetailController.getProductDetail);
 
 app.delete(
-  "/api/:username", 
-  jwtAuthMiddleware, 
-  unsuscribeUserController.unsuscribe);
+  "/api/:username",
+  jwtAuthMiddleware,
+  unsuscribeUserController.unsuscribe
+);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
