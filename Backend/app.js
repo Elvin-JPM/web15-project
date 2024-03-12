@@ -12,10 +12,7 @@ require("./lib/connectMongoose");
 const LoginController = require("./controllers/LoginController");
 const SignUpController = require("./controllers/SignUpController");
 const ListProductsController = require("./controllers/ListProductsController");
-<<<<<<< HEAD
-=======
 const ListProductsControllerrAuth = require("./controllers/ListProductsControllerAuth");
->>>>>>> 0f3cbb4 (Changing node:readline por readline)
 const ProductsByOwnerPublicController = require("./controllers/ProductsByOwnerPublicController");
 const CreateProductController = require("./controllers/CreateProductController");
 const ProductDetailController = require("./controllers/ProductDetailController");
@@ -23,10 +20,6 @@ const ProductsByOwnerController = require("./controllers/ProductsByOwnerControll
 const DeleteProductController = require("./controllers/DeleteProductController");
 const EditProductController = require("./controllers/EditProductController");
 const UnsuscribeUserController = require("./controllers/UnsuscribeUser");
-<<<<<<< HEAD
-=======
-
->>>>>>> 0f3cbb4 (Changing node:readline por readline)
 const jwtAuthMiddleware = require("./lib/jwtAuthMiddleware");
 
 const app = express();
@@ -48,20 +41,13 @@ app.use("/users", usersRouter);
 const loginController = new LoginController();
 const signUpController = new SignUpController();
 const listProductsController = new ListProductsController();
-<<<<<<< HEAD
-=======
 const listProductsControllerrAuth = new ListProductsControllerrAuth();
->>>>>>> 0f3cbb4 (Changing node:readline por readline)
 const productsByOwnerPublicController = new ProductsByOwnerPublicController();
 const productsByOwnerController = new ProductsByOwnerController();
 const createProductController = new CreateProductController();
 const productDetailController = new ProductDetailController();
 const deleteProductController = new DeleteProductController();
 const editProductController = new EditProductController();
-<<<<<<< HEAD
-const unsuscribeUserController = new UnsuscribeUserController();
-=======
->>>>>>> 0f3cbb4 (Changing node:readline por readline)
 
 // API routes
 app.post("/api/authenticate", loginController.postJWT);
@@ -70,8 +56,6 @@ app.post("/api/signup", signUpController.signUpUser);
 
 app.get("/api/products", listProductsController.listProducts);
 
-<<<<<<< HEAD
-=======
 app.get(
   "/api/products/auth",
   jwtAuthMiddleware,
@@ -85,7 +69,6 @@ app.post("/api/authenticate", loginController.postJWT);
 
 app.post("/api/signup", signUpController.signUpUser);
 
->>>>>>> 0f3cbb4 (Changing node:readline por readline)
 app.get("/api/products", listProductsController.listProducts);
 
 app.get(
@@ -118,11 +101,8 @@ app.put(
 );
 
 app.get("/api/products/:id/:name", productDetailController.getProductDetail);
-<<<<<<< HEAD
-=======
 
 app.get("/api/products/:id/:name", productDetailController.getProductDetail);
->>>>>>> 0f3cbb4 (Changing node:readline por readline)
 
 app.delete(
   "/api/:username",
