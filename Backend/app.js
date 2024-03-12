@@ -24,7 +24,16 @@ const jwtAuthMiddleware = require("./lib/jwtAuthMiddleware");
 const app = express();
 
 // view engine setup
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://ec2-54-152-185-104.compute-1.amazonaws.com",
+      "http://localhost:5173",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    credentials: true,
+  })
+);
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
