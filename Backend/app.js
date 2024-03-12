@@ -24,7 +24,16 @@ const jwtAuthMiddleware = require("./lib/jwtAuthMiddleware");
 const app = express();
 
 // view engine setup
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://ec2-54-152-185-104.compute-1.amazonaws.com",
+      "http://localhost:5173",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    credentials: true,
+  })
+);
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
@@ -46,26 +55,25 @@ const createProductController = new CreateProductController();
 const productDetailController = new ProductDetailController();
 const deleteProductController = new DeleteProductController();
 const editProductController = new EditProductController();
+
+// API routes
+app.post("/api/authenticate", loginController.postJWT);
+
+app.post("/api/signup", signUpController.signUpUser);
+
+app.get("/api/products", listProductsController.listProducts);
+
 const unsuscribeUserController = new UnsuscribeUserController();
 
 // API routes
-app.post(
-  "/api/authenticate", 
-  loginController.postJWT
-);
+app.post("/api/authenticate", loginController.postJWT);
 
-app.post(
-  "/api/signup", 
-  signUpController.signUpUser
-);
+app.post("/api/signup", signUpController.signUpUser);
+
+app.get("/api/products", listProductsController.listProducts);
 
 app.get(
-  "/api/products", 
-  listProductsController.listProducts
-);
-
-app.get(
-  "/api/products/list/:owner", 
+  "/api/products/list/:owner",
   productsByOwnerPublicController.listProductsPublic
 );
 
@@ -93,14 +101,13 @@ app.put(
   editProductController.editProduct
 );
 
-app.get(
-  "/api/products/:id/:name", 
-  productDetailController.getProductDetail);
+app.get("/api/products/:id/:name", productDetailController.getProductDetail);
 
 app.delete(
-  "/api/:username", 
-  jwtAuthMiddleware, 
-  unsuscribeUserController.unsuscribe);
+  "/api/:username",
+  jwtAuthMiddleware,
+  unsuscribeUserController.unsuscribe
+);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
