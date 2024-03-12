@@ -2,7 +2,7 @@
     "initialProducts": [
         {
             "name": "Bicicleta",
-            "photo": "bici.jpg",
+            "photo": "prueba.png",
             "description": "Bicicleta de montaña sin estrenar",
             "sale": true,
             "price": 50,
