@@ -1,5 +1,5 @@
 import { useState } from "react";
-import FormInput from "../Components/FormInput";
+import { Label, Input, Icon, H2, Button_large } from '../Components/ui/Index';
 import { useNavigate } from "react-router-dom";
 import { postData } from "../Api/api";
 
@@ -21,7 +21,7 @@ const Signup = () => {
       type: "text",
       placeholder: "Username",
       errorMessage: "Username not available",
-      label: "Label",
+      label: "Username",
       pattern: "^[A-Za-z0-9]{3,16}$",
       required: true,
     },
@@ -57,7 +57,6 @@ const Signup = () => {
   ];
 
   const handleSubmit = async (e) => {
-    console.log("Submit clicked!");
     e.preventDefault();
     try {
       const response = await postData("/signup", requestBody);
@@ -72,21 +71,43 @@ const Signup = () => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  console.log(values);
   return (
-    <form onSubmit={handleSubmit} className="login-container">
-      <h1 className="title">Register</h1>
-      {inputs.map((input) => (
-        <FormInput
-          key={input.id}
-          {...input}
-          value={values[input.name]}
-          onChange={onChange}
-        ></FormInput>
-      ))}
+    <>
+      <div className='flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8'>
+        <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
+          <Icon />
+          <H2>Register</H2>
+        </div>
 
-      <button>Submit</button>
-    </form>
+        <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
+          <form className='space-y-6' onSubmit={handleSubmit}>
+            {inputs.map((input) => (
+              <div key={input.id}>
+                <Label htmlFor={input.name}>{input.label}</Label>
+                <div className='mt-2'>
+                  <Input
+                    id={input.name}
+                    name={input.name}
+                    type={input.type}
+                    placeholder={input.placeholder}
+                    autoComplete={input.name}
+                    value={values[input.name]}
+                    onChange={onChange}
+                    required={input.required}
+                    pattern={input.pattern}
+                    errorMessage={input.errorMessage}
+                  />
+                </div>
+              </div>
+            ))}
+
+            <div>
+              <Button_large type='submit'>Sign up</Button_large>
+            </div>
+          </form>
+        </div>
+      </div>
+    </>
   );
 };
 
