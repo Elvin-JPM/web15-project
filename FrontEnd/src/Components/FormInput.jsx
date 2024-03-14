@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "./formInput.module.css";
+import { Label, Input } from '../Components/ui/Index';
 
 const FormInput = (props) => {
   const { label, errorMessage, onChange, id, ...inputProps } = props;
@@ -8,17 +8,20 @@ const FormInput = (props) => {
     setFocused(true);
   };
   return (
-    <div className={styles.formInput}>
-      <label>{label}</label>
-      <input
-        {...inputProps}
-        onChange={onChange}
-        onBlur={handleFocus}
-        onFocus={() => inputProps.name == "confirmPassword" && setFocused(true)}
-        focused={focused.toString()}
-      ></input>
-      <span>{errorMessage}</span>
-    </div>
+    <>
+      <div className='flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8'></div>
+        <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
+          <Label>{label}</Label>
+          <Input
+            {...inputProps}
+            onChange={onChange}
+            onBlur={handleFocus}
+            onFocus={() => inputProps.name == "confirmPassword" && setFocused(true)}
+            focused={focused.toString()}
+          ></Input>
+          <span>{errorMessage}</span>
+        </div>
+    </>
   );
 };
 

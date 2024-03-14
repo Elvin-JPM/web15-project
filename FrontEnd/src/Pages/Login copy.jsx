@@ -8,30 +8,47 @@ const Login = () => {
   const [values, setValues] = useState({
     username: "",
     password: "",
-    rememberMe: false, // Initial state for remembering user
   });
 
   const navigate = useNavigate();
+  const requestBody = values;
 
-  const handleChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.checked }); // Update state based on checkbox value
-  };
+  const inputs = [
+    {
+      id: 1,
+      name: "username",
+      type: "text",
+      placeholder: "Username",
+      errorMessage: "Username not available",
+      label: "Username",
+      required: true,
+    },
+    {
+      id: 2,
+      name: "password",
+      type: "password",
+      placeholder: "Password",
+      errorMessage: "Password must be at least 8 characters long",
+      label: "Password",
+      required: true,
+    },
+  ];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await postData("/authenticate", values);
+      const response = await postData("/authenticate", requestBody);
       console.log("From login:", response);
-
-      if (values.rememberMe) {
-        storage.set("jwt", response.data.jwt);
-      }
-
+      storage.set("jwt", response.data.jwt);
       console.log(storage.get("jwt"));
       navigate("/products");
     } catch (error) {
       console.log(error.message);
     }
+  };
+
+  const onChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
   };
 
   return (
@@ -43,44 +60,31 @@ const Login = () => {
 
       <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
         <form className='space-y-6' onSubmit={handleSubmit}>
-          <div>
-            <Label htmlFor='username'>Username</Label>
-            <div className='mt-2'>
-              <Input
-                id='username'
-                name='username'
-                type='text'
-                placeholder='Enter your username'
-                autoComplete='username'
-                required
-              />
+          {inputs.map((input) => (
+            <div key={input.id}>
+              <Label htmlFor={input.name}>{input.label}</Label>
+              <div className='mt-2'>
+                <Input
+                  id={input.name}
+                  name={input.name}
+                  type={input.type}
+                  placeholder={input.placeholder}
+                  autoComplete={input.name}
+                  value={values[input.name]}
+                  onChange={onChange}
+                  required={input.required}
+                />
+              </div>
             </div>
-          </div>
+          ))}
 
-          <div>
-            <div className='flex items-center justify-between'>
-              <Label htmlFor='password'>Password</Label>
-            </div>
-            <div className='mt-2'>
-              <Input
-                id='password'
-                name='password'
-                type='password'
-                autoComplete='current-password'
-                required
-                placeholder='********'
-              />
-            </div>
-          </div>
-
+          {/* Added code snippet here */}
           <div className='flex items-center'>
             <Input
               className='mr-2 w-4 h-4 rounded-sm border border-gray-300 focus:ring-primary focus:ring-offset-0 focus:outline-none'
               id='remember-me'
-              name='rememberMe' // Cambiar el nombre a 'rememberMe'
+              name='remember-me'
               type='checkbox'
-              checked={values.rememberMe}
-              onChange={handleChange}
             />
             <Label className='text-gray-700' htmlFor='remember-me'>
               Remember me
