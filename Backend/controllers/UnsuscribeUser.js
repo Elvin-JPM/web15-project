@@ -8,7 +8,6 @@ class UnsucribeUserController {
         // Check user's logged info and permissions
         const { username } = await getUserInfo(req);
         const userURL = req.params.username;
-        console.log(username,userURL)
 
         if (username != userURL) {
             return res.json({ error: 'No tienes permisos para realizar esta acción.' });
