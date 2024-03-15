@@ -3,7 +3,7 @@ import React from "react";
 function Icon() {
   return (
     <svg
-			class="h-10  fill-current bg-primary text-white  mx-auto m-18 w-18  rounded-lg shadow-xl"
+      className="h-10 fill-current bg-primary text-white mx-auto m-18 w-18 rounded-lg shadow-xl"
       xmlns="http://www.w3.org/2000/svg"
       x="0"
       y="0"
@@ -18,5 +18,3 @@ function Icon() {
 }
 
 export default Icon;
-
-

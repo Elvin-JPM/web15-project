@@ -9,6 +9,7 @@ import Footer from './Footer';
 import Layout from './Layout';
 import Button_large from './Button_large';
 import Card from './Card';
+import Icon_product from './Icon_product';
 
 export {
 	Button,
@@ -22,4 +23,5 @@ export {
 	Layout,
 	Button_large,
 	Card,
+	Icon_product,
 };
