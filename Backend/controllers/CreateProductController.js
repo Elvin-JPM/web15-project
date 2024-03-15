@@ -4,10 +4,17 @@ const User = require('../models/User');
 const Jimp = require('jimp'); // Importar Jimp
 const upload = require('../lib/uploadConfigure');
 const path = require('path');
+const fs = require('fs');
 
 class CreateProductController {
   async createProduct(req, res, next) {
     try {
+      // Verificar y crear la carpeta donde se guardarán las imágenes si no existe
+      const imagePath = path.resolve(__dirname, '..', 'uploads', 'final_images');
+      if (!fs.existsSync(imagePath)) {
+        fs.mkdirSync(imagePath, { recursive: true });
+      }
+
       // Upload product's image
       upload.single('photo')(req, res, async function(err) {
         if (err) {
@@ -32,7 +39,7 @@ class CreateProductController {
           // Redimensionar la imagen manteniendo la proporción original
           await image.scaleToFit(300, 200);
 
-          await image.writeAsync(`../Backend/uploads/final_images/${originalName}`); // Guardar la imagen redimensionada con el mismo nombre
+          await image.writeAsync(path.join(imagePath, originalName)); // Guardar la imagen redimensionada con el mismo nombre
         }
 
         productData.photo = originalName; // Asignar el nombre de la imagen redimensionada
@@ -51,3 +58,4 @@ class CreateProductController {
 }
 
 module.exports = CreateProductController;
+
