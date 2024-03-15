@@ -12,7 +12,7 @@ function Product({ name, price, sale, photo }) {
 					className='h-64 w-full object-cover rounded-md transition duration-300 group-hover:scale-105 sm:h-72'
 				/>
 
-				<span className='absolute bottom-4 right-4 z-10 rounded-full px-3 py-1.5 text-xs font-medium bg-primary text-white rounded-full'>
+				<span className='absolute bottom-4 right-4 z-10 px-3 py-1.5 text-xs font-medium bg-primary text-white rounded-full'>
 					{sale ? 'Sell' : 'Buy'}
 				</span>
 
