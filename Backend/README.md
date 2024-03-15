@@ -15,6 +15,7 @@ npm start
 **PUT /api/:username** : update user's info
 
 
+
 **GET /api/products** : list app's products
 
 **GET /api/products/:owner** : list user's logged products
@@ -24,11 +25,13 @@ npm start
 **GET /api/products/:id/:name** : show product's details
 
 
+
 **POST /api/products** : create a new product
 
 **DELETE /api/products/:owner/:id** : delete a product
 
 **PUT /api/products/:owner/:id** : modify a product
+
 
 
 **PUT /api/products/:id** : add product to user's favorites
