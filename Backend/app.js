@@ -19,6 +19,9 @@ const ProductsByOwnerController = require("./controllers/ProductsByOwnerControll
 const DeleteProductController = require("./controllers/DeleteProductController");
 const EditProductController = require("./controllers/EditProductController");
 const UnsuscribeUserController = require("./controllers/UnsuscribeUser");
+const ProductFavsController = require("./controllers/ProductFavsController");
+const ProductsFavsListController = require("./controllers/ProductsFavsListController");
+const UpdateUserController = require("./controllers/UpdateUserController");
 const jwtAuthMiddleware = require("./lib/jwtAuthMiddleware");
 
 const app = express();
@@ -53,22 +56,26 @@ const createProductController = new CreateProductController();
 const productDetailController = new ProductDetailController();
 const deleteProductController = new DeleteProductController();
 const editProductController = new EditProductController();
-
-// API routes
-app.post("/api/authenticate", loginController.postJWT);
-
-app.post("/api/signup", signUpController.signUpUser);
-
-app.get("/api/products", listProductsController.listProducts);
-
 const unsuscribeUserController = new UnsuscribeUserController();
+const productFavsController = new ProductFavsController();
+const productsFavsListController = new ProductsFavsListController();
+const updateUserController = new UpdateUserController();
 
 // API routes
-app.post("/api/authenticate", loginController.postJWT);
+app.post(
+  "/api/authenticate", 
+  loginController.postJWT
+);
 
-app.post("/api/signup", signUpController.signUpUser);
+app.post(
+  "/api/signup", 
+  signUpController.signUpUser
+);
 
-app.get("/api/products", listProductsController.listProducts);
+app.get(
+  "/api/products", 
+  listProductsController.listProducts
+);
 
 app.get(
   "/api/products/list/:owner",
@@ -99,13 +106,42 @@ app.put(
   editProductController.editProduct
 );
 
-app.get("/api/products/:id/:name", productDetailController.getProductDetail);
+app.get(
+  "/api/products/:id/:name", 
+  productDetailController.getProductDetail
+);
 
 app.delete(
   "/api/:username",
   jwtAuthMiddleware,
   unsuscribeUserController.unsuscribe
 );
+
+app.put(
+  "/api/:username",
+  jwtAuthMiddleware,
+  updateUserController.updateUserInfo
+);
+
+app.put(
+  "/api/products/:id",
+  jwtAuthMiddleware,
+  productFavsController.checkFavouriteProduct
+);
+
+app.delete(
+  "/api/products/:id",
+  jwtAuthMiddleware,
+  productFavsController.uncheckFavouriteProduct
+);
+
+app.get(
+  "/api/:owner/favs",
+  jwtAuthMiddleware,
+  productsFavsListController.listFavouriteProducts
+);
+
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
