@@ -10,9 +10,9 @@ function Product({ name }) {
 }
 
 function ProductsList({ products }) {
-  const renderProduct = ({ id, ...product }) => (
-    <li key={id}>
-      <Link to={id}>
+  const renderProduct = ({ _id, ...product }) => (
+    <li key={_id}>
+      <Link to={`/products/${_id}`}>
         <Product {...product} />
       </Link>
     </li>

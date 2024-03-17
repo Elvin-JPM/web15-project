@@ -2,8 +2,10 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 
 import Signup from "./Pages/Signup";
 import Login from "./Pages/Login";
-import ProductsList from "../src/Pages/ProductPage/ProductsList";
+import Layout from './Components/Layout'
 import { Products } from "./Pages/ProductPage";
+import { NewProduct } from "./Pages/NewProductPage";
+import { DetailProduct } from "./Pages/DetailProductPage";
 import { RequireAuth } from "./RequireAuth";
 
 function App() {
@@ -18,10 +20,14 @@ function App() {
               path="products"
               element={
                 <RequireAuth>
-                  <Products />
+                  <Layout />
                 </RequireAuth>
               }
-            />
+            >
+             <Route index element={<Products />} />
+             <Route path="new" element={<NewProduct />} />
+             <Route path=":advertId" element={<DetailProduct />} />
+           </Route>
           </Routes>
         </BrowserRouter>
       </div>
