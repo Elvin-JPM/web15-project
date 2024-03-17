@@ -53,6 +53,8 @@ const Login = () => {
                 placeholder='Enter your username'
                 autoComplete='username'
                 required
+                value={values.username}
+                onChange={(e) => setValues({ ...values, username: e.target.value })}
               />
             </div>
           </div>
@@ -69,6 +71,8 @@ const Login = () => {
                 autoComplete='current-password'
                 required
                 placeholder='********'
+                value={values.password}
+                onChange={(e) => setValues({ ...values, password: e.target.value })}
               />
             </div>
           </div>
@@ -77,7 +81,7 @@ const Login = () => {
             <Input
               className='mr-2 w-4 h-4 rounded-sm border border-gray-300 focus:ring-primary focus:ring-offset-0 focus:outline-none'
               id='remember-me'
-              name='rememberMe' // Cambiar el nombre a 'rememberMe'
+              name='rememberMe'
               type='checkbox'
               checked={values.rememberMe}
               onChange={handleChange}

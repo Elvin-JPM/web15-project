@@ -1,9 +1,9 @@
 import React from 'react';
 
-function Icon() {
+function Logo() {
 	return (
 		<svg
-			class='h-10  fill-current text-primary  mx-auto'
+			className='h-10  fill-current text-primary  mx-auto'
 			xmlns='http://www.w3.org/2000/svg'
 			x='0'
 			y='0'
@@ -20,4 +20,4 @@ function Icon() {
 	);
 }
 
-export default Icon;
+export default Logo;
