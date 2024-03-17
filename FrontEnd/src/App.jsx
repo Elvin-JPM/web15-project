@@ -6,6 +6,7 @@ import Layout from './Components/Layout'
 import { Products } from "./Pages/ProductPage";
 import { NewProduct } from "./Pages/NewProductPage";
 import { DetailProduct } from "./Pages/DetailProductPage";
+import { EditProduct } from "./Pages/EditProductPage";
 import { RequireAuth } from "./RequireAuth";
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
              <Route index element={<Products />} />
              <Route path="new" element={<NewProduct />} />
              <Route path=":productId" element={<DetailProduct />} />
+             <Route path=":productId/edit" element={<EditProduct />} />
            </Route>
           </Routes>
         </BrowserRouter>
