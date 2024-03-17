@@ -26,7 +26,7 @@ function App() {
             >
              <Route index element={<Products />} />
              <Route path="new" element={<NewProduct />} />
-             <Route path=":advertId" element={<DetailProduct />} />
+             <Route path=":productId" element={<DetailProduct />} />
            </Route>
           </Routes>
         </BrowserRouter>

@@ -1,5 +1,5 @@
 
-import { useParams,  } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { useState, useEffect } from 'react';
 import DetailProductForm from './DetailProductForm';
@@ -10,7 +10,6 @@ import storage from "../../Api/storage";
 function DetailProduct() {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
-  console.log(product)
 
   useEffect(() => {
     const isLogged = storage.get("jwt");
@@ -18,6 +17,7 @@ function DetailProduct() {
    
     const fetchProduct = async () =>{
       try {
+         console.log(productId)
         const response = await getData(`/products/${productId}`, );
         console.log("response:", response.data);
         storage.set("jwt", response.data.jwt);
