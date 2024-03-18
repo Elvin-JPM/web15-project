@@ -27,17 +27,23 @@ const Login = () => {
       const response = await postData("/authenticate", values);
       console.log("From login:", response);
 
-      if (response) {
+      if (!response.data.error) {
         console.log(values.username);
         console.log(values.password);
         console.log(values.rememberMe);
         if (values.rememberMe) {
           storage.set("jwt", response.data.jwt);
           console.log("jwt", storage.get("jwt"));
+        } else {
+          sessionStorage.setItem("jwt", response.data.jwt);
         }
         navigate("/products");
+      } else {
+        throw new Error(response.data.error);
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   return (

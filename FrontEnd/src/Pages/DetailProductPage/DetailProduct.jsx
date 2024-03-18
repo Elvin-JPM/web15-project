@@ -1,46 +1,27 @@
+import { useParams } from "react-router-dom";
 
-import { useParams } from 'react-router-dom';
-
-import { useState, useEffect } from 'react';
-import DetailProductForm from './DetailProductForm';
+import { useState, useEffect } from "react";
+import DetailProductForm from "./DetailProductForm";
 import { getData } from "../../Api/api";
-import storage from "../../Api/storage";
-
 
 function DetailProduct() {
-  const { productId } = useParams();
+  const { productId, productName } = useParams();
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
-    const isLogged = storage.get("jwt");
-    console.log('tokeeeen', isLogged)
-   
-    const fetchProduct = async () =>{
+    const fetchProduct = async () => {
       try {
-         console.log(productId)
-        const response = await getData(`/products/${productId}`, );
-        console.log("response:", response.data);
-        storage.set("jwt", response.data.jwt);
-        console.log('tokeeeen',  storage.set("jwt", response.data.jwt))
-        setProduct(response.data)
-        console.log('entro al detalle')
+        const response = await getData(`/products/${productId}/${productName}`);
+        setProduct(response);
       } catch (error) {
         console.log(error.message);
       }
-    }
-  
-    fetchProduct()
-     
+    };
+
+    fetchProduct();
   }, [productId]);
 
-
-  return (
-    product && (
-      <DetailProductForm
-      {...product}
-      />
-      )
-  );
+  return product && <DetailProductForm {...product} />;
 }
 
 export default DetailProduct;
