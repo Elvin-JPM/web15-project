@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Label, Input, Icon, H2, Button_large } from '../Components/ui/Index';
+import { Label, Input, Icon, H2, Button_large } from "../Components/ui/Index";
 import { postData } from "../Api/api";
 import { useNavigate } from "react-router-dom";
 import storage from "../Api/storage";
@@ -14,85 +14,91 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.checked }); // Update state based on checkbox value
+    setValues({
+      ...values,
+      [e.target.getAttribute("name")]: e.target.value,
+    }); // Update state based on checkbox value
   };
 
+  console.log(values);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await postData("/authenticate", values);
       console.log("From login:", response);
 
-      if (values.rememberMe) {
-        storage.set("jwt", response.data.jwt);
+      if (response) {
+        console.log(values.username);
+        console.log(values.password);
+        console.log(values.rememberMe);
+        if (values.rememberMe) {
+          storage.set("jwt", response.data.jwt);
+          console.log("jwt", storage.get("jwt"));
+        }
+        navigate("/products");
       }
-
-      console.log(storage.get("jwt"));
-      navigate("/products");
-    } catch (error) {
-      console.log(error.message);
-    }
+    } catch (error) {}
   };
 
   return (
-    <div className='flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8'>
-      <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
+    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <Icon />
         <H2>Log In</H2>
       </div>
 
-      <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
-        <form className='space-y-6' onSubmit={handleSubmit}>
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
-            <Label htmlFor='username'>Username</Label>
-            <div className='mt-2'>
+            <Label htmlFor="username">Username</Label>
+            <div className="mt-2">
               <Input
-                id='username'
-                name='username'
-                type='text'
-                placeholder='Enter your username'
-                autoComplete='username'
+                id="username"
+                name="username"
+                type="text"
+                placeholder="Enter your username"
+                autoComplete="username"
                 required
                 value={values.username}
-                onChange={(e) => setValues({ ...values, username: e.target.value })}
+                onChange={handleChange}
               />
             </div>
           </div>
 
           <div>
-            <div className='flex items-center justify-between'>
-              <Label htmlFor='password'>Password</Label>
+            <div className="flex items-center justify-between">
+              <Label htmlFor="password">Password</Label>
             </div>
-            <div className='mt-2'>
+            <div className="mt-2">
               <Input
-                id='password'
-                name='password'
-                type='password'
-                autoComplete='current-password'
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="current-password"
                 required
-                placeholder='********'
+                placeholder="********"
                 value={values.password}
-                onChange={(e) => setValues({ ...values, password: e.target.value })}
+                onChange={handleChange}
               />
             </div>
           </div>
 
-          <div className='flex items-center'>
+          <div className="flex items-center">
             <Input
-              className='mr-2 w-4 h-4 rounded-sm border border-gray-300 focus:ring-primary focus:ring-offset-0 focus:outline-none'
-              id='remember-me'
-              name='rememberMe'
-              type='checkbox'
+              className="mr-2 w-4 h-4 rounded-sm border border-gray-300 focus:ring-primary focus:ring-offset-0 focus:outline-none"
+              id="remember-me"
+              name="rememberMe"
+              type="checkbox"
               checked={values.rememberMe}
               onChange={handleChange}
             />
-            <Label className='text-gray-700' htmlFor='remember-me'>
+            <Label className="text-gray-700" htmlFor="remember-me">
               Remember me
             </Label>
           </div>
 
-          <div className='flex items-center justify-end'>
-            <Button_large type='submit'>Log in</Button_large>
+          <div className="flex items-center justify-end">
+            <Button_large type="submit">Log in</Button_large>
           </div>
         </form>
       </div>
