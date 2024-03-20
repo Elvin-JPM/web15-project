@@ -9,6 +9,7 @@ import { NewProduct } from "./Pages/NewProductPage";
 import { DetailProduct } from "./Pages/DetailProductPage";
 import { EditProduct } from "./Pages/EditProductPage";
 import { RequireAuth } from "./RequireAuth";
+import ProductsByOwner from "./Pages/ProductsByOwner/ProductsByOwner";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
                 path=":productId/:productName"
                 element={<DetailProduct />}
               />
+              <Route path="list/:owner" element={<ProductsByOwner />} />
               <Route path=":productId/edit" element={<EditProduct />} />
             </Route>
           </Routes>

@@ -4,6 +4,7 @@ import Button from "../../Components/ui/Button";
 import placeholder from "./../../Assets/placeholder.png";
 
 function Product({ product }) {
+  console.log("at product component:", product);
   const navigate = useNavigate();
   const params = useParams;
   const handleButton = (e) => {
@@ -15,7 +16,7 @@ function Product({ product }) {
     <Link to={`/products/${product._id}/${product.name}`}>
       <div>
         <img
-          src={placeholder || product.photo}
+          src={product.photo}
           alt={product.name}
           className="h-64 w-full object-cover rounded-md transition duration-300 group-hover:scale-105 sm:h-72"
         />
@@ -33,6 +34,7 @@ function Product({ product }) {
           {product.price}€
         </h3>
         <p className="mt-1.5 text-sm text-gray-700">{product.name}</p>
+        <p>{product.owner}</p>
         <Button onClick={handleButton}>Editar producto</Button>
       </div>
     </Link>
