@@ -29,9 +29,19 @@ const app = express();
 // view engine setup
 app.use(
   cors({
-    origin: '*',
+    origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Cache-Control', 'X-Requested-With', 'User-Agent', 'Origin', 'X-CSRF-Token'],
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "Accept",
+      "Cache-Control",
+      "X-Requested-With",
+      "User-Agent",
+      "Origin",
+      "X-CSRF-Token",
+      "headers",
+    ],
     credentials: true,
   })
 );
@@ -62,20 +72,11 @@ const productsFavsListController = new ProductsFavsListController();
 const updateUserController = new UpdateUserController();
 
 // API routes
-app.post(
-  "/api/authenticate", 
-  loginController.postJWT
-);
+app.post("/api/authenticate", loginController.postJWT);
 
-app.post(
-  "/api/signup", 
-  signUpController.signUpUser
-);
+app.post("/api/signup", signUpController.signUpUser);
 
-app.get(
-  "/api/products", 
-  listProductsController.listProducts
-);
+app.get("/api/products", listProductsController.listProducts);
 
 app.get(
   "/api/products/list/:owner",
@@ -106,10 +107,7 @@ app.put(
   editProductController.editProduct
 );
 
-app.get(
-  "/api/products/:id/:name", 
-  productDetailController.getProductDetail
-);
+app.get("/api/products/:id/:name", productDetailController.getProductDetail);
 
 app.delete(
   "/api/:username",
@@ -140,8 +138,6 @@ app.get(
   jwtAuthMiddleware,
   productsFavsListController.listFavouriteProducts
 );
-
-
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

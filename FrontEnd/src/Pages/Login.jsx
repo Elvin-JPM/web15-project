@@ -33,9 +33,11 @@ const Login = () => {
         console.log(values.rememberMe);
         if (values.rememberMe) {
           storage.set("jwt", response.data.jwt);
+          sessionStorage.removeItem("jwt");
           console.log("jwt", storage.get("jwt"));
         } else {
           sessionStorage.setItem("jwt", response.data.jwt);
+          storage.remove("jwt");
         }
         navigate("/products");
       } else {
