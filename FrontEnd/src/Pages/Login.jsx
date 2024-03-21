@@ -17,7 +17,7 @@ const Login = () => {
     setValues({
       ...values,
       [e.target.getAttribute("name")]: e.target.value,
-    }); // Update state based on checkbox value
+    });
   };
 
   console.log(values);
@@ -28,16 +28,17 @@ const Login = () => {
       console.log("From login:", response);
 
       if (!response.data.error) {
-        console.log(values.username);
-        console.log(values.password);
-        console.log(values.rememberMe);
         if (values.rememberMe) {
           storage.set("jwt", response.data.jwt);
+          storage.set("username", response.data.username);
           sessionStorage.removeItem("jwt");
-          console.log("jwt", storage.get("jwt"));
+          sessionStorage.removeItem("username");
+          console.log(response);
         } else {
           sessionStorage.setItem("jwt", response.data.jwt);
+          sessionStorage.setItem("username", response.data.username);
           storage.remove("jwt");
+          storage.remove("username");
         }
         navigate("/products");
       } else {
