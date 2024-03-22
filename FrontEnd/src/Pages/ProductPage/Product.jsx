@@ -3,16 +3,32 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Button from "../../Components/ui/Button";
 import getFromStorage from "../../Service/getFromStorage";
 import placeholder from "./../../Assets/placeholder.png";
+import { putData } from "../../Api/api";
 
 function Product({ product }) {
   console.log("at product component:", product);
   const navigate = useNavigate();
   const params = useParams;
+  const token = getFromStorage("jwt");
 
   const loggedUser = getFromStorage("username");
-  const handleButton = (e) => {
+  const requestBody = { username: loggedUser };
+
+  const addFavoriteClick = async (e) => {
     e.preventDefault();
-    navigate(`${product._id}/edit`);
+    const favoriteProductId = e.target.getAttribute("id");
+    try {
+      const response = await putData(
+        `/products/${favoriteProductId}`,
+        requestBody,
+        {
+          Authorization: `${token}`,
+        }
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   return (
@@ -37,9 +53,11 @@ function Product({ product }) {
           {product.price}€
         </h3>
         <p className="mt-1.5 text-sm text-gray-700">{product.name}</p>
-        <p>{product.owner}</p>
-        {loggedUser === product.owner ? (
-          <Button onClick={handleButton}>Editar producto</Button>
+        <p>Anunciante: {product.owner === loggedUser ? "Yo" : product.owner}</p>
+        {loggedUser !== product.owner ? (
+          <Button id={product._id} onClick={addFavoriteClick}>
+            Agregar Favorito
+          </Button>
         ) : (
           ""
         )}
