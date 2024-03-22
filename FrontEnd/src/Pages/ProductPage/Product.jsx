@@ -1,12 +1,15 @@
 import React from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Button from "../../Components/ui/Button";
+import getFromStorage from "../../Service/getFromStorage";
 import placeholder from "./../../Assets/placeholder.png";
 
 function Product({ product }) {
   console.log("at product component:", product);
   const navigate = useNavigate();
   const params = useParams;
+
+  const loggedUser = getFromStorage("username");
   const handleButton = (e) => {
     e.preventDefault();
     navigate(`${product._id}/edit`);
@@ -35,7 +38,11 @@ function Product({ product }) {
         </h3>
         <p className="mt-1.5 text-sm text-gray-700">{product.name}</p>
         <p>{product.owner}</p>
-        <Button onClick={handleButton}>Editar producto</Button>
+        {loggedUser === product.owner ? (
+          <Button onClick={handleButton}>Editar producto</Button>
+        ) : (
+          ""
+        )}
       </div>
     </Link>
   );

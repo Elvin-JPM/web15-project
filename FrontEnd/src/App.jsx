@@ -19,6 +19,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Navigate to="/products" replace />} />
+            <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/products" element={<Layout />}>
               <Route index element={<Products />} />
