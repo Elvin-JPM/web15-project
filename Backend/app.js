@@ -30,9 +30,19 @@ const app = express();
 // view engine setup
 app.use(
   cors({
-    origin: '*',
+    origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Cache-Control', 'X-Requested-With', 'User-Agent', 'Origin', 'X-CSRF-Token'],
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "Accept",
+      "Cache-Control",
+      "X-Requested-With",
+      "User-Agent",
+      "Origin",
+      "X-CSRF-Token",
+      "headers",
+    ],
     credentials: true,
   })
 );
@@ -64,6 +74,7 @@ const updateUserController = new UpdateUserController();
 const resetUserController  = new ResetUserController();
 
 // API routes
+app.post("/api/authenticate", loginController.postJWT);
 app.put(
   "/api/reset-password",
   resetUserController.resetPassword
@@ -75,15 +86,9 @@ app.post(
   loginController.postJWT
 );
 
-app.post(
-  "/api/signup", 
-  signUpController.signUpUser
-);
+app.post("/api/signup", signUpController.signUpUser);
 
-app.get(
-  "/api/products", 
-  listProductsController.listProducts
-);
+app.get("/api/products", listProductsController.listProducts);
 
 app.get(
   "/api/products/list/:owner",
@@ -158,12 +163,6 @@ app.post(
   "/api/reset-password",
   resetUserController.sendResetEmail
 );
-
-
-
-
-
-
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

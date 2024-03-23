@@ -1,21 +1,41 @@
 import React from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Button from "../../Components/ui/Button";
+import getFromStorage from "../../Service/getFromStorage";
 import placeholder from "./../../Assets/placeholder.png";
+import { putData } from "../../Api/api";
 
 function Product({ product }) {
+  console.log("at product component:", product);
   const navigate = useNavigate();
   const params = useParams;
-  const handleButton = (e) => {
+  const token = getFromStorage("jwt");
+
+  const loggedUser = getFromStorage("username");
+  const requestBody = { username: loggedUser };
+
+  const addFavoriteClick = async (e) => {
     e.preventDefault();
-    navigate(`${product._id}/edit`);
+    const favoriteProductId = e.target.getAttribute("id");
+    try {
+      const response = await putData(
+        `/products/${favoriteProductId}`,
+        requestBody,
+        {
+          Authorization: `${token}`,
+        }
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   return (
     <Link to={`/products/${product._id}/${product.name}`}>
       <div>
         <img
-          src={placeholder || product.photo}
+          src={product.photo}
           alt={product.name}
           className="h-64 w-full object-cover rounded-md transition duration-300 group-hover:scale-105 sm:h-72"
         />
@@ -33,7 +53,14 @@ function Product({ product }) {
           {product.price}€
         </h3>
         <p className="mt-1.5 text-sm text-gray-700">{product.name}</p>
-        <Button onClick={handleButton}>Editar producto</Button>
+        <p>Anunciante: {product.owner === loggedUser ? "Yo" : product.owner}</p>
+        {loggedUser !== product.owner ? (
+          <Button id={product._id} onClick={addFavoriteClick}>
+            Agregar Favorito
+          </Button>
+        ) : (
+          ""
+        )}
       </div>
     </Link>
   );

@@ -36,3 +36,14 @@ export async function deleteData(endpoint, requestHeaders) {
     console.error("Error deleting data:", error);
   }
 }
+
+export async function putData(endpoint, requestBody, requestHeaders) {
+  try {
+    const response = await axios.put(BASE_URL + endpoint, requestBody, {
+      headers: requestHeaders,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error updating data:", error);
+  }
+}

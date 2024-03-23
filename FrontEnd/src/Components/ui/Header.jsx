@@ -3,11 +3,26 @@ import Button from "./Button";
 import { NavLink } from "react-router-dom";
 import Input from "./Input";
 import storage from "../../Api/storage";
-
+import logout from "../../Service/logout";
+import { useNavigate } from "react-router";
+import { useState } from "react";
+import getFromStorage from "../../Service/getFromStorage";
 function Header() {
-  const localStorage = storage.get("jwt");
-  const session = sessionStorage.getItem("jwt");
-  const token = localStorage || session;
+  const [isLogged, setIsLogged] = useState(null);
+  const navigate = useNavigate();
+
+  const token = getFromStorage("jwt");
+  const username = getFromStorage("username");
+
+  const buttonClick = (e) => {
+    if (e.target.getAttribute("name") === "login") {
+      navigate("/login");
+    } else {
+      logout();
+      setIsLogged(false);
+    }
+  };
+
   return (
     <header className="text-gray-600 body-font">
       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
@@ -22,7 +37,7 @@ function Header() {
           <NavLink to="New" className="mr-5 hover:text-gray-900">
             Crear Anuncio{" "}
           </NavLink>
-          <NavLink to="" className="mr-5 hover:text-gray-900">
+          <NavLink to="/products/list/me" className="mr-5 hover:text-gray-900">
             Mis Anuncios
           </NavLink>
           <NavLink to="" className="mr-5 hover:text-gray-900">
@@ -32,11 +47,14 @@ function Header() {
             Fourth Link
           </NavLink>
         </nav>
-        {token ? (
-          <Button type="submit">Log Out</Button>
-        ) : (
-          <Button type="submit">Log In</Button>
-        )}
+        <Button
+          type="submit"
+          name={token ? "logout" : "login"}
+          onClick={buttonClick}
+        >
+          {token ? "Log Out" : "Log In"}
+        </Button>
+        <div>{username ? `Hello ${username}` : ""}</div>
       </div>
     </header>
   );
