@@ -11,7 +11,7 @@ class ProductsFavsListController {
       const usernameURL = req.params.owner;
 
       if(username !== usernameURL){
-        return res.json({ error: 'Permisos no válidos' });
+        return res.json('Permisos no válidos');
       }
 
       const products = await Product.find({ favs: usernameURL });
@@ -19,7 +19,7 @@ class ProductsFavsListController {
       
     } catch (error) {
       console.error('Error:', error);
-      return res.status(500).json({ error: 'Internal Server Error' });
+      return res.status(500).json('Internal Server Error');
     }
   }
 }

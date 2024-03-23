@@ -14,18 +14,18 @@ class DeleteProductController {
 
       // If products doesnt exist show an error
       if (!product) {
-        return res.json({ error: 'Producto no encontrado' });
+        return res.json('Producto no encontrado');
       }
 
       // Check products'owner
       if (product.owner !== username) {
-        return res.json({ error: 'Permisos no válidos' });
+        return res.json('Permisos no válidos');
       }
 
       // If owner is correct delete product
       await Product.findOneAndDelete({ _id: productId });
 
-      res.json({ message: 'Producto eliminado correctamente' });
+      res.json('Producto eliminado correctamente');
 
     } catch (err) {
       next(err);

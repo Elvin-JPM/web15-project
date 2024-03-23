@@ -11,7 +11,7 @@ class ProductListController {
       const products = await Product.find({ owner: username });
 
       if (usernameURL !== username) {
-        return res.json({ error: 'Permisos no válidos' });
+        return res.json('Permisos no válidos' );
       }
       res.json(products);
     } catch (err) {

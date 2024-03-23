@@ -21,10 +21,18 @@ class ResetUserController {
             const verificationLink = `http://localhost:3000/api/reset-password/${token}`;
 
             // HTML content for email
-            const emailHTML = `<p name="token" >${token}</p>`;
+            const emailHTML = 
+            `<p>Hola ${user.username},</p>
+            <p>Recibes este correo electrónico porque hemos recibido una solicitud para restablecer la contraseña de tu cuenta en Fleapster.</p>
+            <p>Para restablecer tu contraseña, haz clic en el siguiente enlace:
+            ${token}</p>
+            <p>Si no has solicitado este cambio, puedes ignorar este correo electrónico de manera segura. Tu contraseña seguirá siendo la misma.</p>
+            <p>Gracias</p>
+            <p>Atentamente,
+            Fleapster<p>`;
 
-            sendEmail(userEmail,'Restablecer contraseña de usuario en Fleapster',emailHTML);
-            res.json('ok')
+            sendEmail(userEmail,'Restablecimiento de contraseña',emailHTML);
+            res.json('Email enviado correctamente');
 
         } catch (err) {
             next(err);
