@@ -22,6 +22,7 @@ const UnsuscribeUserController = require("./controllers/UnsuscribeUser");
 const ProductFavsController = require("./controllers/ProductFavsController");
 const ProductsFavsListController = require("./controllers/ProductsFavsListController");
 const UpdateUserController = require("./controllers/UpdateUserController");
+const ResetUserController = require("./controllers/ResetUserController");
 const jwtAuthMiddleware = require("./lib/jwtAuthMiddleware");
 
 const app = express();
@@ -60,8 +61,15 @@ const unsuscribeUserController = new UnsuscribeUserController();
 const productFavsController = new ProductFavsController();
 const productsFavsListController = new ProductsFavsListController();
 const updateUserController = new UpdateUserController();
+const resetUserController  = new ResetUserController();
 
 // API routes
+app.put(
+  "/api/reset-password",
+  resetUserController.resetPassword
+);
+
+
 app.post(
   "/api/authenticate", 
   loginController.postJWT
@@ -140,6 +148,20 @@ app.get(
   jwtAuthMiddleware,
   productsFavsListController.listFavouriteProducts
 );
+
+app.put(
+  "/api/updateuser",
+  resetUserController.sendResetEmail
+);
+
+app.post(
+  "/api/reset-password",
+  resetUserController.sendResetEmail
+);
+
+
+
+
 
 
 

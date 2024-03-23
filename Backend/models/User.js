@@ -6,7 +6,8 @@ const userSchema = mongoose.Schema(
        username: { type: String, index: true, unique:true},
        email: { type: String, index:true, unique:true},
        password: String,
-       active: Boolean
+       active: Boolean,
+       resetPasswordToken : String
     }
 );
 
