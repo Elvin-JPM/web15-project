@@ -10,12 +10,12 @@ class SignUpController {
             const existingEmail = await User.findOne({ email });
             const existingUsername = await User.findOne({ username });
             if (existingEmail || existingUsername ) {
-                return res.json({ error: 'El usuario ya está dado de alta' });
+                return res.json('El usuario ya está dado de alta');
             }
 
             // If user doesnt exit create it
             const hashedPassword = await bcrypt.hash(password, 7);
-            const newUser = new User({ username, email, password: hashedPassword, active: true});
+            const newUser = new User({ username, email, password: hashedPassword, active: true, resetPasswordToken: ""});
             await newUser.save();
             
             res.json({ user: newUser });

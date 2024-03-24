@@ -23,6 +23,7 @@ const ProductFavsController = require("./controllers/ProductFavsController");
 const ProductsFavsListController = require("./controllers/ProductsFavsListController");
 const UpdateUserController = require("./controllers/UpdateUserController");
 const ReturnImageController = require("./controllers/ReturnImageController");
+const ResetUserController = require("./controllers/ResetUserController");
 const jwtAuthMiddleware = require("./lib/jwtAuthMiddleware");
 
 const app = express();
@@ -72,7 +73,12 @@ const productFavsController = new ProductFavsController();
 const productsFavsListController = new ProductsFavsListController();
 const updateUserController = new UpdateUserController();
 const returnImageController = new ReturnImageController();
+const resetUserController = new ResetUserController();
+
 // API routes
+app.post("/api/authenticate", loginController.postJWT);
+app.put("/api/reset-password", resetUserController.resetPassword);
+
 app.post("/api/authenticate", loginController.postJWT);
 
 app.post("/api/signup", signUpController.signUpUser);
@@ -141,6 +147,10 @@ app.get(
   jwtAuthMiddleware,
   productsFavsListController.listFavouriteProducts
 );
+
+app.put("/api/updateuser", resetUserController.sendResetEmail);
+
+app.post("/api/reset-password", resetUserController.sendResetEmail);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -9,7 +9,7 @@ class LoginController {
 
       // If user doesnt exit shows an error
       if (!user || !(await user.comparePassword(password))) {
-        res.json({ error: "Credenciales incorrectas" });
+        res.json("Credenciales incorrectas");
         return;
       }
 

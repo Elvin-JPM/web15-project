@@ -6,18 +6,17 @@ class ProductsFavsController {
     const productId = req.params.id;
 
     // Check user's logged info
-    // const { username } = await getUserInfo(req);
-    const username = req.body.username;
+    const { username } = await getUserInfo(req);
 
     try {
       const product = await Product.findById(productId);
 
       if (!username) {
-        return res.json({ error: "No tienes los permisos necesarios" });
+        return res.json("No tienes los permisos necesarios" );
       }
 
       if (!product) {
-        return res.status(404).json({ error: "Producto no encontrado" });
+        return res.status(404).json("Producto no encontrado" );
       }
 
       if (!product.favs.includes(username)) {
