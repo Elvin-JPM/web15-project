@@ -1,12 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import getFromStorage from "../../Service/getFromStorage";
+import Button from "../../Components/ui/Button";
 function DetailProductForm({
   name,
   sale,
   price,
   tags,
   owner,
+  favs,
+  _id,
   photo,
   onDelete,
   isLoading,

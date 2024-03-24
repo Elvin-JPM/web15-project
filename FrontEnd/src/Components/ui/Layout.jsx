@@ -1,13 +1,13 @@
-import Header from './Header';
-import Footer from './Footer';
+import Header from "./Header";
+import Footer from "./Footer";
+import { Outlet } from "react-router";
 
-function Layout() {
+function Layout({ children }) {
   return (
-    <div className=""> 
+    <div className="">
       <Header className="" />
-      <main className="">
-      </main>
-      <Footer className="" />
+      <main className="">{children ? children : <Outlet />}</main>
+      <Footer />
     </div>
   );
 }

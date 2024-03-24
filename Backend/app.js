@@ -22,6 +22,7 @@ const UnsuscribeUserController = require("./controllers/UnsuscribeUser");
 const ProductFavsController = require("./controllers/ProductFavsController");
 const ProductsFavsListController = require("./controllers/ProductsFavsListController");
 const UpdateUserController = require("./controllers/UpdateUserController");
+const ReturnImageController = require("./controllers/ReturnImageController");
 const jwtAuthMiddleware = require("./lib/jwtAuthMiddleware");
 
 const app = express();
@@ -70,13 +71,15 @@ const unsuscribeUserController = new UnsuscribeUserController();
 const productFavsController = new ProductFavsController();
 const productsFavsListController = new ProductsFavsListController();
 const updateUserController = new UpdateUserController();
-
+const returnImageController = new ReturnImageController();
 // API routes
 app.post("/api/authenticate", loginController.postJWT);
 
 app.post("/api/signup", signUpController.signUpUser);
 
 app.get("/api/products", listProductsController.listProducts);
+
+app.get("/api/images/:imageName", returnImageController.returnImage);
 
 app.get(
   "/api/products/list/:owner",

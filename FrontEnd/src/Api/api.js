@@ -16,10 +16,8 @@ export async function postData(endpoint, requestBody, headers) {
 }
 
 export async function getData(endpoint, requestHeaders) {
-  const headers = requestHeaders;
-
   try {
-    const response = await axios.get(BASE_URL + endpoint, headers);
+    const response = await axios.get(BASE_URL + endpoint, requestHeaders);
     return response.data;
   } catch (error) {
     console.error("Error fetching data:", error);

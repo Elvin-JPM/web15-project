@@ -33,26 +33,36 @@ function Header() {
           <Icon />
         </NavLink>
         <Input />
-        <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
-          <NavLink to="New" className="mr-5 hover:text-gray-900">
-            Crear Anuncio{" "}
-          </NavLink>
-          <NavLink to="/products/list/me" className="mr-5 hover:text-gray-900">
-            Mis Anuncios
-          </NavLink>
-          <NavLink to="" className="mr-5 hover:text-gray-900">
-            Favoritos
-          </NavLink>
-          <NavLink to="" className="mr-5 hover:text-gray-900">
-            Fourth Link
-          </NavLink>
-        </nav>
+        {token ? (
+          <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
+            <NavLink to="New" className="mr-5 hover:text-gray-900">
+              Crear Anuncio{" "}
+            </NavLink>
+            <NavLink
+              to="/products/list/me"
+              className="mr-5 hover:text-gray-900"
+            >
+              Mis Anuncios
+            </NavLink>
+            <NavLink
+              to={`/${username}/favs`}
+              className="mr-5 hover:text-gray-900"
+            >
+              Favoritos
+            </NavLink>
+            <NavLink to="" className="mr-5 hover:text-gray-900">
+              Fourth Link
+            </NavLink>
+          </nav>
+        ) : (
+          ""
+        )}
         <Button
           type="submit"
           name={token ? "logout" : "login"}
           onClick={buttonClick}
         >
-          {token ? "Log Out" : "Log In"}
+          {token ? "Cerrar sesión" : "Regístrate o inicia sesión"}
         </Button>
         <div>{username ? `Hello ${username}` : ""}</div>
       </div>

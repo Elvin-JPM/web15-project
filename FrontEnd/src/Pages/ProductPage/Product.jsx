@@ -2,40 +2,19 @@ import React from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Button from "../../Components/ui/Button";
 import getFromStorage from "../../Service/getFromStorage";
-import placeholder from "./../../Assets/placeholder.png";
+import placeholder from "../../Assets/placeholder.png";
 import { putData } from "../../Api/api";
 
-function Product({ product }) {
-  console.log("at product component:", product);
-  const navigate = useNavigate();
-  const params = useParams;
-  const token = getFromStorage("jwt");
-
+function Product({ product, children }) {
   const loggedUser = getFromStorage("username");
-  const requestBody = { username: loggedUser };
-
-  const addFavoriteClick = async (e) => {
-    e.preventDefault();
-    const favoriteProductId = e.target.getAttribute("id");
-    try {
-      const response = await putData(
-        `/products/${favoriteProductId}`,
-        requestBody,
-        {
-          Authorization: `${token}`,
-        }
-      );
-      console.log(response);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
+  const imageUrl = `http://127.0.0.1:3000/api/images/${product.photo}`
+    ? `http://127.0.0.1:3000/api/images/${product.photo}`
+    : placeholder;
   return (
-    <Link to={`/products/${product._id}/${product.name}`}>
+    <>
       <div>
         <img
-          src={product.photo}
+          src={imageUrl}
           alt={product.name}
           className="h-64 w-full object-cover rounded-md transition duration-300 group-hover:scale-105 sm:h-72"
         />
@@ -53,16 +32,10 @@ function Product({ product }) {
           {product.price}€
         </h3>
         <p className="mt-1.5 text-sm text-gray-700">{product.name}</p>
-        <p>Anunciante: {product.owner === loggedUser ? "Yo" : product.owner}</p>
-        {loggedUser !== product.owner ? (
-          <Button id={product._id} onClick={addFavoriteClick}>
-            Agregar Favorito
-          </Button>
-        ) : (
-          ""
-        )}
       </div>
-    </Link>
+
+      {children}
+    </>
   );
 }
 
