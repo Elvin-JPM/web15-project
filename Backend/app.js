@@ -26,7 +26,6 @@ const ReturnImageController = require("./controllers/ReturnImageController");
 const ResetUserController = require("./controllers/ResetUserController");
 const ProductReservedController = require('./controllers/ProductReservedController')
 const jwtAuthMiddleware = require("./lib/jwtAuthMiddleware");
-const ProductListController = require("./controllers/ProductsByOwnerController");
 
 const app = express();
 
@@ -79,15 +78,6 @@ const returnImageController = new ReturnImageController();
 const resetUserController = new ResetUserController();
 
 // API routes
-app.post(
-  "/api/authenticate", 
-  loginController.postJWT
-);
-
-app.put(
-  "/api/reset-password", 
-  resetUserController.resetPassword
-);
 
 app.post(
   "/api/authenticate", 
@@ -101,12 +91,17 @@ app.post(
 
 app.put(
   "/api/updateuser", 
-  resetUserController.sendResetEmail
+  updateUserController.updateUserInfo
 );
 
 app.post(
   "/api/reset-password", 
   resetUserController.sendResetEmail
+);
+
+app.put(
+  "/api/reset-password", 
+  resetUserController.resetPassword
 );
 
 app.delete(
@@ -119,6 +114,18 @@ app.put(
   "/api/:username",
   jwtAuthMiddleware,
   updateUserController.updateUserInfo
+);
+
+app.put(
+  "/api/products/check-reserved/:id",
+  jwtAuthMiddleware,
+  productReservedController.checkReservedProduct
+);
+
+app.put(
+  "/api/products/uncheck-reserved/:id",
+  jwtAuthMiddleware,
+  productReservedController.uncheckReservedProduct
 );
 
 app.get(
@@ -166,13 +173,13 @@ app.get(
 );
 
 app.put(
-  "/api/products/favs/:id",
+  "/api/products/:id",
   jwtAuthMiddleware,
   productFavsController.checkFavouriteProduct
 );
 
 app.delete(
-  "/api/products/favs/:id",
+  "/api/products/:id",
   jwtAuthMiddleware,
   productFavsController.uncheckFavouriteProduct
 );
@@ -181,18 +188,6 @@ app.get(
   "/api/:owner/favs",
   jwtAuthMiddleware,
   productsFavsListController.listFavouriteProducts
-);
-
-app.put(
-  "/api/products/reserved/:id",
-  jwtAuthMiddleware,
-  productReservedController.checkReservedProduct
-);
-
-app.delete(
-  "/api/products/reserved/:id",
-  jwtAuthMiddleware,
-  productReservedController.uncheckReservedProduct
 );
 
 // catch 404 and forward to error handler
