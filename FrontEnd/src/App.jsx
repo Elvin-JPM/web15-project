@@ -2,8 +2,7 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { Navigate } from "react-router";
 import Signup from "./Pages/Signup";
 import Login from "./Pages/Login";
-import Layout from "./Components/Layout";
-// import { Products } from "./Pages/ProductPage";
+import Layout from "./Components/ui/Layout";
 import Products from "./Pages/ProductPage/Products";
 import { NewProduct } from "./Pages/NewProductPage";
 import { DetailProduct } from "./Pages/DetailProductPage";
@@ -11,6 +10,7 @@ import { EditProduct } from "./Pages/EditProductPage";
 import { RequireAuth } from "./RequireAuth";
 import MyProducts from "./Pages/MyProducts/MyProducts";
 import ProductsByOwner from "./Pages/ProductsByOwner/ProductsByOwner";
+import MyFavoriteProducts from "./Pages/MyFavoriteProducts/MyFavoriteProducts";
 
 function App() {
   return (
@@ -39,6 +39,14 @@ function App() {
               <Route path="list/me" element={<MyProducts />} />
               <Route path=":productId/edit" element={<EditProduct />} />
             </Route>
+            <Route
+              path="/:owner/favs"
+              element={
+                <RequireAuth>
+                  <MyFavoriteProducts />
+                </RequireAuth>
+              }
+            ></Route>
           </Routes>
         </BrowserRouter>
       </div>

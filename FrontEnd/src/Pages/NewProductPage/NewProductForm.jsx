@@ -56,7 +56,7 @@ const NewProductForm = () => {
         "Content-Type": "multipart/form-data",
       });
       console.log("New product:", response);
-      //navigate("/products");
+      navigate("/products");
     } catch (error) {
       console.log(error.message);
     }

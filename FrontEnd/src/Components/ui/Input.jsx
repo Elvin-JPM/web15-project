@@ -22,7 +22,7 @@ export function Input({ errorMessage, ...props }) {
           </svg>
         </div>
       )}
-      {errorMessage && <div className="text-red-500">{errorMessage}</div>}
+      {/* {errorMessage && <div className="text-red-500">{errorMessage}</div>} */}
     </div>
   );
 }
