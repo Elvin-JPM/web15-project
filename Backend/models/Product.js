@@ -9,7 +9,9 @@ const productSchema = mongoose.Schema({
   tags: [{ type: String, index: true }],
   date: { type: Date, index: true },
   owner: { type: String, index: true },
-  favs: [{ type: String }]
+  favs: [{ type: String }],
+  reserved: Boolean,
+  sold: Boolean
 });
 
 productSchema.statics.filters = function (filter) {

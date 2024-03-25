@@ -23,6 +23,8 @@ class CreateProductController {
 
         const productData = req.body;
         productData.date = new Date();
+        productData.reserved = false;
+        productData.sold = false;
 
         const userId = req.userId;
         const user = await User.findOne({_id: new ObjectId(userId)});
@@ -35,14 +37,11 @@ class CreateProductController {
         if (req.file) {
           // Resize image with Jimp
           const image = await Jimp.read(req.file.path);
-          
-          // Redimensionar la imagen manteniendo la proporción original
           await image.scaleToFit(300, 200);
-
-          await image.writeAsync(path.join(imagePath, originalName)); // Guardar la imagen redimensionada con el mismo nombre
+          await image.writeAsync(path.join(imagePath, originalName));
         }
 
-        productData.photo = originalName; // Asignar el nombre de la imagen redimensionada
+        productData.photo = originalName;
         
         const product = new Product(productData);
 

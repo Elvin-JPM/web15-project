@@ -1,17 +1,19 @@
 const { getUserInfo } = require("../lib/authUtils");
 const Product = require("../models/Product");
 
-class ProductsFavsController {
-  async checkFavouriteProduct(req, res) {
+class ProductReservedController {
+  async checkReservedProduct(req, res) {
     const productId = req.params.id;
+    console.log(productId)
 
     // Check user's logged info
     const { username } = await getUserInfo(req);
-
+    console.log(product)
     try {
       const product = await Product.findById(productId);
+      console.log(product)
 
-      if (!username) {
+      /*if (!username) {
         return res.json("No tienes los permisos necesarios" );
       }
 
@@ -19,11 +21,9 @@ class ProductsFavsController {
         return res.status(404).json("Producto no encontrado" );
       }
 
-      if (!product.favs.includes(username)) {
-        product.favs.push(username);
-        await product.save();
-      }
-      res.json(product);
+      product.reserved = true;
+      await product.save();
+      res.json(product);*/
     } catch (error) {
       res
         .status(500)
@@ -31,7 +31,7 @@ class ProductsFavsController {
     }
   }
 
-  async uncheckFavouriteProduct(req, res) {
+  async uncheckReservedProduct(req, res) {
     const productId = req.params.id;
 
     // Check user's logged info
@@ -44,11 +44,8 @@ class ProductsFavsController {
         return res.status(404).json({ error: "Producto no encontrado" });
       }
 
-      const index = product.favs.indexOf(username);
-      if (index !== -1) {
-        product.favs.splice(index, 1);
-        await product.save();
-      }
+      product.reserved = false;
+      await product.save();
 
       res.json(product);
     } catch (error) {
@@ -60,4 +57,4 @@ class ProductsFavsController {
   }
 }
 
-module.exports = ProductsFavsController;
+module.exports = ProductReservedController;

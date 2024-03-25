@@ -23,7 +23,9 @@ const ProductFavsController = require("./controllers/ProductFavsController");
 const ProductsFavsListController = require("./controllers/ProductsFavsListController");
 const UpdateUserController = require("./controllers/UpdateUserController");
 const ResetUserController = require("./controllers/ResetUserController");
+const ProductReservedController = require('./controllers/ProductReservedController')
 const jwtAuthMiddleware = require("./lib/jwtAuthMiddleware");
+const ProductListController = require("./controllers/ProductsByOwnerController");
 
 const app = express();
 
@@ -70,6 +72,7 @@ const editProductController = new EditProductController();
 const unsuscribeUserController = new UnsuscribeUserController();
 const productFavsController = new ProductFavsController();
 const productsFavsListController = new ProductsFavsListController();
+const productReservedController = new ProductReservedController();
 const updateUserController = new UpdateUserController();
 const resetUserController  = new ResetUserController();
 
@@ -137,13 +140,13 @@ app.put(
 );
 
 app.put(
-  "/api/products/:id",
+  "/api/products/favs/:id",
   jwtAuthMiddleware,
   productFavsController.checkFavouriteProduct
 );
 
 app.delete(
-  "/api/products/:id",
+  "/api/products/favs/:id",
   jwtAuthMiddleware,
   productFavsController.uncheckFavouriteProduct
 );
@@ -152,6 +155,18 @@ app.get(
   "/api/:owner/favs",
   jwtAuthMiddleware,
   productsFavsListController.listFavouriteProducts
+);
+
+app.put(
+  "/api/products/reserved/:id",
+  jwtAuthMiddleware,
+  productReservedController.checkReservedProduct
+);
+
+app.delete(
+  "/api/products/reserved/:id",
+  jwtAuthMiddleware,
+  productReservedController.uncheckReservedProduct
 );
 
 app.put(
