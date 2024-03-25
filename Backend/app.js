@@ -79,32 +79,73 @@ const returnImageController = new ReturnImageController();
 const resetUserController = new ResetUserController();
 
 // API routes
-app.post("/api/authenticate", loginController.postJWT);
-app.put("/api/reset-password", resetUserController.resetPassword);
+app.post(
+  "/api/authenticate", 
+  loginController.postJWT
+);
 
-app.post("/api/authenticate", loginController.postJWT);
+app.put(
+  "/api/reset-password", 
+  resetUserController.resetPassword
+);
 
-app.post("/api/signup", signUpController.signUpUser);
+app.post(
+  "/api/authenticate", 
+  loginController.postJWT
+);
 
-app.get("/api/products", listProductsController.listProducts);
+app.post(
+  "/api/signup", 
+  signUpController.signUpUser
+);
 
-app.get("/api/images/:imageName", returnImageController.returnImage);
+app.put(
+  "/api/updateuser", 
+  resetUserController.sendResetEmail
+);
+
+app.post(
+  "/api/reset-password", 
+  resetUserController.sendResetEmail
+);
+
+app.delete(
+  "/api/:username",
+  jwtAuthMiddleware,
+  unsuscribeUserController.unsuscribe
+);
+
+app.put(
+  "/api/:username",
+  jwtAuthMiddleware,
+  updateUserController.updateUserInfo
+);
+
+app.get(
+  "/api/products", 
+  listProductsController.listProducts
+);
+
+app.get(
+  "/api/images/:imageName", 
+  returnImageController.returnImage
+);
 
 app.get(
   "/api/products/list/:owner",
   productsByOwnerPublicController.listProductsPublic
 );
 
-app.post(
-  "/api/products",
-  jwtAuthMiddleware,
-  createProductController.createProduct
-);
-
 app.get(
   "/api/products/:owner",
   jwtAuthMiddleware,
   productsByOwnerController.listProducts
+);
+
+app.post(
+  "/api/products",
+  jwtAuthMiddleware,
+  createProductController.createProduct
 );
 
 app.delete(
@@ -119,18 +160,9 @@ app.put(
   editProductController.editProduct
 );
 
-app.get("/api/products/:id/:name", productDetailController.getProductDetail);
-
-app.delete(
-  "/api/:username",
-  jwtAuthMiddleware,
-  unsuscribeUserController.unsuscribe
-);
-
-app.put(
-  "/api/:username",
-  jwtAuthMiddleware,
-  updateUserController.updateUserInfo
+app.get(
+  "/api/products/:id/:name", 
+  productDetailController.getProductDetail
 );
 
 app.put(
@@ -162,10 +194,6 @@ app.delete(
   jwtAuthMiddleware,
   productReservedController.uncheckReservedProduct
 );
-
-app.put("/api/updateuser", resetUserController.sendResetEmail);
-
-app.post("/api/reset-password", resetUserController.sendResetEmail);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
