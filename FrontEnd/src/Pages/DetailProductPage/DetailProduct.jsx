@@ -43,7 +43,7 @@ function DetailProduct() {
 
   return (
     product && (
-      <>
+      <div className="max-w-xl  mx-auto p-5">
         {
           <p>
             Anunciante: {product.owner === loggedUser ? "Yo" : product.owner}
@@ -58,8 +58,10 @@ function DetailProduct() {
             Agregar Favorito
           </Button>
         )}
-        <Product product={product} />
-      </>
+        <section className="mt-4" >
+          <Product product={product}  />
+        </section>
+      </div>
     )
   );
 }
