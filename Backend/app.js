@@ -24,7 +24,8 @@ const ProductsFavsListController = require("./controllers/ProductsFavsListContro
 const UpdateUserController = require("./controllers/UpdateUserController");
 const ReturnImageController = require("./controllers/ReturnImageController");
 const ResetUserController = require("./controllers/ResetUserController");
-const ProductReservedController = require('./controllers/ProductReservedController')
+const ProductReservedController = require('./controllers/ProductReservedController');
+const ProductSoldController = require('./controllers/ProductSoldController');
 const jwtAuthMiddleware = require("./lib/jwtAuthMiddleware");
 
 const app = express();
@@ -76,6 +77,7 @@ const productReservedController = new ProductReservedController();
 const updateUserController = new UpdateUserController();
 const returnImageController = new ReturnImageController();
 const resetUserController = new ResetUserController();
+const productSoldController = new ProductSoldController();
 
 // API routes
 
@@ -126,6 +128,18 @@ app.put(
   "/api/products/uncheck-reserved/:id",
   jwtAuthMiddleware,
   productReservedController.uncheckReservedProduct
+);
+
+app.put(
+  "/api/products/check-sold/:id",
+  jwtAuthMiddleware,
+  productSoldController.checkSoldProduct
+);
+
+app.put(
+  "/api/products/uncheck-sold/:id",
+  jwtAuthMiddleware,
+  productSoldController.uncheckSoldProduct
 );
 
 app.get(

@@ -48,7 +48,7 @@ class EditProductController {
           <p>Atentamente,
           Fleapster<p>`;
 
-          sendEmail(userEmail,'Actualización de precio del artículo favorito',emailHTML);
+          await sendEmail(userEmail,'Actualización de precio del artículo favorito',emailHTML);
         } 
       }
 
