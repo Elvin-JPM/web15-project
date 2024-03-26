@@ -4,9 +4,9 @@ import { Outlet } from "react-router";
 
 function Layout({ children }) {
   return (
-    <div className="">
+    <div className="h-full">
       <Header className="" />
-      <main className="">{children ? children : <Outlet />}</main>
+      <main className="h-full">{children ? children : <Outlet />}</main>
       <Footer />
     </div>
   );

@@ -13,17 +13,17 @@ npm start
 
 **POST /api/signup** : user signup
 
-**DELETE /api/:username** : delete a user
+**DELETE /api/:username (PRIVATE)** : delete a user
 
-**PUT /api/:username** : update user's info
+**PUT /api/:username (PRIVATE)** : update user's info
 
 
 
 **GET /api/products** : list app's products
 
-**GET /api/products/:owner** : list user's logged products
-
 **GET /api/products/list/:owner** : list products of a specific user
+
+**GET /api/products/:owner (PRIVATE)** : list user's logged products
 
 **GET /api/products/:id/:name** : show product's details
 
@@ -42,3 +42,7 @@ npm start
 **DELETE /api/products/:id** : delete product from user's favorites
 
 **GET /api/:owner/favs** : list user's favorite products
+
+**PUT /api/products/check-reserved/:id (PRIVATE)** : check product as reserved
+
+**PUT /api/products/uncheck-reserved/:id (PRIVATE)** : uncheck product as reserved
