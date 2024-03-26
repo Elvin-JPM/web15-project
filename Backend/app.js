@@ -77,7 +77,12 @@ const resetUserController = new ResetUserController();
 
 // API routes
 app.post("/api/authenticate", loginController.postJWT);
+
 app.put("/api/reset-password", resetUserController.resetPassword);
+
+app.put("/api/updateuser", resetUserController.sendResetEmail);
+
+app.post("/api/reset-password", resetUserController.sendResetEmail);
 
 app.post("/api/authenticate", loginController.postJWT);
 
@@ -147,10 +152,6 @@ app.get(
   jwtAuthMiddleware,
   productsFavsListController.listFavouriteProducts
 );
-
-app.put("/api/updateuser", resetUserController.sendResetEmail);
-
-app.post("/api/reset-password", resetUserController.sendResetEmail);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -36,6 +36,7 @@ export async function deleteData(endpoint, requestHeaders) {
 }
 
 export async function putData(endpoint, requestBody, requestHeaders) {
+  console.log(requestBody, requestHeaders);
   try {
     const response = await axios.put(BASE_URL + endpoint, requestBody, {
       headers: requestHeaders,

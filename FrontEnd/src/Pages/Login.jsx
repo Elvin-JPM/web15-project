@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Label, Input, Icon, H2, Button_large } from "../Components/ui/Index";
 import { postData } from "../Api/api";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import storage from "../Api/storage";
 
 const Login = () => {
@@ -105,7 +105,7 @@ const Login = () => {
               Remember me
             </Label>
           </div>
-
+          <Link to={"/verification-email"}>Olvidaste tu contraseña?</Link>
           <div className="flex items-center justify-end">
             <Button_large type="submit">Log in</Button_large>
           </div>

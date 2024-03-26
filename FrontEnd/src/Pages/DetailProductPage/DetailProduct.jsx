@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import DetailProductForm from "./DetailProductForm";
 import { getData } from "../../Api/api";
@@ -46,7 +46,10 @@ function DetailProduct() {
       <>
         {
           <p>
-            Anunciante: {product.owner === loggedUser ? "Yo" : product.owner}
+            Anunciante:{" "}
+            <Link to="/products/list/me">
+              {product.owner === loggedUser ? "Yo" : product.owner}
+            </Link>
           </p>
         }
         {loggedUser === product.owner ? (

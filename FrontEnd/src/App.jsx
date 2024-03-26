@@ -11,6 +11,8 @@ import { RequireAuth } from "./RequireAuth";
 import MyProducts from "./Pages/MyProducts/MyProducts";
 import ProductsByOwner from "./Pages/ProductsByOwner/ProductsByOwner";
 import MyFavoriteProducts from "./Pages/MyFavoriteProducts/MyFavoriteProducts";
+import ResetPassword from "./Pages/ResetPassword/ResetPassword";
+import SendVerificationEmail from "./Pages/ResetPassword/SendVerificationEmail";
 
 function App() {
   return (
@@ -21,6 +23,11 @@ function App() {
             <Route path="/" element={<Navigate to="/products" replace />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
+            <Route
+              path="/verification-email"
+              element={<SendVerificationEmail />}
+            />
             <Route path="/products" element={<Layout />}>
               <Route index element={<Products />} />
               <Route
@@ -32,7 +39,7 @@ function App() {
                 }
               />
               <Route
-                path=":productId/:productName"
+                path=":productName/:productId"
                 element={<DetailProduct />}
               />
               <Route path="list/:owner" element={<ProductsByOwner />} />
