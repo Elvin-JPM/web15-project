@@ -3,6 +3,7 @@ import { Label, Input, Icon, H2, Button_large } from "../Components/ui/Index";
 import { postData } from "../Api/api";
 import { useNavigate } from "react-router-dom";
 import storage from "../Api/storage";
+import io from 'socket.io-client';
 
 const Login = () => {
   const [values, setValues] = useState({
@@ -40,6 +41,7 @@ const Login = () => {
           storage.remove("jwt");
           storage.remove("username");
         }
+        const socket = io('http://localhost:4000');
         navigate("/products");
       } else {
         throw new Error(response.data.error);

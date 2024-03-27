@@ -2,56 +2,57 @@ const { getUserInfo } = require("../lib/authUtils");
 const sendEmail = require('../lib/sendEmailUtils');
 const User = require('../models/User');
 const Product = require("../models/Product");
+const multer = require('multer');
+const fs = require('fs');
+const path = require('path');
+
+// Configurar multer para manejar la carga de archivos
+const upload = multer({ dest: 'uploads/' }); // Establece el directorio de destino para guardar los archivos
 
 class EditProductController {
   async editProduct(req, res, next) {
     try {
       const productId = req.params.id;
-      const { name, photo, description, sale, price, tags, date } = req.body;
       
       const product = await Product.findById(productId);
 
-       // If products doesnt exist show an error
-       if (!product) {
-        return res.json('Producto no encontrado' );
+      // Verificar si se encontró el producto
+      if (!product) {
+        return res.status(404).json({ error: 'Producto no encontrado' });
       }
 
-      // Check user's logged info
+      // Obtener la información del usuario
       const { username } = await getUserInfo(req);
 
+      // Verificar permisos del usuario
       if (product.owner !== username) {
-        return res.json('Permisos no válidos');
+        return res.status(403).json({ error: 'Permisos no válidos' });
       }
 
-      // If owner is correct update product
-      if ( name ) product.name = name;
-      if ( photo ) product.photo = photo;
-      if ( description ) product.description = description;
-      if ( sale ) product.sale = sale;
-      if ( price ) product.price = price;
-      if ( tags ) product.tags = tags;
-      if ( date ) product.date = date;
+      // Actualizar los campos del producto
+      product.name = req.body.name || product.name;
+      product.description = req.body.description || product.description;
+      product.sale = req.body.sale || product.sale;
+      product.price = req.body.price || product.price;
+      product.tags = req.body.tags || product.tags;
 
+      // Manejar la carga de la nueva foto, si se proporciona
+      if (req.file) {
+        // Eliminar la foto anterior si existe
+        if (product.photo) {
+          fs.unlinkSync(path.join(__dirname, '..', product.photo));
+        }
+        
+        // Guardar la nueva foto y actualizar la ruta en el producto
+        const newPhotoPath = `uploads/final_images/${productId}_${Date.now()}${path.extname(req.file.originalname)}`;
+        fs.renameSync(req.file.path, path.join(__dirname, '..', newPhotoPath));
+        product.photo = newPhotoPath;
+      }
+
+      // Guardar los cambios en el producto
       await product.save();
 
-      // If product's price change send an email to users favs
-      if ( price ) {
-        for ( let i = 0; i < product.favs.length; i++ ){
-          const userfav = product.favs[i];
-          const user = await User.findOne({ username: userfav });
-          const userEmail = user.email;
-          const emailHTML = 
-          `<p>Hola ${user.username},</p>
-          <p>Te informamos que el artículo "<b>${product.name}</b>" que marcaste como favorito ha experimentado un cambio en su precio.
-          Por favor, visita nuestro sitio web para ver los detalles actualizados.</p>
-          <p>¡Gracias por tu interés!</p>
-          <p>Atentamente,
-          Fleapster<p>`;
-
-          await sendEmail(userEmail,'Actualización de precio del artículo favorito',emailHTML);
-        } 
-      }
-
+      // Enviar la respuesta
       res.json(product);
       
     } catch (err) {

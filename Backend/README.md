@@ -1,11 +1,11 @@
 ## INSTALLATION ##
 npm install
 
-## DATABASE DATA ##
+## INITIAL DATABASE DATA ##
 node init-db.js 
 
 ## APP RUN ##
-npm start
+npm start || nodemon ./bin/www
 
 ## ENDPOINTS ##
 
@@ -46,3 +46,7 @@ npm start
 **PUT /api/products/check-reserved/:id (PRIVATE)** : check product as reserved
 
 **PUT /api/products/uncheck-reserved/:id (PRIVATE)** : uncheck product as reserved
+
+**PUT /api/products/check-sold/:id (PRIVATE)** : check product as sold
+
+**PUT /api/products/uncheck-sold/:id (PRIVATE)** : uncheck product as sold
