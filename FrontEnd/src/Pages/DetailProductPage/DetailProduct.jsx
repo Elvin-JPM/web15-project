@@ -5,8 +5,9 @@ import { getData } from "../../Api/api";
 import Product from "../ProductPage/Product";
 import getFromStorage from "../../Service/getFromStorage";
 import Button from "../../Components/ui/Button";
-
+import { useNavigate } from "react-router";
 function DetailProduct() {
+  const navigate = useNavigate();
   const { productId, productName } = useParams();
   const [product, setProduct] = useState(null);
   const loggedUser = getFromStorage("username");
@@ -28,6 +29,10 @@ function DetailProduct() {
     }
   };
 
+  const goToEditProduct = () => {
+    navigate(`/edit/${product._id}`);
+  };
+
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -43,15 +48,18 @@ function DetailProduct() {
 
   return (
     product && (
-      <>
+      <div className="max-w-xl  mx-auto p-5">
+        {/* Nombre del propietario del anuncio */}
         {
           <p>
             Anunciante:{" "}
-            <Link to="/products/list/me">
+            <Link to={`/products/list/${product.owner}`}>
               {product.owner === loggedUser ? "Yo" : product.owner}
             </Link>
           </p>
         }
+
+        {/* Si aun no es favorito renderiza el boton, sino, el texto 'FAVORITO' */}
         {loggedUser === product.owner ? (
           ""
         ) : product.favs.includes(loggedUser) ? (
@@ -61,8 +69,11 @@ function DetailProduct() {
             Agregar Favorito
           </Button>
         )}
-        <Product product={product} />
-      </>
+
+        <section className="mt-4">
+          <Product product={product} />
+        </section>
+      </div>
     )
   );
 }

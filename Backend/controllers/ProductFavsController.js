@@ -27,7 +27,7 @@ class ProductsFavsController {
     } catch (error) {
       res
         .status(500)
-        .json({ error: "Error al marcar el producto como favorito" });
+        .json("Error al marcar el producto como favorito");
     }
   }
 

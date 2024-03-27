@@ -3,10 +3,8 @@ import axios from "axios";
 const BASE_URL = import.meta.env.VITE_APP_URL;
 
 export async function postData(endpoint, requestBody, headers) {
-  const body = requestBody;
-
   try {
-    const response = await axios.post(BASE_URL + endpoint, body, {
+    const response = await axios.post(BASE_URL + endpoint, requestBody, {
       headers: headers,
     });
     return response;
@@ -36,7 +34,6 @@ export async function deleteData(endpoint, requestHeaders) {
 }
 
 export async function putData(endpoint, requestBody, requestHeaders) {
-  console.log(requestBody, requestHeaders);
   try {
     const response = await axios.put(BASE_URL + endpoint, requestBody, {
       headers: requestHeaders,

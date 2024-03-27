@@ -17,7 +17,7 @@ class ProductDetailController {
 
         // Check if name is correct
         if (product.name !== productNameWithoutHyphens) {
-          return res.json('Nombre erróneo');
+          return res.status(404).json('Producto no encontrado');
         }
 
         res.json(product);    

@@ -44,8 +44,11 @@ function App() {
               />
               <Route path="list/:owner" element={<ProductsByOwner />} />
               <Route path="list/me" element={<MyProducts />} />
-              <Route path=":productId/edit" element={<EditProduct />} />
             </Route>
+            <Route
+              path="/edit/:productId/:productName"
+              element={<EditProduct />}
+            />
             <Route
               path="/:owner/favs"
               element={
