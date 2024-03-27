@@ -26,7 +26,9 @@ export async function deleteData(endpoint, requestHeaders) {
   const headers = requestHeaders;
 
   try {
-    const response = await axios.delete(BASE_URL + endpoint, headers);
+    const response = await axios.delete(BASE_URL + endpoint, {
+      headers: requestHeaders,
+    });
     return response.data;
   } catch (error) {
     console.error("Error deleting data:", error);

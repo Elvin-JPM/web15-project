@@ -21,19 +21,16 @@ class EditProductController {
       }
 
       const productId = req.params.id;
-      console.log("product id: ", productId);
-      // console.log(req);
       const product = await Product.findById(productId);
-      console.log("this is the product: ", product);
+
       // If products doesnt exist show an error
       if (!product) {
         return res.json("Producto no encontrado");
       }
 
       // Check user's logged info
-      //const { username } = await getUserInfo(req);
       const username = req.params.owner;
-      console.log("username backend: ", username);
+
       if (product.owner !== username) {
         return res.json("Permisos no válidos");
       }
@@ -44,7 +41,7 @@ class EditProductController {
           return next(err);
         }
 
-        const username = req.params.owner;
+        //const username = req.params.owner;
         const { name, photo, description, sale, price, tags, date } = req.body;
         //productData.date = new Date();
         //productData.reserved = false;
@@ -72,11 +69,6 @@ class EditProductController {
         if (sale) product.sale = sale;
         if (price) product.price = price;
         if (tags) product.tags = tags;
-        //if (date) product.date = date;
-
-        //productData.photo = originalName;
-
-        //const product = new Product(productData);
 
         const savedProduct = await product.save();
 
@@ -93,7 +85,6 @@ class EditProductController {
           <p>Atentamente,
           Fleapster<p>`;
 
-<<<<<<< HEAD
             sendEmail(
               userEmail,
               "Actualización de precio del artículo favorito",
@@ -103,11 +94,6 @@ class EditProductController {
         }
         res.json({ result: savedProduct });
       });
-=======
-          await sendEmail(userEmail,'Actualización de precio del artículo favorito',emailHTML);
-        } 
-      }
->>>>>>> e89d8870305875b832b7e777e01d93a18a65833e
 
       //await product.save();
     } catch (err) {
