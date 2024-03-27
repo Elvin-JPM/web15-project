@@ -122,7 +122,6 @@ const NewProductForm = () => {
                     required={input.required}
                     pattern={input.pattern}
                     errorMessage={input.errorMessage}
-                    onChange={onChange}
                   />
                 </div>
               </div>

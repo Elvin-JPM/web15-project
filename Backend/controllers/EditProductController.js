@@ -93,6 +93,7 @@ class EditProductController {
           <p>Atentamente,
           Fleapster<p>`;
 
+<<<<<<< HEAD
             sendEmail(
               userEmail,
               "Actualización de precio del artículo favorito",
@@ -102,6 +103,11 @@ class EditProductController {
         }
         res.json({ result: savedProduct });
       });
+=======
+          await sendEmail(userEmail,'Actualización de precio del artículo favorito',emailHTML);
+        } 
+      }
+>>>>>>> e89d8870305875b832b7e777e01d93a18a65833e
 
       //await product.save();
     } catch (err) {
