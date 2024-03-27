@@ -35,7 +35,7 @@ function Header() {
         <Input />
         {token ? (
           <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
-            <NavLink to="New" className="mr-5 hover:text-gray-900">
+            <NavLink to="/products/new" className="mr-5 hover:text-gray-900">
               Crear Anuncio{" "}
             </NavLink>
             <NavLink

@@ -3,10 +3,8 @@ import axios from "axios";
 const BASE_URL = import.meta.env.VITE_APP_URL;
 
 export async function postData(endpoint, requestBody, headers) {
-  const body = requestBody;
-
   try {
-    const response = await axios.post(BASE_URL + endpoint, body, {
+    const response = await axios.post(BASE_URL + endpoint, requestBody, {
       headers: headers,
     });
     return response;
@@ -28,7 +26,9 @@ export async function deleteData(endpoint, requestHeaders) {
   const headers = requestHeaders;
 
   try {
-    const response = await axios.delete(BASE_URL + endpoint, headers);
+    const response = await axios.delete(BASE_URL + endpoint, {
+      headers: requestHeaders,
+    });
     return response.data;
   } catch (error) {
     console.error("Error deleting data:", error);

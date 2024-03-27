@@ -1,28 +1,34 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import DetailProductForm from "./DetailProductForm";
-import { getData } from "../../Api/api";
+import { deleteData, getData, putData } from "../../Api/api";
 import Product from "../ProductPage/Product";
 import getFromStorage from "../../Service/getFromStorage";
 import Button from "../../Components/ui/Button";
+import { useNavigate } from "react-router";
 
 function DetailProduct() {
+  const navigate = useNavigate();
   const { productId, productName } = useParams();
   const [product, setProduct] = useState(null);
+  const [favoriteStatus, setFavoriteStatus] = useState(null);
+
   const loggedUser = getFromStorage("username");
+  const token = getFromStorage("jwt");
   const requestBody = { username: loggedUser };
 
-  const addFavoriteClick = async (e) => {
+  const favoriteClick = async (e) => {
     e.preventDefault();
     const favoriteProductId = e.target.getAttribute("id");
     try {
-      const response = await putData(
-        `/products/${favoriteProductId}`,
-        requestBody,
-        {
-          Authorization: `${token}`,
-        }
-      );
+      favoriteStatus
+        ? await deleteData(`/products/${favoriteProductId}`, {
+            Authorization: `${token}`,
+          })
+        : await putData(`/products/${favoriteProductId}`, requestBody, {
+            Authorization: `${token}`,
+          });
+      setFavoriteStatus(!favoriteStatus);
     } catch (error) {
       console.log(error.message);
     }
@@ -33,6 +39,9 @@ function DetailProduct() {
       try {
         const response = await getData(`/products/${productId}/${productName}`);
         setProduct(response);
+        response.favs.includes(loggedUser)
+          ? setFavoriteStatus(true)
+          : setFavoriteStatus(false);
       } catch (error) {
         console.log(error.message);
       }
@@ -41,25 +50,31 @@ function DetailProduct() {
     fetchProduct();
   }, [productId]);
 
+  console.log(product);
   return (
     product && (
       <div className="max-w-xl  mx-auto p-5">
+        {/* Nombre del propietario del anuncio */}
         {
           <p>
-            Anunciante: {product.owner === loggedUser ? "Yo" : product.owner}
+            Anunciante:{" "}
+            <Link to={`/products/list/${product.owner}`}>
+              {product.owner === loggedUser ? "Yo" : product.owner}
+            </Link>
           </p>
         }
+
+        {/* Si aun no es favorito renderiza el boton, sino, el texto 'FAVORITO' */}
         {loggedUser === product.owner ? (
           ""
-        ) : product.favs.includes(loggedUser) ? (
-          <p>FAVORITO</p>
         ) : (
-          <Button id={product._id} onClick={addFavoriteClick}>
-            Agregar Favorito
+          <Button id={product._id} onClick={favoriteClick}>
+            {favoriteStatus ? "Quitar Favorito" : "Agregar Favorito"}
           </Button>
         )}
-        <section className="mt-4" >
-          <Product product={product}  />
+
+        <section className="mt-4">
+          <Product product={product} />
         </section>
       </div>
     )

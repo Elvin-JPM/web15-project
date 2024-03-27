@@ -35,7 +35,7 @@ const Products = () => {
             {products.map((product) => (
               <Link
                 key={product._id}
-                to={`/products/${product._id}/${product.name}`}
+                to={`/products/${product.name}/${product._id}`}
               >
                 <Product product={product} />
               </Link>

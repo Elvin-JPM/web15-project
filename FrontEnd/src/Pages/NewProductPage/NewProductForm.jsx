@@ -9,6 +9,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { postData } from "../../Api/api";
 import storage from "../../Api/storage";
+import getFromStorage from "../../Service/getFromStorage";
 
 const NewProductForm = () => {
   const navigate = useNavigate();
@@ -21,10 +22,12 @@ const NewProductForm = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedTags, setSelectedTags] = useState([]); // tags
 
-  const localStorage = storage.get("jwt");
-  const session = sessionStorage.getItem("jwt");
-  const token = session || localStorage;
+  const token = getFromStorage("jwt");
 
+  // Handler functions
+  const onChange = (e) => {
+    setValues({ ...values, [e.target.getAttribute("name")]: e.target.value });
+  };
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     setSelectedImage(file);
@@ -46,6 +49,7 @@ const NewProductForm = () => {
     photo: selectedImage,
     tags: selectedTags,
   };
+
   console.log(requestBody);
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -60,10 +64,6 @@ const NewProductForm = () => {
     } catch (error) {
       console.log(error.message);
     }
-  };
-
-  const onChange = (e) => {
-    setValues({ ...values, [e.target.getAttribute("name")]: e.target.value });
   };
 
   const inputs = [

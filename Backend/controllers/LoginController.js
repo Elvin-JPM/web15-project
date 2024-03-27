@@ -7,19 +7,19 @@ class LoginController {
       const { username, password } = req.body;
       const user = await User.findOne({ username: username });
 
-      // If user doesnt exit shows an error
+      // If user doesn't exist, show an error
       if (!user || !(await user.comparePassword(password))) {
-        res.json("Credenciales incorrectas");
+        res.status(401).json({ error: "Credenciales incorrectas" });
         return;
       }
 
-      // Check if user its active
-      if (user.active === false) {
-        res.json({ error: "Usuario inactivo" });
+      // Check if user is active
+      if (!user.active) {
+        res.status(403).json({ error: "Usuario inactivo" });
         return;
       }
 
-      // If user exists and its active gives an JWTtoken
+      // If user exists and is active, give a JWT token
       const tokenJWT = await jwt.sign(
         { _id: user._id },
         "9iup435ntrhjitgeijt",

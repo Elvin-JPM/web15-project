@@ -24,8 +24,8 @@ const ProductsFavsListController = require("./controllers/ProductsFavsListContro
 const UpdateUserController = require("./controllers/UpdateUserController");
 const ReturnImageController = require("./controllers/ReturnImageController");
 const ResetUserController = require("./controllers/ResetUserController");
-const ProductReservedController = require('./controllers/ProductReservedController');
-const ProductSoldController = require('./controllers/ProductSoldController');
+const ProductReservedController = require("./controllers/ProductReservedController");
+const ProductSoldController = require("./controllers/ProductSoldController");
 const jwtAuthMiddleware = require("./lib/jwtAuthMiddleware");
 
 const http = require('http');
@@ -107,31 +107,23 @@ const resetUserController = new ResetUserController();
 const productSoldController = new ProductSoldController();
 
 // API routes
+app.post("/api/authenticate", loginController.postJWT);
 
-app.post(
-  "/api/authenticate", 
-  loginController.postJWT
-);
+app.put("/api/reset-password", resetUserController.resetPassword);
 
-app.post(
-  "/api/signup", 
-  signUpController.signUpUser
-);
+app.put("/api/updateuser", resetUserController.sendResetEmail);
 
-app.put(
-  "/api/updateuser", 
-  updateUserController.updateUserInfo
-);
+app.post("/api/reset-password", resetUserController.sendResetEmail);
 
-app.post(
-  "/api/reset-password", 
-  resetUserController.sendResetEmail
-);
+app.post("/api/authenticate", loginController.postJWT);
 
-app.put(
-  "/api/reset-password", 
-  resetUserController.resetPassword
-);
+app.post("/api/signup", signUpController.signUpUser);
+
+app.put("/api/updateuser", updateUserController.updateUserInfo);
+
+app.post("/api/reset-password", resetUserController.sendResetEmail);
+
+app.put("/api/reset-password", resetUserController.resetPassword);
 
 app.delete(
   "/api/:username",
@@ -169,15 +161,9 @@ app.put(
   productSoldController.uncheckSoldProduct
 );
 
-app.get(
-  "/api/products", 
-  listProductsController.listProducts
-);
+app.get("/api/products", listProductsController.listProducts);
 
-app.get(
-  "/api/images/:imageName", 
-  returnImageController.returnImage
-);
+app.get("/api/images/:imageName", returnImageController.returnImage);
 
 app.get(
   "/api/products/list/:owner",
@@ -208,10 +194,7 @@ app.put(
   editProductController.editProduct
 );
 
-app.get(
-  "/api/products/:id/:name", 
-  productDetailController.getProductDetail
-);
+app.get("/api/products/:id/:name", productDetailController.getProductDetail);
 
 app.put(
   "/api/products/:id",

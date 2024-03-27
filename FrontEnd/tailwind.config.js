@@ -10,7 +10,9 @@ export default {
         primary: '#54acb4',
         primaryDark: '#2c7d85',
         secondary: '#75c4cc',
-        accent: '#0c2c4c'
+        accent: '#0c2c4c',
+        primaryVariant: '#808080',
+        secondaryVariant: '#373737',
     },
   },
   plugins: [],
