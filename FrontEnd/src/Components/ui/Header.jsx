@@ -20,6 +20,7 @@ function Header() {
     } else {
       logout();
       setIsLogged(false);
+      navigate("/");
     }
   };
 

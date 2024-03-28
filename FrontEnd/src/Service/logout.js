@@ -1,5 +1,5 @@
 import storage from "../Api/storage";
-import { disconnectSocket } from '../Service/socketManager';
+import { disconnectSocket } from "../Service/socketManager";
 
 const logout = () => {
   storage.remove("jwt");
