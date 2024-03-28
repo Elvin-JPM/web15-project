@@ -61,6 +61,7 @@ async function initUsers() {
     email: "user1@example.com",
     password: await User.hashPassword("1234"),
     active: true,
+    activeSocketIO: false,
     resetPasswordToken: ""
   });
   console.log(`Creados ${inserted.length} usuarios.`);

@@ -6,6 +6,7 @@ const Jimp = require("jimp"); // Importar Jimp
 const upload = require("../lib/uploadConfigure");
 const path = require("path");
 const fs = require("fs");
+const { sendNotificationsToActiveUsers } = require('../lib/socket_IOServer');
 
 class EditProductController {
   async editProduct(req, res, next) {
@@ -31,6 +32,7 @@ class EditProductController {
       // Check user's logged info
       const username = req.params.owner;
 
+      // Verificar permisos del usuario
       if (product.owner !== username) {
         return res.json("Permisos no válidos");
       }
@@ -41,15 +43,9 @@ class EditProductController {
           return next(err);
         }
 
-        //const username = req.params.owner;
         const { name, photo, description, sale, price, tags, date } = req.body;
-        //productData.date = new Date();
-        //productData.reserved = false;
-        //productData.sold = false;
-
-        // const userId = req.userId;
         const user = await User.findOne({ name: username });
-        //const username = user.username;
+        
 
         product.owner = username;
 
@@ -77,25 +73,27 @@ class EditProductController {
           for (let i = 0; i < product.favs.length; i++) {
             const userfav = product.favs[i];
             const user = await User.findOne({ username: userfav });
-            const userEmail = user.email;
-            const emailHTML = `<p>Hola ${user.username},</p>
-          <p>Te informamos que el artículo "<b>${product.name}</b>" que marcaste como favorito ha experimentado un cambio en su precio.
-          Por favor, visita nuestro sitio web para ver los detalles actualizados.</p>
-          <p>¡Gracias por tu interés!</p>
-          <p>Atentamente,
-          Fleapster<p>`;
 
-            sendEmail(
-              userEmail,
-              "Actualización de precio del artículo favorito",
-              emailHTML
-            );
-          }
+            if ( user.activeSocketIO === false ){
+              const userEmail = user.email;
+              const emailHTML = `<p>Hola ${user.username},</p>
+              <p>Te informamos que el artículo "<b>${product.name}</b>" que marcaste como favorito ha experimentado un cambio en su precio.
+              Por favor, visita nuestro sitio web para ver los detalles actualizados.</p>
+              <p>¡Gracias por tu interés!</p>
+              <p>Atentamente,
+              Fleapster<p>`;
+
+              sendEmail(
+                userEmail,
+                "Actualización de precio del artículo favorito",
+                emailHTML
+              );
+            }
+            sendNotificationsToActiveUsers(user.username,'evento');
         }
+      }
         res.json({ result: savedProduct });
       });
-
-      //await product.save();
     } catch (err) {
       next(err);
     }

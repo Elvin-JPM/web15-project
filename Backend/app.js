@@ -27,8 +27,21 @@ const ResetUserController = require("./controllers/ResetUserController");
 const ProductReservedController = require("./controllers/ProductReservedController");
 const ProductSoldController = require("./controllers/ProductSoldController");
 const jwtAuthMiddleware = require("./lib/jwtAuthMiddleware");
+const http = require('http');
+const { configureSocket } = require('./lib/socket_IOServer');
 
 const app = express();
+
+// Create a Socket.IO server using an http server
+const server = http.createServer(app);
+const io = configureSocket(server);
+global.io = io;
+
+// Initialazing Socket.IO Server
+const PORT = 4000;
+server.listen(PORT, () => {
+  console.log(`Servidor de SocketIO corriendo en el puerto ${PORT}`);
+});
 
 // view engine setup
 app.use(
