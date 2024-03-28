@@ -3,7 +3,7 @@ import { Label, Input, Icon, H2, Button_large } from "../Components/ui/Index";
 import { postData } from "../Api/api";
 import { Link, useNavigate } from "react-router-dom";
 import storage from "../Api/storage";
-import io from 'socket.io-client';
+import { initializeSocket } from '../Service/socketManager';
 
 const Login = () => {
   const [values, setValues] = useState({
@@ -23,7 +23,8 @@ const Login = () => {
     });
   };
 
-  console.log(values);
+  //console.log(values);
+
   const handleSubmit = async e => {
     e.preventDefault();
     try {
@@ -44,12 +45,9 @@ const Login = () => {
           storage.remove('jwt');
           storage.remove('username');
         }
-<<<<<<< HEAD
-        const socket = io('http://localhost:4000');
-        navigate("/products");
-=======
+        console.log(values.username)
+        await initializeSocket(values.username);
         navigate('/products');
->>>>>>> 86971140e526058f82a9e9b4c886d5dd6524a3c0
       } else {
         throw new Error(response.data.error);
       }

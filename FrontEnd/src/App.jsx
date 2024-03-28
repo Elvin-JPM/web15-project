@@ -1,4 +1,3 @@
-//import io from 'socket.io-client';
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { Navigate } from "react-router";
 import Signup from "./Pages/Signup";
@@ -14,8 +13,6 @@ import ProductsByOwner from "./Pages/ProductsByOwner/ProductsByOwner";
 import MyFavoriteProducts from "./Pages/MyFavoriteProducts/MyFavoriteProducts";
 import ResetPassword from "./Pages/ResetPassword/ResetPassword";
 import SendVerificationEmail from "./Pages/ResetPassword/SendVerificationEmail";
-
-// const socket = io("http://localhost:4000");
 
 function App() {
   return (

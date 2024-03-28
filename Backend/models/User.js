@@ -7,6 +7,7 @@ const userSchema = mongoose.Schema(
        email: { type: String, index:true, unique:true},
        password: String,
        active: Boolean,
+       activeSocketIO: Boolean,
        resetPasswordToken : String
     }
 );

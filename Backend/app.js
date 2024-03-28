@@ -27,34 +27,20 @@ const ResetUserController = require("./controllers/ResetUserController");
 const ProductReservedController = require("./controllers/ProductReservedController");
 const ProductSoldController = require("./controllers/ProductSoldController");
 const jwtAuthMiddleware = require("./lib/jwtAuthMiddleware");
-
 const http = require('http');
-const socketIo = require('socket.io');
+const { configureSocket } = require('./lib/socket_IOServer');
 
 const app = express();
 
 // Create a Socket.IO server using an http server
 const server = http.createServer(app);
-const io = socketIo(server, {
-  cors: {
-    origin: "http://localhost:5173"
-  }
-});
+const io = configureSocket(server);
+global.io = io;
 
 // Initialazing Socket.IO Server
 const PORT = 4000;
 server.listen(PORT, () => {
   console.log(`Servidor de SocketIO corriendo en el puerto ${PORT}`);
-});
-
-// Create a listener for Sockets.IO's events
-io.on('connection', (socket) => {
-  console.log('Usuario conectado');
-
-  // Manejar evento de desconexión
-  socket.on('disconnect', () => {
-    console.log('Usuario desconectado');
-  });
 });
 
 // view engine setup
