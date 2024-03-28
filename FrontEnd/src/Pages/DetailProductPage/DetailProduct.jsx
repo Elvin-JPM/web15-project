@@ -64,7 +64,6 @@ function DetailProduct() {
           </p>
         }
 
-        {/* Si aun no es favorito renderiza el boton, sino, el texto 'FAVORITO' */}
         {loggedUser === product.owner ? (
           ""
         ) : (
