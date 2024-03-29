@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import Product from "./Product";
+import useProductSearch from "../../Hooks/useProductSearch";
+import { useState } from "react";
 
 function FilteredProducts({
   productsList,
@@ -9,6 +11,12 @@ function FilteredProducts({
   filterSale,
   filterSelectedTags,
 }) {
+  // const [query, setQuery] = useState("");
+  // const [loading, setLoading] = useState(true);
+  // const [pageNumber, setPageNumber] = useState(1);
+  // const [products, setProducts] = useState([]);
+  // const [hasMore, setHasMore] = useState(false);
+  // useProductSearch(query, pageNumber);
   // If all conditions are met, the product will be included in the array
   const filteredProductsArray = productsList
     .filter(

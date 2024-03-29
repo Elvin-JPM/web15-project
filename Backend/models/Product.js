@@ -11,11 +11,11 @@ const productSchema = mongoose.Schema({
   owner: { type: String, index: true },
   favs: [{ type: String }],
   reserved: Boolean,
-  sold: Boolean
+  sold: Boolean,
 });
 
-productSchema.statics.filters = function (filter) {
-  const query = Product.find(filter).sort({ date: -1 });
+productSchema.statics.filters = function (filter, skip, limit) {
+  const query = Product.find(filter).sort({ date: -1 }).skip(skip).limit(limit);
   return query.exec();
 };
 

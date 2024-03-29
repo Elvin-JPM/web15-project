@@ -21,6 +21,7 @@ function Filters({
         <option>For sale</option>
         <option>Looking to buy</option>
       </select>
+      <br></br>
       <label htmlFor="max-price">Max Price: </label>
       <Input
         type="number"

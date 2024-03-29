@@ -1,15 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import EmptyList from "./EmptyList";
 import ProductTitle from "./ProducTitle";
 import { getData } from "../../Api/api";
+import Product from "./Product";
 import Filters from "../../Components/ui/Filters";
 import FilteredProducts from "./FilteredProducts";
+import useProductSearch from "../../Hooks/useProductSearch";
 
 const Products = () => {
   const navigate = useNavigate();
-  const [products, setProducts] = useState([]);
+  //const [products, setProducts] = useState([]);
+  const [pageNumber, setPageNumber] = useState(1);
   const [selectedTags, setSelectedTags] = useState([]);
   const [filterValues, setFilterValues] = useState({
     name: "",
@@ -18,11 +21,41 @@ const Products = () => {
     maxPrice: "",
   });
 
+  const query = {
+    name: filterValues.name,
+    minPrice: filterValues.minPrice,
+    maxPrice: filterValues.maxPrice,
+    tags: selectedTags,
+  };
+
+  const { loading, error, products, hasMore } = useProductSearch(
+    query,
+    pageNumber
+  );
+
+  const observer = useRef();
+  const lastProductRef = useCallback(
+    (node) => {
+      console.log(node);
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPageNumber((prevPageNumber) => prevPageNumber + 1);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [loading, hasMore]
+  );
+
   const onFilterChange = (e) => {
     setFilterValues({
       ...filterValues,
       [e.target.getAttribute("name")]: e.target.value,
     });
+
+    setPageNumber(1);
   };
 
   const handleTagsChange = (value) => {
@@ -31,21 +64,30 @@ const Products = () => {
     } else {
       setSelectedTags([...selectedTags, value]);
     }
+
+    setPageNumber(1);
   };
 
-  useEffect(() => {
-    const getProducts = async () => {
-      try {
-        const response = await getData("/products");
-        console.log(response.data);
-        setProducts(response.data);
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
+  // useEffect(() => {
+  //   const getProducts = async () => {
+  //     try {
+  //       setLoading(true);
+  //       setError(false);
+  //       const response = await getData(`/products?page=${pageNumber}`);
+  //       console.log(response.data);
+  //       setProducts((prevProducts) => {
+  //         return [...new Set([...prevProducts, ...response.data])];
+  //       });
+  //       setLoading(false);
+  //     } catch (error) {
+  //       console.log("Error fetching data:", error.message);
+  //       setLoading(false);
+  //       setError(true);
+  //     }
+  //   };
 
-    getProducts();
-  }, []);
+  //   getProducts();
+  // }, [pageNumber, getData]);
 
   return (
     <section className="max-w-3xl mx-auto font-sans antialiased">
@@ -59,7 +101,33 @@ const Products = () => {
         onTagsChange={handleTagsChange}
       />
       <ProductTitle />
-      {products.length > 0 ? (
+
+      <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+        {products.map((product, index) => {
+          if (products.length === index + 1) {
+            return (
+              <div ref={lastProductRef} key={product._id}>
+                <Link to={`/products/${product.name}/${product._id}`}>
+                  <Product product={product} />
+                </Link>
+              </div>
+            );
+          } else {
+            return (
+              <div key={product._id}>
+                <Link to={`/products/${product.name}/${product._id}`}>
+                  <Product product={product} />
+                </Link>
+              </div>
+            );
+          }
+        })}
+      </div>
+
+      <div>{loading && "Loading..."}</div>
+      <div>{error && "Error..."}</div>
+
+      {/* {products.length > 0 ? (
         <FilteredProducts
           productsList={products}
           filterName={filterValues.name}
@@ -70,7 +138,7 @@ const Products = () => {
         />
       ) : (
         <EmptyList />
-      )}
+      )} */}
     </section>
   );
 };
