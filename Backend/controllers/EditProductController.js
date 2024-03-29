@@ -58,7 +58,7 @@ class EditProductController {
           await image.writeAsync(path.join(imagePath, originalName));
           product.photo = originalName;
         }
-        console.log("photo:", originalName);
+     
         //If owner is correct update product
         if (name) product.name = name;
         if (description) product.description = description;
@@ -89,11 +89,12 @@ class EditProductController {
                 emailHTML
               );
             }
-            sendNotificationsToActiveUsers(user.username,'evento');
+            sendNotificationsToActiveUsers(user.username,'productPriceEdited');
         }
       }
         res.json({ result: savedProduct });
       });
+      
     } catch (err) {
       next(err);
     }
