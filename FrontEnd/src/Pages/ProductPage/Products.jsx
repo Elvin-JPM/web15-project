@@ -25,7 +25,7 @@ const Products = () => {
     name: filterValues.name,
     minPrice: filterValues.minPrice,
     maxPrice: filterValues.maxPrice,
-    tags: selectedTags,
+    tagsArray: selectedTags,
   };
 
   const { loading, error, products, hasMore } = useProductSearch(

@@ -7,7 +7,8 @@ function useProductSearch(query, pageNumber) {
   const [products, setProducts] = useState([]);
   const [hasMore, setHasMore] = useState(false);
 
-  const { name, minPrice, maxPrice, tags } = query;
+  const { name, minPrice, maxPrice, tagsArray } = query;
+  const tags = tagsArray.join(",");
 
   useEffect(() => {
     setProducts([]);

@@ -79,7 +79,7 @@ class ProductListController {
         filter.price = { $lte: filterMaxPrice };
       }
       const numFound = await Product.find(filter);
-      const products = await Product.filters(filter, skip, limit);
+      const products = await Product.filters(filter, limit);
       res.json({
         numFound: numFound.length,
         numReturned: products.length,
