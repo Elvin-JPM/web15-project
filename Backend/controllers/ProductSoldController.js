@@ -2,6 +2,7 @@ const { getUserInfo } = require("../lib/authUtils");
 const Product = require("../models/Product");
 const User = require('../models/User');
 const sendEmail = require('../lib/sendEmailUtils');
+const { sendNotificationsToActiveUsers } = require('../lib/socket_IOServer');
 
 class ProductSoldController {
   async checkSoldProduct(req, res) {
@@ -23,7 +24,7 @@ class ProductSoldController {
       await Product.findOneAndUpdate({ _id: productId }, { sold: true });
 
       // Send email to users who have marked this product as a favorite.
-      for ( let i = 0; i < product.favs.length; i++ ){
+      /*for ( let i = 0; i < product.favs.length; i++ ){
         const userfav = product.favs[i];
         const user = await User.findOne({ username: userfav });
         const userEmail = user.email;
@@ -36,7 +37,30 @@ class ProductSoldController {
         Fleapster</p>`;
 
        await  sendEmail(userEmail,'Artículo favorito marcado como vendido',emailHTML);
-      } 
+      } */
+
+      for (let i = 0; i < product.favs.length; i++) {
+        const userfav = product.favs[i];
+        const user = await User.findOne({ username: userfav });
+
+        if ( user.activeSocketIO === false ){
+          const userEmail = user.email;
+          const emailHTML = 
+        `<p>Hola ${user.username},</p>
+        <p>Queríamos informarte que el artículo "<b>${product.name}</b>" que marcaste como favorito ha sido vendido recientemente.</p>
+        <p>Te animamos a explorar otros productos similares en nuestro sitio web.</p>
+        <p>¡Gracias por tu interés y esperamos que encuentres lo que buscas!</p>
+        <p>Atentamente,
+        Fleapster</p>`;
+
+          sendEmail(
+            userEmail,
+            "Artículo favorito marcado como vendido",
+            emailHTML
+          );
+        }
+        sendNotificationsToActiveUsers(user.username,'soldProduct');
+      }
 
       res.json('Producto marcado como vendido');
 

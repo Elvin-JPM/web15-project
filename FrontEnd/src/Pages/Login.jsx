@@ -23,8 +23,6 @@ const Login = () => {
     });
   };
 
-  //console.log(values);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -52,7 +50,6 @@ const Login = () => {
         throw new Error(response.data.error);
       }
     } catch (error) {
-      //navigate("/signup");
       console.error("Error during login:", error.message);
       setValues({
         ...values,
