@@ -6,6 +6,8 @@ import Product from "../ProductPage/Product";
 import getFromStorage from "../../Service/getFromStorage";
 import Button from "../../Components/ui/Button";
 import { useNavigate } from "react-router";
+import FacebookShareButton from "../../Components/FacebookShare";
+import TwitterShareButton from "../../Components/TwitterShare";
 
 function DetailProduct() {
   const navigate = useNavigate();
@@ -75,6 +77,15 @@ function DetailProduct() {
         <section className="mt-4">
           <Product product={product} />
         </section>
+        <div>
+          <FacebookShareButton
+            url={`http://localhost:5173/products/${productName}/${productId}`}
+          />
+          <TwitterShareButton
+            url={`http://localhost:5173/products/${productName}/${productId}`}
+            text="Check out this product!"
+          />
+        </div>
       </div>
     )
   );
