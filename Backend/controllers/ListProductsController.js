@@ -58,7 +58,7 @@ class ProductListController {
 
       // Pagination
       const page = req.query.page ? parseInt(req.query.page) : 1;
-      const limit = req.query.limit ? parseInt(req.query.limit) : 5;
+      const limit = req.query.limit ? parseInt(req.query.limit) : 16;
       const skip = (page - 1) * limit;
 
       const filter = {};
@@ -79,7 +79,7 @@ class ProductListController {
         filter.price = { $lte: filterMaxPrice };
       }
       const numFound = await Product.find(filter);
-      const products = await Product.filters(filter, limit);
+      const products = await Product.filters(filter, skip, limit);
       res.json({
         numFound: numFound.length,
         numReturned: products.length,

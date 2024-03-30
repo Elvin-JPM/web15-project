@@ -26,9 +26,11 @@ const ReturnImageController = require("./controllers/ReturnImageController");
 const ResetUserController = require("./controllers/ResetUserController");
 const ProductReservedController = require("./controllers/ProductReservedController");
 const ProductSoldController = require("./controllers/ProductSoldController");
+const GetUserController = require("./controllers/GetUserController");
 const jwtAuthMiddleware = require("./lib/jwtAuthMiddleware");
-const http = require('http');
-const { configureSocket } = require('./lib/socket_IOServer');
+
+const http = require("http");
+const { configureSocket } = require("./lib/socket_IOServer");
 
 const app = express();
 
@@ -91,6 +93,7 @@ const updateUserController = new UpdateUserController();
 const returnImageController = new ReturnImageController();
 const resetUserController = new ResetUserController();
 const productSoldController = new ProductSoldController();
+const getUserController = new GetUserController();
 
 // API routes
 app.post("/api/authenticate", loginController.postJWT);
@@ -105,7 +108,11 @@ app.post("/api/authenticate", loginController.postJWT);
 
 app.post("/api/signup", signUpController.signUpUser);
 
-app.put("/api/updateuser", updateUserController.updateUserInfo);
+app.put(
+  "/api/updateuser/:username",
+  jwtAuthMiddleware,
+  updateUserController.updateUserInfo
+);
 
 app.post("/api/reset-password", resetUserController.sendResetEmail);
 
@@ -199,6 +206,8 @@ app.get(
   jwtAuthMiddleware,
   productsFavsListController.listFavouriteProducts
 );
+
+app.get("/api/get/:username", jwtAuthMiddleware, getUserController.getUserData);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

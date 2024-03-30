@@ -1,5 +1,6 @@
 import Icon from "./Icon";
 import Button from "./Button";
+import Label from "./Label";
 import { NavLink } from "react-router-dom";
 import Input from "./Input";
 import storage from "../../Api/storage";
@@ -50,8 +51,8 @@ function Header() {
             >
               Favoritos
             </NavLink>
-            <NavLink to="" className="mr-5 hover:text-gray-900">
-              Fourth Link
+            <NavLink to="/mi-perfil" className="mr-5 hover:text-gray-900">
+              Mi Perfil
             </NavLink>
           </nav>
         ) : (
@@ -64,7 +65,7 @@ function Header() {
         >
           {token ? "Cerrar sesión" : "Regístrate o inicia sesión"}
         </Button>
-        <div>{username ? `Hello ${username}` : ""}</div>
+        <Label>{username ? `Hello ${username}` : ""}</Label>
       </div>
     </header>
   );

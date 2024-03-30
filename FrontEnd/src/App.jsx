@@ -13,6 +13,7 @@ import ProductsByOwner from "./Pages/ProductsByOwner/ProductsByOwner";
 import MyFavoriteProducts from "./Pages/MyFavoriteProducts/MyFavoriteProducts";
 import ResetPassword from "./Pages/ResetPassword/ResetPassword";
 import SendVerificationEmail from "./Pages/ResetPassword/SendVerificationEmail";
+import MyProfile from "./Pages/MyProfile/MyProfile";
 
 function App() {
   return (
@@ -24,6 +25,14 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/reset-password/:token" element={<ResetPassword />} />
+            <Route
+              path="/mi-perfil"
+              element={
+                <RequireAuth>
+                  <MyProfile />
+                </RequireAuth>
+              }
+            />
             <Route
               path="/verification-email"
               element={<SendVerificationEmail />}
@@ -47,7 +56,11 @@ function App() {
             </Route>
             <Route
               path="/edit/:productId/:productName"
-              element={<EditProduct />}
+              element={
+                <RequireAuth>
+                  <EditProduct />
+                </RequireAuth>
+              }
             />
             <Route
               path="/:owner/favs"
