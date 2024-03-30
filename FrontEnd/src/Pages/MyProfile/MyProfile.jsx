@@ -3,7 +3,7 @@ import Label from "../../Components/ui/Label";
 import Icon from "../../Components/ui/Icon";
 import Header from "../../Components/ui/Header";
 import { useEffect } from "react";
-import { getData, putData } from "../../Api/api";
+import { deleteData, getData, putData } from "../../Api/api";
 import { useState } from "react";
 import getFromStorage from "../../Service/getFromStorage";
 import Input from "../../Components/ui/Input";
@@ -69,7 +69,18 @@ function MyProfile() {
       console.log(error.message);
     }
   };
-  const deleteMyUser = async () => {};
+
+  const deleteMyUser = async () => {
+    try {
+      const response = await deleteData(`/deleteUser/${username}`, {
+        Authorization: `${token}`,
+      });
+      console.log("this is the response", response);
+      if (response.ok) navigate("/login");
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   console.log(newData);
 
