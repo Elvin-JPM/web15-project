@@ -65,7 +65,7 @@ function Header() {
         >
           {token ? "Cerrar sesión" : "Regístrate o inicia sesión"}
         </Button>
-        <Label>{username ? `Hello ${username}` : ""}</Label>
+        <Label>{username ? ` Hello ${username}` : ""}</Label>
       </div>
     </header>
   );

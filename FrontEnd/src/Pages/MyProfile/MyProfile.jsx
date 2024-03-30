@@ -9,6 +9,7 @@ import getFromStorage from "../../Service/getFromStorage";
 import Input from "../../Components/ui/Input";
 import H2 from "../../Components/ui/H2";
 import { useNavigate } from "react-router";
+import logout from "../../Service/logout";
 function MyProfile() {
   const navigate = useNavigate();
 
@@ -64,7 +65,10 @@ function MyProfile() {
         Authorization: `${token}`,
       });
       console.log(response);
-      if (response.ok) navigate("/login");
+      if (response.ok) {
+        logout();
+        navigate("/login");
+      }
     } catch (error) {
       console.log(error.message);
     }
@@ -76,7 +80,10 @@ function MyProfile() {
         Authorization: `${token}`,
       });
       console.log("this is the response", response);
-      if (response.ok) navigate("/login");
+      if (response.ok) {
+        logout();
+        navigate("/login");
+      }
     } catch (error) {
       console.log(error.message);
     }
