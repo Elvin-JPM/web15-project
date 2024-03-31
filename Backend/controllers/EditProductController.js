@@ -56,10 +56,11 @@ class EditProductController {
 
         product.owner = username;
 
-        const originalName = path.basename(req.file.filename);
+        let originalName = "";
 
         if (req.file) {
           // Resize image with Jimp
+          originalName = path.basename(req.file.filename);
           const image = await Jimp.read(req.file.path);
           await image.scaleToFit(300, 200);
           await image.writeAsync(path.join(imagePath, originalName));

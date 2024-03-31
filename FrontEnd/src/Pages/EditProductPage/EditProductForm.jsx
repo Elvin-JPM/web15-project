@@ -93,7 +93,7 @@ const EditProductForm = () => {
         }
       );
       console.log("Edit product:", response);
-      navigate(`/products/${values.name}/${productId}`);
+      response && navigate(`/products/${values.name}/${productId}`);
     } catch (error) {
       console.log(error.message);
     }
