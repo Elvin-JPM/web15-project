@@ -166,6 +166,7 @@ const EditProductForm = () => {
             <Input
               type="file"
               id="imageInput"
+              name="photo"
               required
               accept="image/*" // Specify that only image files are allowed
               onChange={handleImageChange}

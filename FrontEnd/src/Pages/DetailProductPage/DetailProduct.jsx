@@ -8,6 +8,7 @@ import Button from "../../Components/ui/Button";
 import { useNavigate } from "react-router";
 import FacebookShareButton from "../../Components/FacebookShare";
 import TwitterShareButton from "../../Components/TwitterShare";
+import Chat from "../../Components/chat";
 
 function DetailProduct() {
   const navigate = useNavigate();
@@ -86,6 +87,7 @@ function DetailProduct() {
             text="Check out this product!"
           />
         </div>
+        <Chat />
       </div>
     )
   );
