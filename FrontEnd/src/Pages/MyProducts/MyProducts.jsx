@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Product from "../ProductPage/Product";
 import { useNavigate, useParams } from "react-router";
-import { deleteData, getData } from "../../Api/api";
+import { deleteData, getData, putData } from "../../Api/api";
 import Button from "../../Components/ui/Button";
 import getFromStorage from "../../Service/getFromStorage";
 
 const MyProducts = () => {
   const [products, setProducts] = useState([]);
+  const [reservedStatus, setReservedStatus] = useState(false);
   const navigate = useNavigate();
 
   const username = getFromStorage("username");
@@ -26,7 +27,7 @@ const MyProducts = () => {
 
       fetchProducts();
     }
-  }, []);
+  }, [reservedStatus]);
 
   const deleteProduct = async (productId) => {
     try {
@@ -34,6 +35,37 @@ const MyProducts = () => {
         Authorization: `${token}`,
       });
       navigate(0);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const reserveProduct = async (productId, productReserved) => {
+    const requestBody = {
+      username,
+      id: productId,
+    };
+    try {
+      if (productReserved) {
+        const response = await putData(
+          `/products/uncheck-reserved/${productId}`,
+          requestBody,
+          {
+            Authorization: `${token}`,
+          }
+        );
+        console.log(response);
+      } else {
+        const response = await putData(
+          `/products/check-reserved/${productId}`,
+          requestBody,
+          {
+            Authorization: `${token}`,
+          }
+        );
+        console.log(response);
+      }
+      setReservedStatus(!reservedStatus);
     } catch (error) {
       console.log(error.message);
     }
@@ -52,6 +84,14 @@ const MyProducts = () => {
             </Button>
             <Button id={product._id} onClick={() => deleteProduct(product._id)}>
               Borrar producto
+            </Button>
+            <Button
+              id={product._id}
+              onClick={() => reserveProduct(product._id, product.reserved)}
+            >
+              {product.reserved
+                ? "Desmarcar como reservado"
+                : "Marcar como reservado"}
             </Button>
           </div>
         </Product>
