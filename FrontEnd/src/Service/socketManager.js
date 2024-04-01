@@ -8,7 +8,7 @@ export const initializeSocket = (username) => {
   socket.emit('setSocketActive')
   
   socket.on('productPriceEdited', ()=>{
-    alert('Cambio de precio en uno de tis artículos favoritos');
+    alert('Cambio de precio en uno de tus artículos favoritos');
   });
 
   socket.on('reservedProduct', ()=>{

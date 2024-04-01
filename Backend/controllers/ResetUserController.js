@@ -24,13 +24,13 @@ class ResetUserController {
 
       // HTML content for email
       const emailHTML = `<p>Hola ${user.username},</p>
-            <p>Recibes este correo electrónico porque hemos recibido una solicitud para restablecer la contraseña de tu cuenta en Fleapster.</p>
-            <p>Para restablecer tu contraseña, haz clic en el siguiente enlace:
-            <a>${verificationLink}</a></p>
-            <p>Si no has solicitado este cambio, puedes ignorar este correo electrónico de manera segura. Tu contraseña seguirá siendo la misma.</p>
-            <p>Gracias</p>
-            <p>Atentamente,
-            Fleapster<p>`;
+        <p>Recibes este correo electrónico porque hemos recibido una solicitud para restablecer la contraseña de tu cuenta en Fleapster.</p>
+        <p>Para restablecer tu contraseña, haz clic en el siguiente enlace:<br>
+        <a href="${verificationLink}">${verificationLink}</a></p>
+        <p>Si no has solicitado este cambio, puedes ignorar este correo electrónico de manera segura. Tu contraseña seguirá siendo la misma.</p>
+        <p>Gracias</p>
+        <p>Atentamente,
+        Fleapster<p>`;
 
       sendEmail(userEmail, "Restablecimiento de contraseña", emailHTML);
       res.json("Email enviado correctamente");

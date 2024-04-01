@@ -55,7 +55,7 @@ class EditProductController {
         if (name) product.name = name;
         if (description) product.description = description;
         if (sale) product.sale = sale;
-        if (price && price !== product.price) product.price = price; // Check if price has changed
+        if (price) product.price = price; // Check if price has changed
 
         const savedProduct = await product.save();
 
