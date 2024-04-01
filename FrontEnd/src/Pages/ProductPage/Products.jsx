@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
 import EmptyList from "./EmptyList";
 import ProductTitle from "./ProducTitle";
 import { getData } from "../../Api/api";
@@ -8,9 +7,20 @@ import Product from "./Product";
 import Filters from "../../Components/ui/Filters";
 import FilteredProducts from "./FilteredProducts";
 import useProductSearch from "../../Hooks/useProductSearch";
-
+import SweetAlert from "../../Components/ui/SweetAlert";
 const Products = () => {
   const navigate = useNavigate();
+
+  const [showSweetAlertProductAdded, setShowSweetAlertProductAdded] = useState(false); 
+
+ useEffect(() => {
+    // Verifica si después de recargar la página, debemos mostrar el SweetAlert
+    if (localStorage.getItem('mostrarSweetAlert') === 'true') {
+      setShowSweetAlertProductAdded(true)
+      localStorage.removeItem('mostrarSweetAlert')
+    }
+  }, [])
+
   //const [products, setProducts] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [selectedTags, setSelectedTags] = useState([]);
@@ -139,6 +149,14 @@ const Products = () => {
       ) : (
         <EmptyList />
       )} */}
+      {showSweetAlertProductAdded && (
+        <SweetAlert
+          title="Nuevo producto creado"
+          text="Cambios guardados exitosamente."
+          succeeded={true}
+          onConfirm={() => setShowSweetAlertProductAdded(false)}
+        />
+      )}
     </section>
   );
 };

@@ -68,7 +68,8 @@ const MyProducts = () => {
   };
 
   return (
-    <div>
+    <section className="max-w-3xl mx-auto font-sans antialiased pt-8">
+    <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
       {products.map((product) => (
         <Product key={product._id} product={product}>
           <div>
@@ -99,6 +100,7 @@ const MyProducts = () => {
         </Product>
       ))}
     </div>
+    </section>
   );
 };
 

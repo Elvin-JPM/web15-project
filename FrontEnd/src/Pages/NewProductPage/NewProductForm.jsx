@@ -11,8 +11,10 @@ import { postData } from "../../Api/api";
 import storage from "../../Api/storage";
 import getFromStorage from "../../Service/getFromStorage";
 
+
 const NewProductForm = () => {
   const navigate = useNavigate();
+
   const [values, setValues] = useState({
     name: "",
     description: "",
@@ -21,6 +23,7 @@ const NewProductForm = () => {
   });
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedTags, setSelectedTags] = useState([]); // tags
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   const token = getFromStorage("jwt");
 
@@ -59,11 +62,15 @@ const NewProductForm = () => {
         Authorization: `${token}`,
         "Content-Type": "multipart/form-data",
       });
+   
+      localStorage.setItem('mostrarSweetAlert', 'true')
+
       console.log("New product:", response);
-      navigate("/products");
+      navigate("/products", { showSweetAlertProductAdded: true });
     } catch (error) {
       console.log(error.message);
     }
+    setFormSubmitted(true);
   };
 
   const inputs = [
@@ -121,7 +128,7 @@ const NewProductForm = () => {
                     onChange={onChange}
                     required={input.required}
                     pattern={input.pattern}
-                    errorMessage={input.errorMessage}
+                    errorMessage={input.required && formSubmitted && !values[input.name] ? "Campo requerido" : (formSubmitted && !RegExp(input.pattern).test(values[input.name]) ? input.errorMessage : null)}
                   />
                 </div>
               </div>
@@ -137,7 +144,7 @@ const NewProductForm = () => {
             />
 
             <label>Selling or buying:</label>
-            <label>
+
               <input
                 type="radio"
                 id="sell"
@@ -147,8 +154,8 @@ const NewProductForm = () => {
                 onChange={onChange}
               />
               For sale
-            </label>
-            <label>
+        
+           
               <input
                 type="radio"
                 id="buy"
@@ -158,7 +165,7 @@ const NewProductForm = () => {
                 onChange={onChange}
               />
               Looking to buy
-            </label>
+         
 
             <br></br>
             <label>Tags:</label>
@@ -187,6 +194,7 @@ const NewProductForm = () => {
 
             <div>
               <input
+               label='LifeStyle'
                 type="checkbox"
                 id="Lifestyle"
                 value="Lifestyle"
@@ -212,6 +220,9 @@ const NewProductForm = () => {
             </div>
           </form>
         </div>
+
+
+
       </div>
     </>
   );
