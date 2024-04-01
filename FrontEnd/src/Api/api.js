@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const BASE_URL = import.meta.env.VITE_APP_URL;
-
+//const BASE_URL = import.meta.env.VITE_APP_URL;
+const BASE_URL = "http://44.203.181.7:3000/api";
 export async function postData(endpoint, requestBody, headers) {
   try {
     const response = await axios.post(BASE_URL + endpoint, requestBody, {
