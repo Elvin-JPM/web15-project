@@ -38,72 +38,56 @@ class EditProductController {
         return res.json("Permisos no válidos");
       }
 
-      // Upload product's image
-      upload.single("photo")(req, res, async function (err) {
-        if (err) {
-          return next(err);
-        }
+      // Upload product's image if exists
+      if (req.file) {
+        upload.single("photo")(req, res, async function (err) {
+          if (err) {
+            return next(err);
+          }
 
-        const username = req.params.owner;
-        const { name, photo, description, sale, price, tags, date } = req.body;
-        //productData.date = new Date();
-        //productData.reserved = false;
-        //productData.sold = false;
+          const { name, photo, description, sale, price, tags, date } = req.body;
 
-        // const userId = req.userId;
-        const user = await User.findOne({ name: username });
-        //const username = user.username;
-
-        product.owner = username;
-
-        const originalName = path.basename(req.file.filename);
-
-        if (req.file) {
           // Resize image with Jimp
+          const originalName = path.basename(req.file.filename);
           const image = await Jimp.read(req.file.path);
           await image.scaleToFit(300, 200);
           await image.writeAsync(path.join(imagePath, originalName));
           product.photo = originalName;
-        }
-        console.log("photo:", originalName);
-        //If owner is correct update product
-        if (name) product.name = name;
-        if (description) product.description = description;
-        if (sale) product.sale = sale;
-        if (price) product.price = price;
-        if (tags) product.tags = tags;
-        //if (date) product.date = date;
+        });
+      }
 
-        //productData.photo = originalName;
+      // Update product details
+      const { name, description, sale, price, tags, date } = req.body;
+      if (name) product.name = name;
+      if (description) product.description = description;
+      if (sale) product.sale = sale;
+      if (price) product.price = price;
+      if (tags) product.tags = tags;
+      //if (date) product.date = date;
 
-        //const product = new Product(productData);
+      const savedProduct = await product.save();
 
-        const savedProduct = await product.save();
-
-        // If product's price change send an email to users favs
-        if (price) {
-          for (let i = 0; i < product.favs.length; i++) {
-            const userfav = product.favs[i];
-            const user = await User.findOne({ username: userfav });
-            const userEmail = user.email;
-            const emailHTML = `<p>Hola ${user.username},</p>
+      // If product's price changed, send an email to users who favorited it
+      if (price) {
+        for (let i = 0; i < product.favs.length; i++) {
+          const userfav = product.favs[i];
+          const user = await User.findOne({ username: userfav });
+          const userEmail = user.email;
+          const emailHTML = `<p>Hola ${user.username},</p>
           <p>Te informamos que el artículo "<b>${product.name}</b>" que marcaste como favorito ha experimentado un cambio en su precio.
           Por favor, visita nuestro sitio web para ver los detalles actualizados.</p>
           <p>¡Gracias por tu interés!</p>
           <p>Atentamente,
           Fleapster<p>`;
 
-            sendEmail(
-              userEmail,
-              "Actualización de precio del artículo favorito",
-              emailHTML
-            );
-          }
+          sendEmail(
+            userEmail,
+            "Actualización de precio del artículo favorito",
+            emailHTML
+          );
         }
-        res.json({ result: savedProduct });
-      });
-
-      //await product.save();
+      }
+      res.json({ result: savedProduct });
     } catch (err) {
       next(err);
     }
