@@ -7,9 +7,7 @@ import {
 import getFromStorage from "../../Service/getFromStorage";
 import placeholder from "../../Assets/placeholder.png";
 
-// const IMAGE_BASE_URL = import.meta.env.VITE_APP_IMAGES_URL;
-const IMAGE_BASE_URL = "http://44.203.181.7:3000/api/images/";
-console.log(IMAGE_BASE_URL);
+const IMAGE_BASE_URL = import.meta.env.VITE_APP_IMAGES_URL;
 
 function Product({ product, children }) {
   const loggedUser = getFromStorage("username");

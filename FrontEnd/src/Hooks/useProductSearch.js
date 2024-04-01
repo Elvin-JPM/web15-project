@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+const BASE_URL = import.meta.env.VITE_APP_URL;
 
 function useProductSearch(query, pageNumber) {
   const [loading, setLoading] = useState(true);
@@ -20,7 +21,7 @@ function useProductSearch(query, pageNumber) {
     let cancel;
     axios({
       method: "GET",
-      url: `http://localhost:3000/api/products`,
+      url: `${BASE_URL}/products`,
       params: { name, minPrice, maxPrice, tags, page: pageNumber },
       cancelToken: new axios.CancelToken((c) => (cancel = c)),
     })
