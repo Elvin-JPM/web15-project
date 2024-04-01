@@ -8,12 +8,23 @@ import Button from "../../Components/ui/Button";
 import { useNavigate } from "react-router";
 import FacebookShareButton from "../../Components/FacebookShare";
 import TwitterShareButton from "../../Components/TwitterShare";
+import Chat from "../../Components/chat";
+import SweetAlert from "../../Components/ui/SweetAlert";
 
 function DetailProduct() {
   const navigate = useNavigate();
+  const [showSweetAlertProductAdded, setShowSweetAlertProductAdded] = useState(false); 
   const { productId, productName } = useParams();
   const [product, setProduct] = useState(null);
   const [favoriteStatus, setFavoriteStatus] = useState(null);
+
+
+ useEffect(() => {
+  if (localStorage.getItem('mostrarSweetAlert') === 'true') {
+    setShowSweetAlertProductAdded(true)
+    localStorage.removeItem('mostrarSweetAlert')
+  }
+}, [])
 
   const loggedUser = getFromStorage("username");
   const token = getFromStorage("jwt");
@@ -86,6 +97,15 @@ function DetailProduct() {
             text="Check out this product!"
           />
         </div>
+        <Chat />
+        {showSweetAlertProductAdded && (
+        <SweetAlert
+          title="Producto Editado"
+          text="Cambios guardados exitosamente."
+          succeeded={true}
+          onConfirm={() => setShowSweetAlertProductAdded(false)}
+        />
+      )}
       </div>
     )
   );

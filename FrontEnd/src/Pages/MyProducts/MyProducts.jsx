@@ -4,11 +4,14 @@ import { useNavigate, useParams } from "react-router";
 import { deleteData, getData, putData } from "../../Api/api";
 import Button from "../../Components/ui/Button";
 import getFromStorage from "../../Service/getFromStorage";
+import SweetAlert from "../../Components/ui/SweetAlert";
 
 const MyProducts = () => {
+  const [showSweetAlert, setShowSweetAlert] = useState(false); 
   const [products, setProducts] = useState([]);
   const [reloadProducts, setReloadProducts] = useState(false);
   const navigate = useNavigate();
+
 
   const username = getFromStorage("username");
   const token = getFromStorage("jwt");
@@ -30,12 +33,20 @@ const MyProducts = () => {
     }
   }, [reloadProducts]);
 
+  useEffect(() => {
+    if (localStorage.getItem('mostrarSweetAlert') === 'true') {
+      setShowSweetAlert(true)
+      localStorage.removeItem('mostrarSweetAlert')
+    }
+  }, [])
+
   // Handler para borrar un producto
   const deleteProduct = async (productId) => {
     try {
       const response = await deleteData(`/products/${username}/${productId}`, {
         Authorization: `${token}`,
       });
+      response && localStorage.setItem('mostrarSweetAlert', 'true')
       navigate(0);
     } catch (error) {
       console.log(error.message);
@@ -68,7 +79,8 @@ const MyProducts = () => {
   };
 
   return (
-    <div>
+    <section className="max-w-3xl mx-auto font-sans antialiased pt-8">
+    <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
       {products.map((product) => (
         <Product key={product._id} product={product}>
           <div>
@@ -99,6 +111,14 @@ const MyProducts = () => {
         </Product>
       ))}
     </div>
+    {showSweetAlert && (
+        <SweetAlert
+          title="Producto Borrado"
+          text="El producto ha sido borrado exitosamente."
+          onConfirm={() => setShowSweetAlert(false)}
+        />
+      )}
+    </section>
   );
 };
 

@@ -29,10 +29,9 @@ const EditProductForm = () => {
         setValues({
           name: `${response.name}`,
           description: `${response.description}`,
-          price: `${response.price}`,
+          //price: `${response.price}`,
           sale: `${response.sale ? "selling" : "buying"}`,
         });
-        //setSelectedImage(`${response.photo}`);
         setSelectedTags(response.tags);
         setPreviousImage(response.photo);
       } catch (error) {
@@ -93,6 +92,7 @@ const EditProductForm = () => {
         }
       );
       console.log("Edit product:", response);
+      response && localStorage.setItem('mostrarSweetAlert', 'true')
       response && navigate(`/products/${values.name}/${productId}`);
     } catch (error) {
       console.log(error.message);
@@ -166,6 +166,7 @@ const EditProductForm = () => {
             <Input
               type="file"
               id="imageInput"
+              name="photo"
               required
               accept="image/*" // Specify that only image files are allowed
               onChange={handleImageChange}
