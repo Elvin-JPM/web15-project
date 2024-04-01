@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
 import EmptyList from "./EmptyList";
 import ProductTitle from "./ProducTitle";
 import { getData } from "../../Api/api";
@@ -8,9 +7,21 @@ import Product from "./Product";
 import Filters from "../../Components/ui/Filters";
 import FilteredProducts from "./FilteredProducts";
 import useProductSearch from "../../Hooks/useProductSearch";
+import SweetAlert from "../../Components/ui/SweetAlert";
+import { Skeleton } from "../../Components/skeleton";
 
 const Products = () => {
   const navigate = useNavigate();
+
+  const [showSweetAlertProductAdded, setShowSweetAlertProductAdded] = useState(false); 
+
+ useEffect(() => {
+    if (localStorage.getItem('mostrarSweetAlert') === 'true') {
+      setShowSweetAlertProductAdded(true)
+      localStorage.removeItem('mostrarSweetAlert')
+    }
+  }, [])
+
   //const [products, setProducts] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [selectedTags, setSelectedTags] = useState([]);
@@ -90,7 +101,7 @@ const Products = () => {
   // }, [pageNumber, getData]);
 
   return (
-    <section className="max-w-3xl mx-auto font-sans antialiased">
+    <section className="max-w-5xl mx-auto font-sans antialiased">
       <Filters
         name={filterValues.name}
         minPrice={filterValues.minPrice}
@@ -123,8 +134,12 @@ const Products = () => {
           }
         })}
       </div>
-
-      <div>{loading && "Loading..."}</div>
+      <Skeleton
+        loading={
+         loading
+         }
+      ></Skeleton>
+      {/* <div>{loading && "Loading..."}</div> */}
       <div>{error && "Error..."}</div>
 
       {/* {products.length > 0 ? (
@@ -139,6 +154,14 @@ const Products = () => {
       ) : (
         <EmptyList />
       )} */}
+      {showSweetAlertProductAdded && (
+        <SweetAlert
+          title="Nuevo producto creado"
+          text="Cambios guardados exitosamente."
+          succeeded={true}
+          onConfirm={() => setShowSweetAlertProductAdded(false)}
+        />
+      )}
     </section>
   );
 };

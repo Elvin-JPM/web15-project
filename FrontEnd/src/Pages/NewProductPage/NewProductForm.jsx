@@ -6,13 +6,22 @@ import {
   H2,
   Button_large,
 } from "../../Components/ui/Index";
+import {
+  Card,
+  CardTitle,
+  CardContent,
+  CardFooter
+} from "../../Components/ui/CardComponent";
 import { useNavigate } from "react-router-dom";
 import { postData } from "../../Api/api";
 import storage from "../../Api/storage";
 import getFromStorage from "../../Service/getFromStorage";
 
+
+
 const NewProductForm = () => {
   const navigate = useNavigate();
+
   const [values, setValues] = useState({
     name: "",
     description: "",
@@ -21,6 +30,7 @@ const NewProductForm = () => {
   });
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedTags, setSelectedTags] = useState([]); // tags
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   const token = getFromStorage("jwt");
 
@@ -59,11 +69,15 @@ const NewProductForm = () => {
         Authorization: `${token}`,
         "Content-Type": "multipart/form-data",
       });
+   
+      localStorage.setItem('mostrarSweetAlert', 'true')
+
       console.log("New product:", response);
       navigate("/products");
     } catch (error) {
       console.log(error.message);
     }
+    setFormSubmitted(true);
   };
 
   const inputs = [
@@ -99,12 +113,12 @@ const NewProductForm = () => {
   ];
 
   return (
-    <>
+    <Card>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <H2>Nuevo producto</H2>
+          <CardTitle>Nuevo producto</CardTitle>
         </div>
-
+        <CardContent>
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={handleSubmit}>
             {inputs.map((input) => (
@@ -121,7 +135,7 @@ const NewProductForm = () => {
                     onChange={onChange}
                     required={input.required}
                     pattern={input.pattern}
-                    errorMessage={input.errorMessage}
+                    errorMessage={input.required && formSubmitted && !values[input.name] ? "Campo requerido" : (formSubmitted && !RegExp(input.pattern).test(values[input.name]) ? input.errorMessage : null)}
                   />
                 </div>
               </div>
@@ -137,7 +151,7 @@ const NewProductForm = () => {
             />
 
             <label>Selling or buying:</label>
-            <label>
+
               <input
                 type="radio"
                 id="sell"
@@ -147,8 +161,8 @@ const NewProductForm = () => {
                 onChange={onChange}
               />
               For sale
-            </label>
-            <label>
+        
+           
               <input
                 type="radio"
                 id="buy"
@@ -158,7 +172,7 @@ const NewProductForm = () => {
                 onChange={onChange}
               />
               Looking to buy
-            </label>
+         
 
             <br></br>
             <label>Tags:</label>
@@ -187,6 +201,7 @@ const NewProductForm = () => {
 
             <div>
               <input
+               label='LifeStyle'
                 type="checkbox"
                 id="Lifestyle"
                 value="Lifestyle"
@@ -207,13 +222,16 @@ const NewProductForm = () => {
               <label htmlFor="Electronics">Electronics</label>
             </div>
 
-            <div>
+            <CardFooter>
               <Button_large type="submit">Crear producto</Button_large>
-            </div>
+            </CardFooter>
           </form>
         </div>
+
+        </CardContent>
+
       </div>
-    </>
+    </Card>
   );
 };
 
