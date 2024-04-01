@@ -3,7 +3,7 @@ import socketIo from 'socket.io-client';
 let socket;
 
 export const initializeSocket = (username) => {
-  socket = socketIo('http://localhost:4000');
+  socket = socketIo('http://localhost:3000');
   socket.emit('setSocketUsername',username);
   socket.emit('setSocketActive')
   
