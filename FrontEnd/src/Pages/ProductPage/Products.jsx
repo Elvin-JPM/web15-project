@@ -8,6 +8,8 @@ import Filters from "../../Components/ui/Filters";
 import FilteredProducts from "./FilteredProducts";
 import useProductSearch from "../../Hooks/useProductSearch";
 import SweetAlert from "../../Components/ui/SweetAlert";
+import { Skeleton } from "../../Components/skeleton";
+
 const Products = () => {
   const navigate = useNavigate();
 
@@ -132,8 +134,12 @@ const Products = () => {
           }
         })}
       </div>
-
-      <div>{loading && "Loading..."}</div>
+      <Skeleton
+        loading={
+         loading
+         }
+      ></Skeleton>
+      {/* <div>{loading && "Loading..."}</div> */}
       <div>{error && "Error..."}</div>
 
       {/* {products.length > 0 ? (
