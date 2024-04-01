@@ -92,6 +92,7 @@ const EditProductForm = () => {
         }
       );
       console.log("Edit product:", response);
+      response && localStorage.setItem('mostrarSweetAlert', 'true')
       response && navigate(`/products/${values.name}/${productId}`);
     } catch (error) {
       console.log(error.message);

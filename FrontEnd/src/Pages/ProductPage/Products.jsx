@@ -14,7 +14,6 @@ const Products = () => {
   const [showSweetAlertProductAdded, setShowSweetAlertProductAdded] = useState(false); 
 
  useEffect(() => {
-    // Verifica si después de recargar la página, debemos mostrar el SweetAlert
     if (localStorage.getItem('mostrarSweetAlert') === 'true') {
       setShowSweetAlertProductAdded(true)
       localStorage.removeItem('mostrarSweetAlert')

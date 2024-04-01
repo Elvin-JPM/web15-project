@@ -4,11 +4,14 @@ import { useNavigate, useParams } from "react-router";
 import { deleteData, getData, putData } from "../../Api/api";
 import Button from "../../Components/ui/Button";
 import getFromStorage from "../../Service/getFromStorage";
+import SweetAlert from "../../Components/ui/SweetAlert";
 
 const MyProducts = () => {
+  const [showSweetAlert, setShowSweetAlert] = useState(false); 
   const [products, setProducts] = useState([]);
   const [reloadProducts, setReloadProducts] = useState(false);
   const navigate = useNavigate();
+
 
   const username = getFromStorage("username");
   const token = getFromStorage("jwt");
@@ -30,12 +33,20 @@ const MyProducts = () => {
     }
   }, [reloadProducts]);
 
+  useEffect(() => {
+    if (localStorage.getItem('mostrarSweetAlert') === 'true') {
+      setShowSweetAlert(true)
+      localStorage.removeItem('mostrarSweetAlert')
+    }
+  }, [])
+
   // Handler para borrar un producto
   const deleteProduct = async (productId) => {
     try {
       const response = await deleteData(`/products/${username}/${productId}`, {
         Authorization: `${token}`,
       });
+      response && localStorage.setItem('mostrarSweetAlert', 'true')
       navigate(0);
     } catch (error) {
       console.log(error.message);
@@ -100,6 +111,13 @@ const MyProducts = () => {
         </Product>
       ))}
     </div>
+    {showSweetAlert && (
+        <SweetAlert
+          title="Producto Borrado"
+          text="El producto ha sido borrado exitosamente."
+          onConfirm={() => setShowSweetAlert(false)}
+        />
+      )}
     </section>
   );
 };

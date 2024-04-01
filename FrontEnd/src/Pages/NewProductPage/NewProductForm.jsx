@@ -66,7 +66,7 @@ const NewProductForm = () => {
       localStorage.setItem('mostrarSweetAlert', 'true')
 
       console.log("New product:", response);
-      navigate("/products", { showSweetAlertProductAdded: true });
+      navigate("/products");
     } catch (error) {
       console.log(error.message);
     }
