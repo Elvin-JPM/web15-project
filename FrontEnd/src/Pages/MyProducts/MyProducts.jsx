@@ -7,12 +7,13 @@ import getFromStorage from "../../Service/getFromStorage";
 
 const MyProducts = () => {
   const [products, setProducts] = useState([]);
-  const [reservedStatus, setReservedStatus] = useState(false);
+  const [reloadProducts, setReloadProducts] = useState(false);
   const navigate = useNavigate();
 
   const username = getFromStorage("username");
   const token = getFromStorage("jwt");
 
+  // Carga el listado de mis anuncios
   useEffect(() => {
     if (username) {
       const fetchProducts = async () => {
@@ -27,8 +28,9 @@ const MyProducts = () => {
 
       fetchProducts();
     }
-  }, [reservedStatus]);
+  }, [reloadProducts]);
 
+  // Handler para borrar un producto
   const deleteProduct = async (productId) => {
     try {
       const response = await deleteData(`/products/${username}/${productId}`, {
@@ -40,32 +42,26 @@ const MyProducts = () => {
     }
   };
 
-  const reserveProduct = async (productId, productReserved) => {
-    const requestBody = {
-      username,
-      id: productId,
-    };
+  // Opcion
+
+  const handleProductAction = async (product, actionType) => {
+    const { _id: productId } = product; // Extract productId from product
+    const requestBody = { username, id: productId };
     try {
-      if (productReserved) {
-        const response = await putData(
-          `/products/uncheck-reserved/${productId}`,
-          requestBody,
-          {
-            Authorization: `${token}`,
-          }
-        );
-        console.log(response);
-      } else {
-        const response = await putData(
-          `/products/check-reserved/${productId}`,
-          requestBody,
-          {
-            Authorization: `${token}`,
-          }
-        );
-        console.log(response);
-      }
-      setReservedStatus(!reservedStatus);
+      const endpoint =
+        actionType === "reserve"
+          ? product.reserved
+            ? `/products/uncheck-reserved/${productId}`
+            : `/products/check-reserved/${productId}`
+          : product.sold
+          ? `/products/uncheck-sold/${productId}`
+          : `/products/check-sold/${productId}`;
+
+      await putData(endpoint, requestBody, {
+        Authorization: token,
+      });
+
+      setReloadProducts(!reloadProducts);
     } catch (error) {
       console.log(error.message);
     }
@@ -87,11 +83,17 @@ const MyProducts = () => {
             </Button>
             <Button
               id={product._id}
-              onClick={() => reserveProduct(product._id, product.reserved)}
+              onClick={() => handleProductAction(product, "reserve")}
             >
               {product.reserved
                 ? "Desmarcar como reservado"
                 : "Marcar como reservado"}
+            </Button>
+            <Button
+              id={product._id}
+              onClick={() => handleProductAction(product, "sold")}
+            >
+              {product.sold ? "Desmarcar como vendido" : "Marcar como vendido"}
             </Button>
           </div>
         </Product>

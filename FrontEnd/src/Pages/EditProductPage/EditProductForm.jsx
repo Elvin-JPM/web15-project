@@ -29,10 +29,9 @@ const EditProductForm = () => {
         setValues({
           name: `${response.name}`,
           description: `${response.description}`,
-          price: `${response.price}`,
+          //price: `${response.price}`,
           sale: `${response.sale ? "selling" : "buying"}`,
         });
-        //setSelectedImage(`${response.photo}`);
         setSelectedTags(response.tags);
         setPreviousImage(response.photo);
       } catch (error) {
@@ -93,7 +92,7 @@ const EditProductForm = () => {
         }
       );
       console.log("Edit product:", response);
-      navigate(`/products/${values.name}/${productId}`);
+      response && navigate(`/products/${values.name}/${productId}`);
     } catch (error) {
       console.log(error.message);
     }
