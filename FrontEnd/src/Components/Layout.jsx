@@ -7,7 +7,7 @@ function Layout() {
   return (
     <>
       <Header />
-      <main>
+      <main className="flex h-full flex-col">
         <Outlet />
       </main>
       <Footer />

@@ -6,10 +6,17 @@ import {
   H2,
   Button_large,
 } from "../../Components/ui/Index";
+import {
+  Card,
+  CardTitle,
+  CardContent,
+  CardFooter
+} from "../../Components/ui/CardComponent";
 import { useNavigate } from "react-router-dom";
 import { postData } from "../../Api/api";
 import storage from "../../Api/storage";
 import getFromStorage from "../../Service/getFromStorage";
+
 
 
 const NewProductForm = () => {
@@ -106,12 +113,12 @@ const NewProductForm = () => {
   ];
 
   return (
-    <>
+    <Card>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <H2>Nuevo producto</H2>
+          <CardTitle>Nuevo producto</CardTitle>
         </div>
-
+        <CardContent>
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={handleSubmit}>
             {inputs.map((input) => (
@@ -215,16 +222,16 @@ const NewProductForm = () => {
               <label htmlFor="Electronics">Electronics</label>
             </div>
 
-            <div>
+            <CardFooter>
               <Button_large type="submit">Crear producto</Button_large>
-            </div>
+            </CardFooter>
           </form>
         </div>
 
-
+        </CardContent>
 
       </div>
-    </>
+    </Card>
   );
 };
 
