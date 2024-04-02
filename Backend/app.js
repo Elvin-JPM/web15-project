@@ -41,7 +41,7 @@ const io = configureSocket(server);
 global.io = io;
 
 // Initialazing Socket.IO Server
-const PORT = 4000;
+const PORT = 3000;
 server.listen(PORT, () => {
   console.log(`Servidor de SocketIO corriendo en el puerto ${PORT}`);
 });

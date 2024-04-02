@@ -5,7 +5,7 @@ npm install
 node init-db.js 
 
 ## APP RUN ##
-npm start || nodemon ./bin/www
+node app.js
 
 ## ENDPOINTS ##
 
