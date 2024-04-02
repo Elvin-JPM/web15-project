@@ -41,7 +41,7 @@ const io = configureSocket(server);
 global.io = io;
 
 // Initialazing Socket.IO Server
-const PORT = 3000;
+const PORT = 4000;
 server.listen(PORT, () => {
   console.log(`Servidor de SocketIO corriendo en el puerto ${PORT}`);
 });
@@ -98,35 +98,17 @@ const getUserController = new GetUserController();
 const deleteUserController = new DeleteUserController();
 
 // API routes
-app.post(
-  "/api/authenticate", 
-  loginController.postJWT
-);
+app.post("/api/authenticate", loginController.postJWT);
 
-app.put(
-  "/api/reset-password", 
-  resetUserController.resetPassword
-);
+app.put("/api/reset-password", resetUserController.resetPassword);
 
-app.put(
-  "/api/updateuser", 
-  resetUserController.sendResetEmail
-);
+app.put("/api/updateuser", resetUserController.sendResetEmail);
 
-app.post(
-  "/api/reset-password", 
-  resetUserController.sendResetEmail
-);
+app.post("/api/reset-password", resetUserController.sendResetEmail);
 
-app.post(
-  "/api/authenticate", 
-  loginController.postJWT
-);
+app.post("/api/authenticate", loginController.postJWT);
 
-app.post(
-  "/api/signup", 
-  signUpController.signUpUser
-);
+app.post("/api/signup", signUpController.signUpUser);
 
 app.put(
   "/api/updateuser/:username",
@@ -134,15 +116,9 @@ app.put(
   updateUserController.updateUserInfo
 );
 
-app.post(
-  "/api/reset-password", 
-  resetUserController.sendResetEmail
-);
+app.post("/api/reset-password", resetUserController.sendResetEmail);
 
-app.put(
-  "/api/reset-password", 
-  resetUserController.resetPassword
-);
+app.put("/api/reset-password", resetUserController.resetPassword);
 
 app.delete(
   "/api/:username",
@@ -180,15 +156,9 @@ app.put(
   productSoldController.uncheckSoldProduct
 );
 
-app.get(
-  "/api/products", 
-  listProductsController.listProducts
-);
+app.get("/api/products", listProductsController.listProducts);
 
-app.get(
-  "/api/images/:imageName", 
-  returnImageController.returnImage
-);
+app.get("/api/images/:imageName", returnImageController.returnImage);
 
 app.get(
   "/api/products/list/:owner",
@@ -219,10 +189,7 @@ app.put(
   editProductController.editProduct
 );
 
-app.get(
-  "/api/products/:id/:name", 
-  productDetailController.getProductDetail
-);
+app.get("/api/products/:id/:name", productDetailController.getProductDetail);
 
 app.put(
   "/api/products/:id",
@@ -242,11 +209,7 @@ app.get(
   productsFavsListController.listFavouriteProducts
 );
 
-app.get(
-  "/api/get/:username", 
-  jwtAuthMiddleware, 
-  getUserController.getUserData
-);
+app.get("/api/get/:username", jwtAuthMiddleware, getUserController.getUserData);
 
 app.delete(
   "/api/deleteUser/:username",
