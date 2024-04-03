@@ -1,41 +1,66 @@
-const socketIo = require('socket.io');
+const socketIo = require("socket.io");
 const User = require("../models/User");
 let usersSockets = [];
 
 function configureSocket(server) {
   const io = socketIo(server, {
     cors: {
-      origin: "http://localhost:5173"
-    }
+      origin: "http://localhost:5173",
+    },
   });
 
+  let ownerUsername = "";
+
   // Create a listener for Sockets.IO's events
-io.on('connection', (socket) => {
-  
+  io.on("connection", (socket) => {
     // Connect event
-    socket.on('setSocketUsername', async (username) => {
+
+    socket.on("setSocketUsername", async (username) => {
       socket.username = username;
       await User.findOneAndUpdate({ username }, { activeSocketIO: true });
       usersSockets.push({ id: socket.id, username: username });
-      console.log('Usuario conectado',socket.id, socket.username);
+      console.log("Usuario conectado", socket.id, socket.username);
     });
-  
-    socket.on('setSocketActive', () => {
+
+    socket.on("setReceiverUsername", async (receiverUsername) => {
+      socket.receiverUsername = receiverUsername;
+      usersSockets.push({ id: socket.id, username: receiverUsername });
+      console.log("Usuario receptor", socket.id, socket.receiverUsername);
+      ownerUsername = receiverUsername;
+    });
+
+    socket.on("setSocketActive", () => {
       socket.active = true;
     });
-   
+
+    socket.on("hello", (arg, callback) => {
+      console.log(arg); // "world"
+      callback("got it");
+    });
+
+    socket.on("chat message", (msg) => {
+      const socketId = findSocketId(socket.receiverUsername);
+      io.to(socketId).emit("chat message", msg);
+    });
+
     // Disconnect event
-    socket.on('disconnect', async () => {
-      await User.findOneAndUpdate({ username: socket.username }, {activeSocketIO: false });
-      usersSockets = usersSockets.filter(userSocket => userSocket.username !== socket.username);
-      console.log('Usuario desconectado', socket.id, socket.username);
+    socket.on("disconnect", async () => {
+      await User.findOneAndUpdate(
+        { username: socket.username },
+        { activeSocketIO: false }
+      );
+      usersSockets = usersSockets.filter(
+        (userSocket) => userSocket.username !== socket.username
+      );
+      console.log("Usuario desconectado", socket.id, socket.username);
     });
   });
-  
+
   setInterval(() => {
     let activeSockets = 0;
     io.sockets.sockets.forEach((socket) => {
       if (socket.active) {
+        console.log(socket.id);
         activeSockets++;
       }
     });
@@ -52,7 +77,9 @@ function sendNotificationsToActiveUsers(username, eventName) {
     global.io.to(socketId).emit(eventName);
     console.log(`Evento "${eventName}" enviado al usuario ${username}.`);
   } else {
-    console.log(`Usuario ${username} no encontrado o no tiene un socket activo.`);
+    console.log(
+      `Usuario ${username} no encontrado o no tiene un socket activo.`
+    );
   }
 }
 
@@ -67,5 +94,5 @@ function findSocketId(username) {
 
 module.exports = {
   configureSocket,
-  sendNotificationsToActiveUsers
+  sendNotificationsToActiveUsers,
 };
