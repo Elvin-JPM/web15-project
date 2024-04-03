@@ -17,7 +17,7 @@ function DetailProduct() {
     useState(false);
   const { productId, productName } = useParams();
   const [product, setProduct] = useState(null);
-  const [favoriteStatus, setFavoriteStatus] = useState(null);
+  const [favoriteStatus, setFavoriteStatus] = useState(false);
 
   useEffect(() => {
     if (localStorage.getItem("mostrarSweetAlert") === "true") {
@@ -77,13 +77,13 @@ function DetailProduct() {
           </p>
         }
 
-        {loggedUser === product.owner ? (
-          ""
-        ) : (
-          <Button id={product._id} onClick={favoriteClick}>
-            {favoriteStatus ? "Quitar Favorito" : "Agregar Favorito"}
-          </Button>
-        )}
+        {loggedUser === product.owner
+          ? ""
+          : loggedUser && (
+              <Button id={product._id} onClick={favoriteClick}>
+                {favoriteStatus ? "Quitar Favorito" : "Agregar Favorito"}
+              </Button>
+            )}
 
         <section className="mt-4">
           <Product product={product} />
