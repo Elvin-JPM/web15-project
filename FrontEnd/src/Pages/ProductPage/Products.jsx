@@ -101,7 +101,7 @@ const Products = () => {
   // }, [pageNumber, getData]);
 
   return (
-    <section className="max-w-5xl mx-auto font-sans antialiased">
+    <section className="xl:max-w-7xl lg:max-w-5xl md:max-w-3xl sm:max-w-lg xs:max-w-xs mx-auto font-sans antialiased">
       <Filters
         name={filterValues.name}
         minPrice={filterValues.minPrice}
