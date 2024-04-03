@@ -1,22 +1,24 @@
-import socketIo from 'socket.io-client';
+import socketIo from "socket.io-client";
 
 let socket;
 
+const SOCKET_IO_URL = import.meta.env.VITE_APP_SOCKET_IO_URL;
+
 export const initializeSocket = (username) => {
-  socket = socketIo('http://localhost:3000');
-  socket.emit('setSocketUsername',username);
-  socket.emit('setSocketActive')
-  
-  socket.on('productPriceEdited', ()=>{
-    alert('Cambio de precio en uno de tus artículos favoritos');
+  socket = socketIo(SOCKET_IO_URL);
+  socket.emit("setSocketUsername", username);
+  socket.emit("setSocketActive");
+
+  socket.on("productPriceEdited", () => {
+    alert("Cambio de precio en uno de tus artículos favoritos");
   });
 
-  socket.on('reservedProduct', ()=>{
-    alert('Producto favorito marcado como reservado');
+  socket.on("reservedProduct", () => {
+    alert("Producto favorito marcado como reservado");
   });
 
-  socket.on('soldProduct', ()=>{
-    alert('Producto favorito vendido');
+  socket.on("soldProduct", () => {
+    alert("Producto favorito vendido");
   });
 };
 
