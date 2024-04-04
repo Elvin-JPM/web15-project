@@ -14,6 +14,8 @@ import MyFavoriteProducts from "./Pages/MyFavoriteProducts/MyFavoriteProducts";
 import ResetPassword from "./Pages/ResetPassword/ResetPassword";
 import SendVerificationEmail from "./Pages/ResetPassword/SendVerificationEmail";
 import MyProfile from "./Pages/MyProfile/MyProfile";
+import Chat from "./Pages/Chat/Chat";
+import "./app.css";
 
 function App() {
   return (
@@ -67,6 +69,15 @@ function App() {
               element={
                 <RequireAuth>
                   <MyFavoriteProducts />
+                </RequireAuth>
+              }
+            ></Route>
+
+            <Route
+              path="/chat"
+              element={
+                <RequireAuth>
+                  <Chat />
                 </RequireAuth>
               }
             ></Route>

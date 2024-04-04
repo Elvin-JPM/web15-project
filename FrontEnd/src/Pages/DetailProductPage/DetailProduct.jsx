@@ -5,12 +5,13 @@ import { deleteData, getData, putData } from "../../Api/api";
 import Product from "../ProductPage/Product";
 import getFromStorage from "../../Service/getFromStorage";
 import Button from "../../Components/ui/Button";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import FacebookShareButton from "../../Components/FacebookShare";
 import TwitterShareButton from "../../Components/TwitterShare";
 import Chat from "../Chat/Chat";
 import SweetAlert from "../../Components/ui/SweetAlert";
-//import Chat from "../../Components/chat";
+import Header from "../../Components/ui/Header";
+
 function DetailProduct() {
   const navigate = useNavigate();
   const [showSweetAlertProductAdded, setShowSweetAlertProductAdded] =
@@ -63,6 +64,13 @@ function DetailProduct() {
     fetchProduct();
   }, [productId]);
 
+  const openChat = () => {
+    if (product) {
+      console.log("from openChat", product);
+      navigate("/chat", { state: { productChat: product } });
+    }
+  };
+
   console.log(product);
   return (
     product && (
@@ -77,13 +85,19 @@ function DetailProduct() {
           </p>
         }
 
+        {/* Boton de agreagar/quitar favorito */}
         {loggedUser === product.owner
           ? ""
           : loggedUser && (
-              <Button id={product._id} onClick={favoriteClick}>
+              <Button onClick={favoriteClick}>
                 {favoriteStatus ? "Quitar Favorito" : "Agregar Favorito"}
               </Button>
             )}
+
+        {/* Boton para iniciar un chat con el propietario del producto */}
+        {loggedUser === product.owner
+          ? ""
+          : loggedUser && <Button onClick={openChat}>Chat</Button>}
 
         <section className="mt-4">
           <Product product={product} />
@@ -97,7 +111,6 @@ function DetailProduct() {
             text="Check out this product!"
           />
         </div>
-        <Chat />
         {showSweetAlertProductAdded && (
           <SweetAlert
             title="Producto Editado"
@@ -106,7 +119,7 @@ function DetailProduct() {
             onConfirm={() => setShowSweetAlertProductAdded(false)}
           />
         )}
-        <Chat owner={product.owner} />
+        {/* <Chat owner={product.owner} /> */}
       </div>
     )
   );
