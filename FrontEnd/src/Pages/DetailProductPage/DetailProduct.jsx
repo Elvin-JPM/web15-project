@@ -113,7 +113,7 @@ function DetailProduct() {
         {loggedUser === product.owner
           ? ""
           : loggedUser && (
-              <Button onClick={favoriteClick}>
+              <Button id={product._id} onClick={favoriteClick}>
                 {favoriteStatus ? "Quitar Favorito" : "Agregar Favorito"}
               </Button>
             )}
