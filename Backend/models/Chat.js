@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
 const chatSchema = mongoose.Schema({
-  sender: { type: String, index: true },
-  receiver: { type: String, index: true },
+  client: { type: String, index: true },
+  owner: { type: String, index: true },
   productId: { type: String, index: true },
   messages: { type: [String], default: [] },
   date: { type: Date, index: true },
