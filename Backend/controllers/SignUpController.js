@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
@@ -30,3 +31,37 @@ class SignUpController {
 
 module.exports = SignUpController;
 
+=======
+const bcrypt = require('bcrypt');
+const User = require('../models/User');
+
+class SignUpController {
+    async signUpUser(req, res, next) {
+        try {
+            const { username, email, password, active} = req.body;
+
+            // If user exits shows an error
+            const existingEmail = await User.findOne({ email });
+            const existingUsername = await User.findOne({ username });
+            if (existingEmail || existingUsername ) {
+                return res.json('El usuario ya está dado de alta');
+            }
+
+            // If user doesnt exit create it
+            const hashedPassword = await bcrypt.hash(password, 7);
+            const newUser = new User({ username, email, password: hashedPassword, active: true, activeSocketIO: false, resetPasswordToken: ""});
+            await newUser.save();
+            
+            res.json({ user: newUser });
+
+            res.end();
+
+        } catch (err) {
+            next(err);
+        }
+    }
+}
+
+module.exports = SignUpController;
+
+>>>>>>> 5d1f2bc9574fb5efac5b8918a417fbfbe4d99d08

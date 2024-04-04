@@ -5,7 +5,11 @@ let usersSockets = [];
 function configureSocket(server) {
   const io = socketIo(server, {
     cors: {
+<<<<<<< HEAD
+      origin: "http://localhost:5173",
+=======
       origin: "*",
+>>>>>>> 5d1f2bc9574fb5efac5b8918a417fbfbe4d99d08
     },
   });
 

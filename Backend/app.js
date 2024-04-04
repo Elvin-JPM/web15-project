@@ -6,6 +6,10 @@ const logger = require("morgan");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const cors = require("cors");
+<<<<<<< HEAD
+const cron = require('node-cron');
+=======
+>>>>>>> 5d1f2bc9574fb5efac5b8918a417fbfbe4d99d08
 
 require("./lib/connectMongoose");
 
@@ -28,8 +32,15 @@ const ProductReservedController = require("./controllers/ProductReservedControll
 const ProductSoldController = require("./controllers/ProductSoldController");
 const GetUserController = require("./controllers/GetUserController");
 const DeleteUserController = require("./controllers/DeleteUserController");
+<<<<<<< HEAD
+const SendRecommendedProductsEmailController = require("./controllers/EmailRecommendedSender");
 const jwtAuthMiddleware = require("./lib/jwtAuthMiddleware");
 
+
+=======
+const jwtAuthMiddleware = require("./lib/jwtAuthMiddleware");
+
+>>>>>>> 5d1f2bc9574fb5efac5b8918a417fbfbe4d99d08
 const http = require("http");
 const { configureSocket } = require("./lib/socket_IOServer");
 
@@ -96,9 +107,25 @@ const resetUserController = new ResetUserController();
 const productSoldController = new ProductSoldController();
 const getUserController = new GetUserController();
 const deleteUserController = new DeleteUserController();
+<<<<<<< HEAD
+const sendRecommendedProductsEmail = new SendRecommendedProductsEmailController();
+
+// Send emails of recommended products
+cron.schedule('0 9 * * 1,4', () => {
+  sendRecommendedProductsEmail.send();
+}, {
+  scheduled: true,
+  timezone: 'America/New_York' // Ajusta la zona horaria según tu ubicación
+});
+
+// API routes
+app.post(
+  "/api/authenticate", loginController.postJWT);
+=======
 
 // API routes
 app.post("/api/authenticate", loginController.postJWT);
+>>>>>>> 5d1f2bc9574fb5efac5b8918a417fbfbe4d99d08
 
 app.put("/api/reset-password", resetUserController.resetPassword);
 
