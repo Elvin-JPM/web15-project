@@ -14,11 +14,8 @@ import MyFavoriteProducts from "./Pages/MyFavoriteProducts/MyFavoriteProducts";
 import ResetPassword from "./Pages/ResetPassword/ResetPassword";
 import SendVerificationEmail from "./Pages/ResetPassword/SendVerificationEmail";
 import MyProfile from "./Pages/MyProfile/MyProfile";
-<<<<<<< HEAD
-=======
 import Chat from "./Pages/Chat/Chat";
 import "./app.css";
->>>>>>> 5d1f2bc9574fb5efac5b8918a417fbfbe4d99d08
 
 function App() {
   return (
@@ -75,8 +72,6 @@ function App() {
                 </RequireAuth>
               }
             ></Route>
-<<<<<<< HEAD
-=======
 
             <Route
               path="/chat"
@@ -86,7 +81,6 @@ function App() {
                 </RequireAuth>
               }
             ></Route>
->>>>>>> 5d1f2bc9574fb5efac5b8918a417fbfbe4d99d08
           </Routes>
         </BrowserRouter>
       </div>

@@ -23,12 +23,6 @@ class ProductReservedController {
       }
       
       await Product.findOneAndUpdate({ _id: productId }, { reserved: true })
-<<<<<<< HEAD
-      
-      for (let i = 0; i < product.favs.length; i++) {
-        const userfav = product.favs[i];
-        console.log(userfav)
-=======
 
       // Send email to users who have marked this product as a favorite.
       /*for ( let i = 0; i < product.favs.length; i++ ){
@@ -50,7 +44,6 @@ class ProductReservedController {
       
       for (let i = 0; i < product.favs.length; i++) {
         const userfav = product.favs[i];
->>>>>>> 5d1f2bc9574fb5efac5b8918a417fbfbe4d99d08
         const user = await User.findOne({ username: userfav });
 
         if ( user.activeSocketIO === false ){

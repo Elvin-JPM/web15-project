@@ -23,12 +23,6 @@ class ProductSoldController {
       
       await Product.findOneAndUpdate({ _id: productId }, { sold: true });
 
-<<<<<<< HEAD
-      for (let i = 0; i < product.favs.length; i++) {
-        const userfav = product.favs[i];
-        const user = await User.findOne({ username: userfav });
-        console.log(user)
-=======
       // Send email to users who have marked this product as a favorite.
       /*for ( let i = 0; i < product.favs.length; i++ ){
         const userfav = product.favs[i];
@@ -49,7 +43,6 @@ class ProductSoldController {
         const userfav = product.favs[i];
         const user = await User.findOne({ username: userfav });
 
->>>>>>> 5d1f2bc9574fb5efac5b8918a417fbfbe4d99d08
         if ( user.activeSocketIO === false ){
           const userEmail = user.email;
           const emailHTML = 

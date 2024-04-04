@@ -13,14 +13,15 @@ import { Skeleton } from "../../Components/skeleton";
 const Products = () => {
   const navigate = useNavigate();
 
-  const [showSweetAlertProductAdded, setShowSweetAlertProductAdded] = useState(false); 
+  const [showSweetAlertProductAdded, setShowSweetAlertProductAdded] =
+    useState(false);
 
- useEffect(() => {
-    if (localStorage.getItem('mostrarSweetAlert') === 'true') {
-      setShowSweetAlertProductAdded(true)
-      localStorage.removeItem('mostrarSweetAlert')
+  useEffect(() => {
+    if (localStorage.getItem("mostrarSweetAlert") === "true") {
+      setShowSweetAlertProductAdded(true);
+      localStorage.removeItem("mostrarSweetAlert");
     }
-  }, [])
+  }, []);
 
   //const [products, setProducts] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
@@ -101,11 +102,7 @@ const Products = () => {
   // }, [pageNumber, getData]);
 
   return (
-<<<<<<< HEAD
-    <section className="max-w-5xl mx-auto font-sans antialiased">
-=======
     <section className="xl:max-w-7xl lg:max-w-5xl md:max-w-3xl sm:max-w-lg xs:max-w-xs mx-auto font-sans antialiased">
->>>>>>> 5d1f2bc9574fb5efac5b8918a417fbfbe4d99d08
       <Filters
         name={filterValues.name}
         minPrice={filterValues.minPrice}
@@ -138,11 +135,7 @@ const Products = () => {
           }
         })}
       </div>
-      <Skeleton
-        loading={
-         loading
-         }
-      ></Skeleton>
+      <Skeleton loading={loading}></Skeleton>
       {/* <div>{loading && "Loading..."}</div> */}
       <div>{error && "Error..."}</div>
 

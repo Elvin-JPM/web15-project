@@ -5,32 +5,20 @@ import { deleteData, getData, putData } from "../../Api/api";
 import Product from "../ProductPage/Product";
 import getFromStorage from "../../Service/getFromStorage";
 import Button from "../../Components/ui/Button";
-<<<<<<< HEAD
-import { useNavigate } from "react-router";
-=======
 import { useNavigate } from "react-router-dom";
->>>>>>> 5d1f2bc9574fb5efac5b8918a417fbfbe4d99d08
 import FacebookShareButton from "../../Components/FacebookShare";
 import TwitterShareButton from "../../Components/TwitterShare";
 import Chat from "../Chat/Chat";
 import SweetAlert from "../../Components/ui/SweetAlert";
-<<<<<<< HEAD
-//import Chat from "../../Components/chat";
-=======
 import Header from "../../Components/ui/Header";
 
->>>>>>> 5d1f2bc9574fb5efac5b8918a417fbfbe4d99d08
 function DetailProduct() {
   const navigate = useNavigate();
   const [showSweetAlertProductAdded, setShowSweetAlertProductAdded] =
     useState(false);
   const { productId, productName } = useParams();
   const [product, setProduct] = useState(null);
-<<<<<<< HEAD
-  const [favoriteStatus, setFavoriteStatus] = useState(null);
-=======
   const [favoriteStatus, setFavoriteStatus] = useState(false);
->>>>>>> 5d1f2bc9574fb5efac5b8918a417fbfbe4d99d08
 
   useEffect(() => {
     if (localStorage.getItem("mostrarSweetAlert") === "true") {
@@ -76,8 +64,6 @@ function DetailProduct() {
     fetchProduct();
   }, [productId]);
 
-<<<<<<< HEAD
-=======
   const openChat = () => {
     if (product) {
       console.log("from openChat", product);
@@ -85,7 +71,6 @@ function DetailProduct() {
     }
   };
 
->>>>>>> 5d1f2bc9574fb5efac5b8918a417fbfbe4d99d08
   console.log(product);
   return (
     product && (
@@ -100,15 +85,6 @@ function DetailProduct() {
           </p>
         }
 
-<<<<<<< HEAD
-        {loggedUser === product.owner ? (
-          ""
-        ) : (
-          <Button id={product._id} onClick={favoriteClick}>
-            {favoriteStatus ? "Quitar Favorito" : "Agregar Favorito"}
-          </Button>
-        )}
-=======
         {/* Boton de agreagar/quitar favorito */}
         {loggedUser === product.owner
           ? ""
@@ -122,7 +98,6 @@ function DetailProduct() {
         {loggedUser === product.owner
           ? ""
           : loggedUser && <Button onClick={openChat}>Chat</Button>}
->>>>>>> 5d1f2bc9574fb5efac5b8918a417fbfbe4d99d08
 
         <section className="mt-4">
           <Product product={product} />
@@ -136,10 +111,6 @@ function DetailProduct() {
             text="Check out this product!"
           />
         </div>
-<<<<<<< HEAD
-        <Chat />
-=======
->>>>>>> 5d1f2bc9574fb5efac5b8918a417fbfbe4d99d08
         {showSweetAlertProductAdded && (
           <SweetAlert
             title="Producto Editado"
@@ -148,11 +119,7 @@ function DetailProduct() {
             onConfirm={() => setShowSweetAlertProductAdded(false)}
           />
         )}
-<<<<<<< HEAD
-        <Chat owner={product.owner} />
-=======
         {/* <Chat owner={product.owner} /> */}
->>>>>>> 5d1f2bc9574fb5efac5b8918a417fbfbe4d99d08
       </div>
     )
   );

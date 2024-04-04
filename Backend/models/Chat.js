@@ -1,0 +1,17 @@
+const mongoose = require("mongoose");
+
+const chatSchema = mongoose.Schema({
+  sender: { type: String, index: true },
+  receiver: { type: String, index: true },
+  productId: { type: String, index: true },
+  messages: { type: [String], default: [] },
+  date: { type: Date, index: true },
+});
+
+chatSchema.statics.filters = function (filter, skip, limit) {
+  const query = Chat.find(filter).sort({ date: -1 }).skip(skip).limit(limit);
+  return query.exec();
+};
+
+const Chat = mongoose.model("Chat", chatSchema);
+module.exports = Chat;
