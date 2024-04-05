@@ -2,13 +2,12 @@ import Icon from "./Icon";
 import Button from "./Button";
 import Label from "./Label";
 import { NavLink } from "react-router-dom";
-import Input from "./Input";
-import storage from "../../Api/storage";
 import logout from "../../Service/logout";
 import { useNavigate } from "react-router";
 import { useState } from "react";
 import getFromStorage from "../../Service/getFromStorage";
-function Header() {
+
+function Sidebar() {
   const [isLogged, setIsLogged] = useState(null);
   const navigate = useNavigate();
 
@@ -25,18 +24,32 @@ function Header() {
     }
   };
 
+
+
   return (
-    <header className="border border-gray-100 fixed top-0 z-50 w-full bg-white px-4 py-2 text-gray-600 body-font">
-      <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-        <NavLink
-          to="/"
-          className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
-        >
-          <Icon />
-        </NavLink>
-        {token ? (
-          <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
-            <NavLink to="/products/new" className="mr-5 hover:text-gray-900">
+    <aside
+    id="sidebar"
+    className="fixed border left-0 top-0 z-40 h-full bg-white border-color-gray w-64"
+    aria-label="Sidebar"
+  >
+      <nav
+        role="navigation"
+        className="m-1 flex h-full flex-col  gap-2 pb-4 pt-20"
+      >
+         <div className="flex items-center px-1">
+          <Button
+            //variant="ghost"
+            className="inline-flex items-center rounded-lg p-2 text-sm"
+            //onClick={() => dispatchMenu({ type: "TOOGLE_MENU" })}
+          >
+            <span className="sr-only">
+              open
+            </span>
+          </Button>
+       
+        </div>
+        <Label>{username ? ` Hello ${username}` : ""}</Label>
+           <NavLink to="/products/new" className="mr-5 hover:text-gray-900">
               Crear Anuncio{" "}
             </NavLink>
             <NavLink
@@ -54,10 +67,8 @@ function Header() {
             <NavLink to="/mi-perfil" className="mr-5 hover:text-gray-900">
               Mi Perfil
             </NavLink>
-          </nav>
-        ) : (
-          ""
-        )}
+            
+        <div className="flex items-center px-1">
         <Button
           type="submit"
           name={token ? "logout" : "login"}
@@ -65,10 +76,12 @@ function Header() {
         >
           {token ? "Cerrar sesión" : "Regístrate o inicia sesión"}
         </Button>
-        <Label>{username ? ` Hello ${username}` : ""}</Label>
-      </div>
-    </header>
+  
+        </div>
+      </nav>
+       
+    </aside>
   );
 }
 
-export default Header;
+export default Sidebar;
