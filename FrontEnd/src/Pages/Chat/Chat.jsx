@@ -3,25 +3,46 @@ import { io } from "socket.io-client";
 import getFromStorage from "../../Service/getFromStorage";
 import { getSocket } from "../../Service/socketManager";
 import { useLocation } from "react-router-dom";
+import { postData } from "../../Api/api";
 import styles from "../Chat/chat.module.css";
 import Header from "../../Components/ui/Header";
 import Button from "../../Components/ui/Button";
 import Footer from "../../Components/ui/Footer";
 import Input from "../../Components/ui/Input";
+
 function Chat() {
   const location = useLocation();
-  const { productChat } = location.state;
+  const { owner, client, productId } = location.state;
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
+  const [currentChat, setCurrentChat] = useState(null);
   //const [username, setUsername] = useState(""); // State to hold the username
   const [isOwnerSet, setIsOwnerSet] = useState(false); // State to track if owner is set
   const socket = getSocket();
-  const owner = productChat.owner;
-  const productId = productChat._id;
   console.log(productId);
   console.log(owner);
 
-  const username = getFromStorage("username");
+  const loggedUser = getFromStorage("username");
+  const token = getFromStorage("jwt");
+
+  const sender = loggedUser === owner ? owner : client;
+  const receiver = sender === owner ? client : owner;
+
+  useEffect(() => {
+    const createChat = async () => {
+      try {
+        const response = await postData(
+          "/find-create-chat",
+          { client, owner, productId },
+          { Authorization: `${token}` }
+        );
+        console.log(response.data.chat);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    createChat();
+  }, []);
 
   useEffect(() => {
     socket.on("chat message", (msg) => {
@@ -32,13 +53,12 @@ function Chat() {
   useEffect(() => {
     if (owner) {
       setIsOwnerSet(true);
-      socket.emit("setSocketUsername", username);
-      socket.emit("setReceiverUsername", owner);
+      socket.emit("setSocketUsername", sender);
+      socket.emit("setReceiverUsername", receiver);
     }
   }, [owner]);
 
   const sendMessage = () => {
-    createNewChat();
     socket.emit("chat message", input);
     setInput("");
   };

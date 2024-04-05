@@ -66,7 +66,6 @@ function DetailProduct() {
   }, [productId]);
 
   useEffect(() => {
-    // Check if product.owner is defined and if the user is the owner of the product
     if (product?.owner === loggedUser) {
       const fetchChatsForProduct = async () => {
         try {
@@ -76,7 +75,8 @@ function DetailProduct() {
               headers: { Authorization: `${token}` },
             }
           );
-          response && setProductChats(response.data);
+          console.log("Chats:", response);
+          response && setProductChats(response.chats);
         } catch (error) {
           console.log(error.message);
         }
@@ -85,12 +85,10 @@ function DetailProduct() {
     }
   }, [loggedUser, product]);
 
-  console.log(productChats);
-
-  const openChat = () => {
+  const openChat = (productId, owner, client) => {
     if (product) {
       console.log("from openChat", product);
-      navigate(`/chat/${product._id}`, { state: { productChat: product } });
+      navigate(`/chat/${productId}`, { state: { owner, client, productId } });
     }
   };
 
@@ -118,7 +116,13 @@ function DetailProduct() {
         {/* {loggedUser === product.owner
           ? ""
           : loggedUser && <Button onClick={openChat}>Chat</Button>} */}
-        {loggedUser && <Button onClick={openChat}>Chat</Button>}
+        {loggedUser && (
+          <Button
+            onClick={() => openChat(product._id, product.owner, loggedUser)}
+          >
+            Chat
+          </Button>
+        )}
         <section className="mt-4">
           <Product product={product} />
         </section>
@@ -139,6 +143,18 @@ function DetailProduct() {
             onConfirm={() => setShowSweetAlertProductAdded(false)}
           />
         )}
+        {productChats &&
+          productChats.map((chat) => {
+            return (
+              <div
+                onClick={() =>
+                  openChat(chat.productId, chat.owner, chat.client)
+                }
+              >
+                <div key={chat._id}>{chat._id}</div>
+              </div>
+            );
+          })}
       </div>
     )
   );
