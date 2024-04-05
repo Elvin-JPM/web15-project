@@ -1,4 +1,6 @@
 import socketIo from "socket.io-client";
+import { toast } from 'react-toastify'; 
+import 'react-toastify/dist/ReactToastify.css';
 
 let socket;
 
@@ -10,15 +12,15 @@ export const initializeSocket = (username) => {
   socket.emit("setSocketActive");
 
   socket.on("productPriceEdited", () => {
-    alert("Cambio de precio en uno de tus artículos favoritos");
+    toast.info("Cambio de precio en uno de tus artículos favoritos");
   });
 
   socket.on("reservedProduct", () => {
-    alert("Producto favorito marcado como reservado");
+    toast.info("Producto favorito marcado como reservado");
   });
 
   socket.on("soldProduct", () => {
-    alert("Producto favorito vendido");
+    toast.error("Uno de tus productos favorito ha sido vendido");
   });
 };
 

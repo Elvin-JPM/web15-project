@@ -13,13 +13,11 @@ function configureSocket(server) {
 
   // Create a listener for Sockets.IO's events
   io.on("connection", (socket) => {
-    // Connect event
 
     socket.on("setSocketUsername", async (username) => {
       socket.username = username;
       await User.findOneAndUpdate({ username }, { activeSocketIO: true });
       usersSockets.push({ id: socket.id, username: username });
-      console.log("Usuario conectado", socket.id, socket.username);
     });
 
     socket.on("setReceiverUsername", async (receiverUsername) => {
@@ -31,6 +29,7 @@ function configureSocket(server) {
 
     socket.on("setSocketActive", () => {
       socket.active = true;
+      console.log(`Usuario ${socket.username} conectado`);
     });
 
     socket.on("hello", (arg, callback) => {
@@ -52,7 +51,7 @@ function configureSocket(server) {
       usersSockets = usersSockets.filter(
         (userSocket) => userSocket.username !== socket.username
       );
-      console.log("Usuario desconectado", socket.id, socket.username);
+      console.log(`Usuario ${socket.username} desconectado`);
     });
   });
 
@@ -60,7 +59,6 @@ function configureSocket(server) {
     let activeSockets = 0;
     io.sockets.sockets.forEach((socket) => {
       if (socket.active) {
-        console.log(socket.id);
         activeSockets++;
       }
     });

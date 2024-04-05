@@ -7,7 +7,6 @@ const { sendNotificationsToActiveUsers } = require('../lib/socket_IOServer');
 class ProductReservedController {
   async checkReservedProduct(req, res) {
     const productId = req.params.id;
-    console.log(productId)
   
     try {
       const product = await Product.findById(productId);
@@ -23,22 +22,6 @@ class ProductReservedController {
       }
       
       await Product.findOneAndUpdate({ _id: productId }, { reserved: true })
-
-      // Send email to users who have marked this product as a favorite.
-      /*for ( let i = 0; i < product.favs.length; i++ ){
-        const userfav = product.favs[i];
-        const user = await User.findOne({ username: userfav });
-        const userEmail = user.email;
-        const emailHTML = 
-        `<p>Hola ${user.username},</p>
-        <p>Queríamos informarte que el artículo "<b>${product.name}</b>" que marcaste como favorito ha sido reservado por otro usuario.</p>
-        <p>Te animamos a explorar otros productos similares en nuestro sitio web.</p>
-        <p>¡Gracias por tu interés y esperamos que encuentres lo que buscas!</p>
-        <p>Atentamente,
-        Fleapster</p>`;
-
-        await sendEmail(userEmail,'Artículo favorito marcado como reservado',emailHTML);
-      } */
 
       // If product's price change send an email to users favs
       
