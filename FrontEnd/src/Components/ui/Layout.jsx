@@ -13,8 +13,8 @@ function Layout({ children }) {
      <main className={
         "h-full p-4 pt-24",
         token
-          ? "ml-64 h-full p-4 pt-28 sm:pt-56 "
-          : "ml-0 p-4 pt-28 sm:pt-40"
+          ? "ml-64 h-full p-4 pt-28"
+          : "ml-0 h-full p-4 pt-28"
       } >
           {children ? children : <Outlet />}
         </main>
