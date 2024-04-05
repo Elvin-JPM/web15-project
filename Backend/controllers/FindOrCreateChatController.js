@@ -3,7 +3,7 @@ const Chat = require("../models/Chat");
 class FindOrCreateChatController {
   async findOrCreateChat(req, res) {
     try {
-      const { client, owner, productId, message } = req.body;
+      const { client, owner, productId } = req.body;
 
       let existingChat = await Chat.findOne({
         client,
@@ -22,7 +22,6 @@ class FindOrCreateChatController {
         client,
         owner,
         productId,
-        messages: [message],
         date: new Date(),
       });
 

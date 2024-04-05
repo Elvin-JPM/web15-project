@@ -32,6 +32,7 @@ const DeleteUserController = require("./controllers/DeleteUserController");
 const SendRecommendedProductsEmailController = require("./controllers/EmailRecommendedSender");
 const GetAllChatsController = require("./controllers/GetAllChatsController");
 const FindOrCreateChatController = require("./controllers/FindOrCreateChatController");
+const InsertChatMessageController = require("./controllers/InsertChatMessageController");
 const jwtAuthMiddleware = require("./lib/jwtAuthMiddleware");
 
 const http = require("http");
@@ -104,6 +105,7 @@ const sendRecommendedProductsEmail =
   new SendRecommendedProductsEmailController();
 const getAllChatsController = new GetAllChatsController();
 const findOrCreateChatController = new FindOrCreateChatController();
+const insertChatMessageController = new InsertChatMessageController();
 
 // Send emails of recommended products
 cron.schedule(
@@ -247,6 +249,12 @@ app.post(
   "/api/find-create-chat",
   jwtAuthMiddleware,
   findOrCreateChatController.findOrCreateChat
+);
+
+app.put(
+  "/api/chat/:chatId",
+  jwtAuthMiddleware,
+  insertChatMessageController.insertChatMessage
 );
 
 // catch 404 and forward to error handler

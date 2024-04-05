@@ -15,7 +15,7 @@ import ResetPassword from "./Pages/ResetPassword/ResetPassword";
 import SendVerificationEmail from "./Pages/ResetPassword/SendVerificationEmail";
 import MyProfile from "./Pages/MyProfile/MyProfile";
 import Chat from "./Pages/Chat/Chat";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
 import "./app.css";
 
 function App() {
@@ -75,7 +75,7 @@ function App() {
             ></Route>
 
             <Route
-              path="/chat/:productId"
+              path="/chat/:owner/:productId"
               element={
                 <RequireAuth>
                   <Chat />
@@ -83,7 +83,7 @@ function App() {
               }
             ></Route>
           </Routes>
-          <ToastContainer className='toastifyCustomized'/>
+          <ToastContainer className="toastifyCustomized" />
         </BrowserRouter>
       </div>
     </>

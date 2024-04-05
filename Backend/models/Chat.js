@@ -4,7 +4,16 @@ const chatSchema = mongoose.Schema({
   client: { type: String, index: true },
   owner: { type: String, index: true },
   productId: { type: String, index: true },
-  messages: { type: [String], default: [] },
+  messages: {
+    type: [
+      {
+        message: String,
+        from: String,
+        date: Date,
+      },
+    ],
+    default: [],
+  },
   date: { type: Date, index: true },
 });
 

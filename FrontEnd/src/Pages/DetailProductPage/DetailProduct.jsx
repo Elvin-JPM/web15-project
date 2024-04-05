@@ -88,7 +88,9 @@ function DetailProduct() {
   const openChat = (productId, owner, client) => {
     if (product) {
       console.log("from openChat", product);
-      navigate(`/chat/${productId}`, { state: { owner, client, productId } });
+      navigate(`/chat/${owner}/${productId}`, {
+        state: { owner, client, productId },
+      });
     }
   };
 
@@ -113,10 +115,10 @@ function DetailProduct() {
               </Button>
             )}
         {/* Boton para iniciar un chat con el propietario del producto */}
-        {/* {loggedUser === product.owner
-          ? ""
-          : loggedUser && <Button onClick={openChat}>Chat</Button>} */}
-        {loggedUser && (
+
+        {loggedUser === product.owner ? (
+          ""
+        ) : (
           <Button
             onClick={() => openChat(product._id, product.owner, loggedUser)}
           >
@@ -151,7 +153,9 @@ function DetailProduct() {
                   openChat(chat.productId, chat.owner, chat.client)
                 }
               >
-                <div key={chat._id}>{chat._id}</div>
+                <div key={chat._id}>
+                  {chat._id}: {chat.client}
+                </div>
               </div>
             );
           })}

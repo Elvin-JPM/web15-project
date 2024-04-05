@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { io } from "socket.io-client";
 import getFromStorage from "../../Service/getFromStorage";
 import { getSocket } from "../../Service/socketManager";
-import { useLocation } from "react-router-dom";
-import { postData } from "../../Api/api";
+import { useLocation, useParams } from "react-router-dom";
+import { postData, putData } from "../../Api/api";
 import styles from "../Chat/chat.module.css";
 import Header from "../../Components/ui/Header";
 import Button from "../../Components/ui/Button";
@@ -11,8 +11,9 @@ import Footer from "../../Components/ui/Footer";
 import Input from "../../Components/ui/Input";
 
 function Chat() {
+  const {owner, productId} = useParams();
   const location = useLocation();
-  const { owner, client, productId } = location.state;
+  const {  client } = location.state;
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [currentChat, setCurrentChat] = useState(null);
@@ -21,11 +22,12 @@ function Chat() {
   const socket = getSocket();
   console.log(productId);
   console.log(owner);
+  console.log("Messages:", messages);
 
   const loggedUser = getFromStorage("username");
   const token = getFromStorage("jwt");
 
-  const sender = loggedUser === owner ? owner : client;
+  const sender = loggedUser; // === owner ? owner : client;
   const receiver = sender === owner ? client : owner;
 
   useEffect(() => {
@@ -37,12 +39,16 @@ function Chat() {
           { Authorization: `${token}` }
         );
         console.log(response.data.chat);
+        setCurrentChat(response.data.chat);
+        setMessages(response.data.chat.messages);
       } catch (error) {
         console.log(error.message);
       }
     };
     createChat();
   }, []);
+
+  console.log(currentChat);
 
   useEffect(() => {
     socket.on("chat message", (msg) => {
@@ -58,8 +64,23 @@ function Chat() {
     }
   }, [owner]);
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     socket.emit("chat message", input);
+    try {
+      const updatedChat = await putData(
+        `/chat/${currentChat._id}`,
+        {
+          message: input,
+          from: sender,
+          date: new Date(),
+        },
+        { Authorization: `${token}` }
+      );
+      console.log(updatedChat);
+      updatedChat && setCurrentChat(updatedChat);
+    } catch (error) {
+      console.log(error.message);
+    }
     setInput("");
   };
 
