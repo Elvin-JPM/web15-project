@@ -19,6 +19,7 @@ function DetailProduct() {
   const { productId, productName } = useParams();
   const [product, setProduct] = useState(null);
   const [favoriteStatus, setFavoriteStatus] = useState(false);
+  const [productChats, setProductChats] = useState(null);
 
   useEffect(() => {
     if (localStorage.getItem("mostrarSweetAlert") === "true") {
@@ -64,14 +65,35 @@ function DetailProduct() {
     fetchProduct();
   }, [productId]);
 
+  useEffect(() => {
+    // Check if product.owner is defined and if the user is the owner of the product
+    if (product?.owner === loggedUser) {
+      const fetchChatsForProduct = async () => {
+        try {
+          const response = await getData(
+            `/get-chats/${product.owner}/${product._id}`,
+            {
+              headers: { Authorization: `${token}` },
+            }
+          );
+          response && setProductChats(response.data);
+        } catch (error) {
+          console.log(error.message);
+        }
+      };
+      fetchChatsForProduct();
+    }
+  }, [loggedUser, product]);
+
+  console.log(productChats);
+
   const openChat = () => {
     if (product) {
       console.log("from openChat", product);
-      navigate("/chat", { state: { productChat: product } });
+      navigate(`/chat/${product._id}`, { state: { productChat: product } });
     }
   };
 
-  console.log(product);
   return (
     product && (
       <div className="max-w-xl  mx-auto p-5">
@@ -84,7 +106,6 @@ function DetailProduct() {
             </Link>
           </p>
         }
-
         {/* Boton de agreagar/quitar favorito */}
         {loggedUser === product.owner
           ? ""
@@ -93,12 +114,11 @@ function DetailProduct() {
                 {favoriteStatus ? "Quitar Favorito" : "Agregar Favorito"}
               </Button>
             )}
-
         {/* Boton para iniciar un chat con el propietario del producto */}
-        {loggedUser === product.owner
+        {/* {loggedUser === product.owner
           ? ""
-          : loggedUser && <Button onClick={openChat}>Chat</Button>}
-
+          : loggedUser && <Button onClick={openChat}>Chat</Button>} */}
+        {loggedUser && <Button onClick={openChat}>Chat</Button>}
         <section className="mt-4">
           <Product product={product} />
         </section>
@@ -119,7 +139,6 @@ function DetailProduct() {
             onConfirm={() => setShowSweetAlertProductAdded(false)}
           />
         )}
-        {/* <Chat owner={product.owner} /> */}
       </div>
     )
   );

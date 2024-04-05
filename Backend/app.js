@@ -6,7 +6,7 @@ const logger = require("morgan");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const cors = require("cors");
-const cron = require('node-cron');
+const cron = require("node-cron");
 
 require("./lib/connectMongoose");
 
@@ -30,8 +30,9 @@ const ProductSoldController = require("./controllers/ProductSoldController");
 const GetUserController = require("./controllers/GetUserController");
 const DeleteUserController = require("./controllers/DeleteUserController");
 const SendRecommendedProductsEmailController = require("./controllers/EmailRecommendedSender");
+const GetAllChatsController = require("./controllers/GetAllChatsController");
+const FindOrCreateChatController = require("./controllers/FindOrCreateChatController");
 const jwtAuthMiddleware = require("./lib/jwtAuthMiddleware");
-
 
 const http = require("http");
 const { configureSocket } = require("./lib/socket_IOServer");
@@ -99,19 +100,25 @@ const resetUserController = new ResetUserController();
 const productSoldController = new ProductSoldController();
 const getUserController = new GetUserController();
 const deleteUserController = new DeleteUserController();
-const sendRecommendedProductsEmail = new SendRecommendedProductsEmailController();
+const sendRecommendedProductsEmail =
+  new SendRecommendedProductsEmailController();
+const getAllChatsController = new GetAllChatsController();
+const findOrCreateChatController = new FindOrCreateChatController();
 
 // Send emails of recommended products
-cron.schedule('0 9 * * 1,4', () => {
-  sendRecommendedProductsEmail.send();
-}, {
-  scheduled: true,
-  timezone: 'America/New_York' // Ajusta la zona horaria según tu ubicación
-});
+cron.schedule(
+  "0 9 * * 1,4",
+  () => {
+    sendRecommendedProductsEmail.send();
+  },
+  {
+    scheduled: true,
+    timezone: "America/New_York", // Ajusta la zona horaria según tu ubicación
+  }
+);
 
 // API routes
-app.post(
-  "/api/authenticate", loginController.postJWT);
+app.post("/api/authenticate", loginController.postJWT);
 
 app.put("/api/reset-password", resetUserController.resetPassword);
 
@@ -228,6 +235,18 @@ app.delete(
   "/api/deleteUser/:username",
   jwtAuthMiddleware,
   deleteUserController.deleteUser
+);
+
+app.get(
+  "/api/get-chats/:owner/:productId",
+  jwtAuthMiddleware,
+  getAllChatsController.getProductChats
+);
+
+app.post(
+  "/api/find-create-chat",
+  jwtAuthMiddleware,
+  findOrCreateChatController.findOrCreateChat
 );
 
 // catch 404 and forward to error handler

@@ -17,6 +17,8 @@ function Chat() {
   const [isOwnerSet, setIsOwnerSet] = useState(false); // State to track if owner is set
   const socket = getSocket();
   const owner = productChat.owner;
+  const productId = productChat._id;
+  console.log(productId);
   console.log(owner);
 
   const username = getFromStorage("username");
@@ -36,6 +38,7 @@ function Chat() {
   }, [owner]);
 
   const sendMessage = () => {
+    createNewChat();
     socket.emit("chat message", input);
     setInput("");
   };

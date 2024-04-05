@@ -74,7 +74,7 @@ function App() {
             ></Route>
 
             <Route
-              path="/chat"
+              path="/chat/:productId"
               element={
                 <RequireAuth>
                   <Chat />

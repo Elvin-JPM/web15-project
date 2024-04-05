@@ -12,7 +12,6 @@ class FindOrCreateChatController {
       });
 
       if (existingChat) {
-        // Chat already exists, return it
         return res
           .status(200)
           .json({ message: "Chat found", chat: existingChat });
