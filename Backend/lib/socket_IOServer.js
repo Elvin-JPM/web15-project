@@ -13,7 +13,6 @@ function configureSocket(server) {
 
   // Create a listener for Sockets.IO's events
   io.on("connection", (socket) => {
-
     socket.on("setSocketUsername", async (username) => {
       socket.username = username;
       await User.findOneAndUpdate({ username }, { activeSocketIO: true });
@@ -39,7 +38,9 @@ function configureSocket(server) {
 
     socket.on("chat message", (msg) => {
       const socketId = findSocketId(socket.receiverUsername);
+      console.log("Enviando mensaje a:", socket.receiverUsername);
       io.to(socketId).emit("chat message", msg);
+      console.log("Mensaje enviado fue:", msg);
     });
 
     // Disconnect event

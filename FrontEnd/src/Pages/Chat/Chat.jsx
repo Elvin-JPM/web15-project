@@ -8,20 +8,16 @@ import styles from "../Chat/chat.module.css";
 import Header from "../../Components/ui/Header";
 import Button from "../../Components/ui/Button";
 import Footer from "../../Components/ui/Footer";
-import Input from "../../Components/ui/Input";
 
 function Chat() {
-  const {owner, productId} = useParams();
+  const { owner, productId } = useParams();
   const location = useLocation();
-  const {  client } = location.state;
+  const { client } = location.state;
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [currentChat, setCurrentChat] = useState(null);
-  //const [username, setUsername] = useState(""); // State to hold the username
-  const [isOwnerSet, setIsOwnerSet] = useState(false); // State to track if owner is set
+
   const socket = getSocket();
-  console.log(productId);
-  console.log(owner);
   console.log("Messages:", messages);
 
   const loggedUser = getFromStorage("username");
@@ -38,7 +34,6 @@ function Chat() {
           { client, owner, productId },
           { Authorization: `${token}` }
         );
-        console.log(response.data.chat);
         setCurrentChat(response.data.chat);
         setMessages(response.data.chat.messages);
       } catch (error) {
@@ -48,24 +43,28 @@ function Chat() {
     createChat();
   }, []);
 
-  console.log(currentChat);
-
   useEffect(() => {
     socket.on("chat message", (msg) => {
+      console.log("Recibiendo mensaje para:", loggedUser, msg);
+      // SetMessages se actualiza aqui y en SendMessage para que actualice la interfaz tanto del que envia como el que recibe
       setMessages([...messages, msg]);
     });
-  }, [messages, socket]);
+  }, [messages]);
 
   useEffect(() => {
     if (owner) {
-      setIsOwnerSet(true);
+      //setIsOwnerSet(true);  //uncomment in case it fails
       socket.emit("setSocketUsername", sender);
       socket.emit("setReceiverUsername", receiver);
     }
   }, [owner]);
 
   const sendMessage = async () => {
-    socket.emit("chat message", input);
+    socket.emit("chat message", {
+      message: input,
+      from: sender,
+      date: new Date(),
+    });
     try {
       const updatedChat = await putData(
         `/chat/${currentChat._id}`,
@@ -76,8 +75,10 @@ function Chat() {
         },
         { Authorization: `${token}` }
       );
-      console.log(updatedChat);
-      updatedChat && setCurrentChat(updatedChat);
+      if (updatedChat) {
+        setCurrentChat(updatedChat);
+        setMessages([...updatedChat.chat.messages]);
+      }
     } catch (error) {
       console.log(error.message);
     }
@@ -92,7 +93,7 @@ function Chat() {
         <div className={styles.messagesBox}>
           {messages.length === 0
             ? "No messages yet..."
-            : messages.map((msg, index) => <p key={index}>{msg}</p>)}
+            : messages.map((msg, index) => <p key={index}>{msg.message}</p>)}
         </div>
         <textarea
           placeholder="Start typing..."

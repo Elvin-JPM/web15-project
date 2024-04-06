@@ -6,7 +6,6 @@ class InsertChatMessageController {
     const { message, from, date } = req.body; // {message: new-message, from: who-wrote-the-message, date: new Date()}
 
     console.log("New message:", { message, from, date });
-    console.log(chatId);
     try {
       const updatedChat = await Chat.findOneAndUpdate(
         { _id: chatId },
@@ -17,12 +16,6 @@ class InsertChatMessageController {
       if (!updatedChat) {
         res.json({ success: false, message: "Chat not found" });
       }
-
-      //   const serializedChat = updatedChat.toObject({
-      //     getters: true,
-      //     virtuals: true,
-      //   });
-      console.log(updatedChat);
 
       res.status(200).json({ success: true, chat: updatedChat });
     } catch (error) {

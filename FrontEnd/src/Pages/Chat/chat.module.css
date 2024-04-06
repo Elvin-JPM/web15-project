@@ -30,6 +30,7 @@ html {
   border-radius: 6px;
   margin-bottom: 3%;
   border-radius: 10px;
+  overflow-y: auto;
 }
 
 .textarea {
