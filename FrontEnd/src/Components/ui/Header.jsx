@@ -19,13 +19,14 @@ function Header() {
   const username = getFromStorage("username");
 
   const buttonClick = (e) => {
-    if (e.target.getAttribute("name") === "login") {
-      navigate("/login");
-    } else {
-      logout();
-      setIsLogged(false);
-      navigate("/");
-    }
+    navigate("/login");
+    // if (e.target.getAttribute("name") === "login") {
+    //   navigate("/login");
+    // } else {
+    //   logout();
+    //   setIsLogged(false);
+    //   navigate("/");
+    // }
   };
 
   return (
@@ -46,34 +47,34 @@ function Header() {
           <Logo />
         </div>
         </NavLink>
-        {token ? (
-          <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
-            <NavLink to="/products/new" className="mr-5 hover:text-gray-900">
-              Crear Anuncio{" "}
-            </NavLink>
-            <NavLink
-              to="/products/list/me"
-              className="mr-5 hover:text-gray-900"
-            >
-              Mis Anuncios
-            </NavLink>
-            <NavLink
-              to={`/${username}/favs`}
-              className="mr-5 hover:text-gray-900"
-            >
-              Favoritos
-            </NavLink>
-            <NavLink to="/mi-perfil" className="mr-5 hover:text-gray-900 w-14 h-14 border rounded-full p-4">
-             {username ? <span ><IconUser /></span>  : ""}
-            </NavLink>
-            {/* <NavLink to="/mi-perfil" className="mr-5 hover:text-gray-900">
-              Mi Perfil
-            </NavLink> */}
-           
-          </nav>
-        ) : (
-          ""
-        )}
+      
+  
+
+        <nav className="md:ml-auto flex flex-wrap items-center text-base justify-between">
+          {token === '' && (
+            <Button  onClick={buttonClick}>
+              Iniciar sesión
+            </Button>
+          )}
+          {token && (
+            <>
+              <NavLink to="/products/new" className="mr-5 hover:text-gray-900">
+                Crear Anuncio
+              </NavLink>
+              <NavLink to="/products/list/me" className="mr-5 hover:text-gray-900">
+                Mis Anuncios
+              </NavLink>
+              <NavLink to={`/${username}/favs`} className="mr-5 hover:text-gray-900">
+                Favoritos
+              </NavLink>
+              <NavLink to="/mi-perfil" className="mr-5 hover:text-gray-900 w-14 h-14 border rounded-full p-4">
+                {username ? <span ><IconUser /></span>  : ""}
+              </NavLink>
+            </>
+          )}
+        </nav>
+
+       
         {/* <Button
           type="submit"
           name={token ? "logout" : "login"}

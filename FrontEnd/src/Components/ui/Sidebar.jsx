@@ -29,7 +29,7 @@ function Sidebar() {
   return (
     <aside
     id="sidebar"
-    className="fixed border left-0 top-0 z-40 h-full bg-white border-color-gray w-30 px-10"
+    className="fixed border left-0 top-0 z-20 h-full bg-white border-color-gray w-30 px-10"
     aria-label="Sidebar"
   >
       <nav

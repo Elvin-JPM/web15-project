@@ -7,19 +7,16 @@ import getFromStorage from "../../Service/getFromStorage";
 function Layout({ children }) {
   const token = getFromStorage("jwt");
   return (
-    <>
-      <Header className="" />
+    <div className="flex flex-col min-h-screen">
+      <Header />
       {token && <Sidebar />}
-      <main
-        className={
-          ("h-full p-4 pt-24",
-          token ? "ml-52 h-full p-4 pt-24" : "ml-0 h-full p-4 pt-24")
-        }
-      >
+      <main className={`flex-grow ${token ? "ml-52" : "ml-0"} p-4 pt-24`}>
         {children ? children : <Outlet />}
       </main>
-      <Footer />
-    </>
+      <Footer >
+        <p className="text-sm">Copyright © 2024</p>
+      </Footer >
+    </div>
   );
 }
 

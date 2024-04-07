@@ -12,6 +12,7 @@ import getFromStorage from "../../Service/getFromStorage";
 import { useEffect } from "react";
 import { useParams } from "react-router";
 import { getData } from "../../Api/api";
+import Layout from "../../Components/ui/Layout";
 const EditProductForm = () => {
   const navigate = useNavigate();
   const { productId, productName } = useParams();
@@ -133,7 +134,7 @@ const EditProductForm = () => {
   ];
 
   return (
-    <>
+    <Layout>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <H2>Editar producto</H2>
@@ -252,7 +253,7 @@ const EditProductForm = () => {
           </form>
         </div>
       </div>
-    </>
+      </Layout>
   );
 };
 
