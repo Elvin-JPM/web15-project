@@ -8,6 +8,7 @@ import Filters from "../../Components/ui/Filters";
 import FilteredProducts from "./FilteredProducts";
 import useProductSearch from "../../Hooks/useProductSearch";
 import SweetAlert from "../../Components/ui/SweetAlert";
+import getFromStorage from "../../Service/getFromStorage";
 import { Skeleton } from "../../Components/skeleton";
 
 const Products = () => {
@@ -100,7 +101,7 @@ const Products = () => {
 
   //   getProducts();
   // }, [pageNumber, getData]);
-
+  const token = getFromStorage("jwt");
   return (
     <section className="container mx-auto font-sans antialiased">
       <Filters
@@ -112,7 +113,7 @@ const Products = () => {
         onChange={onFilterChange}
         onTagsChange={handleTagsChange}
       />
-      <ProductTitle />
+    { token ? '' : <ProductTitle /> }
 
       <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
         {products.map((product, index) => {

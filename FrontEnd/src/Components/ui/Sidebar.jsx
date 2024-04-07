@@ -29,12 +29,12 @@ function Sidebar() {
   return (
     <aside
     id="sidebar"
-    className="fixed border left-0 top-0 z-40 h-full bg-white border-color-gray w-64 px-10"
+    className="fixed border left-0 top-0 z-40 h-full bg-white border-color-gray w-30 px-10"
     aria-label="Sidebar"
   >
       <nav
         role="navigation"
-        className="m-1 flex h-full flex-col  gap-2 pb-4 pt-24"
+        className="m-1 flex h-full flex-col  gap-2 pb-4 pt-20"
       >
          <div className="flex items-center px-1">
           <Button
@@ -68,7 +68,7 @@ function Sidebar() {
               Mi Perfil
             </NavLink>
             
-            <div className="absolute bottom-6  lex items-center px-1">
+            <div className="absolute bottom-20 flex items-center px-1">
             <Button
               type="submit"
               name={token ? "logout" : "login"}

@@ -12,7 +12,7 @@ function Filters({
 }) {
   const tags = ['Motor', 'Electronics', 'Lifestyle', 'Work'];
   return (
-    <div className='bg-gray-100 rounded-lg p-2'>
+    <div className='bg-gray-100 rounded-lg p-2 mb-10'>
       <div className='flex flex-wrap place-content-around gap-2'>
         <div className='col-span-5 grow shrink-0'>
           <Input
