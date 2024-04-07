@@ -3,7 +3,7 @@ import React from 'react';
 function Logo() {
 	return (
 		<svg
-			className='h-10  fill-current text-primary  mx-auto'
+			className='h-8  fill-current text-primary  mx-auto sm:{Icon}'
 			xmlns='http://www.w3.org/2000/svg'
 			x='0'
 			y='0'

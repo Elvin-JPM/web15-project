@@ -91,6 +91,10 @@ function MyProfile() {
 
   console.log(newData);
 
+  const handleReturn = () =>{
+    navigate('/products')
+  }
+
   return (
     <>
       <Header />
@@ -98,39 +102,45 @@ function MyProfile() {
         <Icon />
         <H2>Editar Perfil</H2>
         <form>
+        <div className="mb-4">
           <Label>email: </Label>
           <Input
             name="email"
             value={newData.email}
             onChange={onDataChange}
           ></Input>
-          <br></br>
-          <Label>username: </Label>
-          <Input
-            name="username"
-            onChange={onDataChange}
-            value={newData.username}
-          />
-          <br></br>
-          <Label>New Password: </Label>
-          <Input
-            name="newPassword"
-            onChange={onDataChange}
-            value={newData.newPassword}
-            placeholder="In case you want to change it..."
-          />
-          <br></br>
-          <Label>Confirm New Password: </Label>
-          <Input
-            name="confirmNewPassword"
-            onChange={onDataChange}
-            value={newData.confirmNewPassword}
-            placeholder="Confirm your new password"
-          />
+            </div>
+            <div className="mb-4">
+            <Label>username:</Label>
+            <Input
+              name="username"
+              onChange={onDataChange}
+              value={newData.username}
+            />
+          </div>
+          <div className="mb-4">
+            <Label>New Password:</Label>
+            <Input
+              name="newPassword"
+              onChange={onDataChange}
+              value={newData.newPassword}
+              placeholder="In case you want to change it..."
+            />
+          </div>
+          <div className="mb-4">
+            <Label>Confirm New Password:</Label>
+            <Input
+              name="confirmNewPassword"
+              onChange={onDataChange}
+              value={newData.confirmNewPassword}
+              placeholder="Confirm your new password"
+            />
+          </div>
         </form>
-        <br></br>
+        <div className="mb-4">
         <Button onClick={deleteMyUser}>Delete my user</Button>
-        <br></br>
+        </div>
+        <div className="mb-4">
         <Button
           disabled={
             !(
@@ -143,6 +153,10 @@ function MyProfile() {
         >
           Update my data
         </Button>
+        </div>
+        <div className="mb-4">
+        <Button onClick={handleReturn}>Volver</Button>
+        </div>
       </div>
     </>
   );

@@ -10,6 +10,7 @@ import Layout from './Layout';
 import Button_large from './Button_large';
 //import Card from './Card';
 import Icon_product from './Icon_product';
+import IconUser from './Icon_user'
 
 export {
 	Button,
@@ -24,6 +25,7 @@ export {
 	Button_large,
 	//Card,
 	Icon_product,
+	IconUser,
 };
 
 export {

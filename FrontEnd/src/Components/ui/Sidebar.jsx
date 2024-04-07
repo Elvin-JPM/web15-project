@@ -29,12 +29,12 @@ function Sidebar() {
   return (
     <aside
     id="sidebar"
-    className="fixed border left-0 top-0 z-40 h-full bg-white border-color-gray w-64"
+    className="fixed border left-0 top-0 z-40 h-full bg-white border-color-gray w-64 px-10"
     aria-label="Sidebar"
   >
       <nav
         role="navigation"
-        className="m-1 flex h-full flex-col  gap-2 pb-4 pt-20"
+        className="m-1 flex h-full flex-col  gap-2 pb-4 pt-24"
       >
          <div className="flex items-center px-1">
           <Button
@@ -48,7 +48,7 @@ function Sidebar() {
           </Button>
        
         </div>
-        <Label>{username ? ` Hello ${username}` : ""}</Label>
+        <Label className='text-md text-gray-500 pb-5'>{username ? ` Hello ${username}` : ""}</Label>
            <NavLink to="/products/new" className="mr-5 hover:text-gray-900">
               Crear Anuncio{" "}
             </NavLink>
@@ -68,14 +68,14 @@ function Sidebar() {
               Mi Perfil
             </NavLink>
             
-        <div className="flex items-center px-1">
-        <Button
-          type="submit"
-          name={token ? "logout" : "login"}
-          onClick={buttonClick}
-        >
-          {token ? "Cerrar sesión" : "Regístrate o inicia sesión"}
-        </Button>
+            <div className="absolute bottom-6  lex items-center px-1">
+            <Button
+              type="submit"
+              name={token ? "logout" : "login"}
+              onClick={buttonClick}
+            >
+              {token ? "Cerrar sesión" : "Regístrate o inicia sesión"}
+            </Button>
   
         </div>
       </nav>
