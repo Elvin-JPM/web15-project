@@ -9,15 +9,15 @@ function Layout({ children }) {
   return (
     <>
       <Header className="" />
-     { token && <Sidebar /> }
-     <main className={
-        "h-full p-4 pt-24",
-        token
-          ? "ml-64 h-full p-4 pt-28"
-          : "ml-0 h-full p-4 pt-28"
-      } >
-          {children ? children : <Outlet />}
-        </main>
+      {token && <Sidebar />}
+      <main
+        className={
+          ("h-full p-4 pt-24",
+          token ? "ml-64 h-full p-4 pt-28" : "ml-0 h-full p-4 pt-28")
+        }
+      >
+        {children ? children : <Outlet />}
+      </main>
       <Footer />
     </>
   );

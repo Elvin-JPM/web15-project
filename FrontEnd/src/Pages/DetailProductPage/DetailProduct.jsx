@@ -11,6 +11,7 @@ import TwitterShareButton from "../../Components/TwitterShare";
 import Chat from "../Chat/Chat";
 import SweetAlert from "../../Components/ui/SweetAlert";
 import Header from "../../Components/ui/Header";
+import styles from "../DetailProductPage/product_chats.module.css";
 
 function DetailProduct() {
   const navigate = useNavigate();
@@ -96,7 +97,7 @@ function DetailProduct() {
 
   return (
     product && (
-      <div className="max-w-xl  mx-auto p-5">
+      <div className={`${styles.product_detail_page} max-w-xl  mx-auto p-5`}>
         {/* Nombre del propietario del anuncio */}
         {
           <p>
@@ -147,25 +148,43 @@ function DetailProduct() {
             onConfirm={() => setShowSweetAlertProductAdded(false)}
           />
         )}
-        {productChats &&
-          productChats.map((chat) => {
-            return (
-              <div
-                onClick={() =>
-                  openChat(
-                    chat.productId,
-                    chat.owner,
-                    chat.client,
-                    product.name
-                  )
-                }
-              >
-                <div key={chat._id}>
-                  {chat._id}: {chat.client}
+
+        <div className={styles.chats}>
+          <h4>Chats for this product</h4>
+          {productChats &&
+            productChats
+              .sort((a, b) => {
+                const dateA =
+                  a.messages.length > 0
+                    ? new Date(a.messages.slice(-1)[0].date)
+                    : null;
+                const dateB =
+                  b.messages.length > 0
+                    ? new Date(b.messages.slice(-1)[0].date)
+                    : null;
+
+                return dateB - dateA;
+              })
+              .map((chat) => (
+                <div
+                  className={styles.chat_item}
+                  key={chat._id}
+                  onClick={() =>
+                    openChat(
+                      chat.productId,
+                      chat.owner,
+                      chat.client,
+                      product.name
+                    )
+                  }
+                >
+                  <div>
+                    <p>Chat with: {chat.client}</p>
+                    <p>Last message: {chat.messages.slice(-1)[0].message}</p>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              ))}
+        </div>
       </div>
     )
   );
