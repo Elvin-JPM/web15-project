@@ -85,10 +85,10 @@ function DetailProduct() {
     }
   }, [loggedUser, product]);
 
-  const openChat = (productId, owner, client) => {
+  const openChat = (productId, owner, client, productName) => {
     if (product) {
       console.log("from openChat", product);
-      navigate(`/chat/${owner}/${productId}`, {
+      navigate(`/chat/${owner}/${productName}/${productId}`, {
         state: { owner, client, productId },
       });
     }
@@ -120,7 +120,9 @@ function DetailProduct() {
           ""
         ) : (
           <Button
-            onClick={() => openChat(product._id, product.owner, loggedUser)}
+            onClick={() =>
+              openChat(product._id, product.owner, loggedUser, product.name)
+            }
           >
             Chat
           </Button>
@@ -150,7 +152,12 @@ function DetailProduct() {
             return (
               <div
                 onClick={() =>
-                  openChat(chat.productId, chat.owner, chat.client)
+                  openChat(
+                    chat.productId,
+                    chat.owner,
+                    chat.client,
+                    product.name
+                  )
                 }
               >
                 <div key={chat._id}>

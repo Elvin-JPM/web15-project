@@ -8,9 +8,12 @@ import styles from "../Chat/chat.module.css";
 import Header from "../../Components/ui/Header";
 import Button from "../../Components/ui/Button";
 import Footer from "../../Components/ui/Footer";
+import getTimeAgo from "../../Service/getTimeAgo";
+import sendSVG from "../Chat/send-message-2-2.svg";
+import sendMessageIcon from "../Chat/send-message.png";
 
 function Chat() {
-  const { owner, productId } = useParams();
+  const { owner, productId, productName } = useParams();
   const location = useLocation();
   const { client } = location.state;
   const [messages, setMessages] = useState([]);
@@ -90,19 +93,38 @@ function Chat() {
       <Header />
 
       <div className={styles.chat}>
+        <div className={styles.receiver}>
+          Chat with {receiver} about {productName}
+        </div>
         <div className={styles.messagesBox}>
           {messages.length === 0
             ? "No messages yet..."
-            : messages.map((msg, index) => <p key={index}>{msg.message}</p>)}
+            : messages.map((msg, index) => (
+                <div
+                  className={`${
+                    msg.from === loggedUser
+                      ? styles["loggedUser-message"]
+                      : styles["receiver-message"]
+                  } ${styles["message"]}`}
+                  key={index}
+                >
+                  <p>{msg.message}</p>
+                  <time className={styles.time} dateTime={msg.date}>
+                    {getTimeAgo(msg.date)}
+                  </time>
+                </div>
+              ))}
         </div>
-        <textarea
-          placeholder="Start typing..."
-          className={styles.textarea}
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-        />
-        <Button onClick={sendMessage}>Send</Button>
+        <div className={styles.createMessage}>
+          <input
+            placeholder="Start typing..."
+            className={styles.input}
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+          />
+          <Button onClick={sendMessage}>Send</Button>
+        </div>
       </div>
 
       <Footer>Footer</Footer>
