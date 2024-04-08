@@ -8,12 +8,13 @@ function useProductSearch(query, pageNumber) {
   const [products, setProducts] = useState([]);
   const [hasMore, setHasMore] = useState(false);
 
-  const { name, minPrice, maxPrice, tagsArray } = query;
+  const { name, saleParam, minPrice, maxPrice, tagsArray } = query;
   const tags = tagsArray.join(",");
+  const sale = saleParam === "Sale" ? true : saleParam === "Buy" ? false : "";
 
   useEffect(() => {
     setProducts([]);
-  }, [name, minPrice, maxPrice, tags]);
+  }, [name, sale, minPrice, maxPrice, tags]);
 
   useEffect(() => {
     setLoading(true);
@@ -22,7 +23,7 @@ function useProductSearch(query, pageNumber) {
     axios({
       method: "GET",
       url: `${BASE_URL}/products`,
-      params: { name, minPrice, maxPrice, tags, page: pageNumber },
+      params: { name, sale, minPrice, maxPrice, tags, page: pageNumber },
       cancelToken: new axios.CancelToken((c) => (cancel = c)),
     })
       .then((res) => {
@@ -38,7 +39,7 @@ function useProductSearch(query, pageNumber) {
       });
 
     return () => cancel(); // Cleanup function to cancel the request
-  }, [name, minPrice, maxPrice, tags, pageNumber]);
+  }, [name, sale, minPrice, maxPrice, tags, pageNumber]);
 
   return { loading, error, products, hasMore };
 }

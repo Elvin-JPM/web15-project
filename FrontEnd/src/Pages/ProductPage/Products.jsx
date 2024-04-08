@@ -5,7 +5,7 @@ import ProductTitle from "./ProducTitle";
 import { getData } from "../../Api/api";
 import Product from "./Product";
 import Filters from "../../Components/ui/Filters";
-import FilteredProducts from "./FilteredProducts";
+//import FilteredProducts from "./FilteredProducts";
 import useProductSearch from "../../Hooks/useProductSearch";
 import SweetAlert from "../../Components/ui/SweetAlert";
 import getFromStorage from "../../Service/getFromStorage";
@@ -36,6 +36,7 @@ const Products = () => {
 
   const query = {
     name: filterValues.name,
+    saleParam: filterValues.sale,
     minPrice: filterValues.minPrice,
     maxPrice: filterValues.maxPrice,
     tagsArray: selectedTags,
@@ -113,7 +114,7 @@ const Products = () => {
         onChange={onFilterChange}
         onTagsChange={handleTagsChange}
       />
-    { token ? '' : <ProductTitle /> }
+      {token ? "" : <ProductTitle />}
 
       <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
         {products.map((product, index) => {

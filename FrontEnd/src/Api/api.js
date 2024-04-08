@@ -8,7 +8,7 @@ export async function postData(endpoint, requestBody, headers) {
     });
     return response;
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error("Error posting data:", error);
   }
 }
 
@@ -17,7 +17,7 @@ export async function getData(endpoint, requestHeaders) {
     const response = await axios.get(BASE_URL + endpoint, requestHeaders);
     return response.data;
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error("Error getting data:", error);
   }
 }
 

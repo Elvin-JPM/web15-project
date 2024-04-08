@@ -52,19 +52,24 @@ class ProductListController {
   async listProducts(req, res, next) {
     try {
       const filterByName = req.query.name;
+      const filterBySale = req.query.sale;
       const filterByTags = req.query.tags;
       const filterMinPrice = req.query.minPrice;
       const filterMaxPrice = req.query.maxPrice;
 
       // Pagination
       const page = req.query.page ? parseInt(req.query.page) : 1;
-      const limit = req.query.limit ? parseInt(req.query.limit) : 16;
+      const limit = req.query.limit ? parseInt(req.query.limit) : 4;
       const skip = (page - 1) * limit;
 
       const filter = {};
 
       if (filterByName) {
         filter.name = new RegExp("^" + filterByName, "i"); // not case sensitive
+      }
+
+      if (filterBySale) {
+        filter.sale = filterBySale;
       }
 
       if (filterByTags) {

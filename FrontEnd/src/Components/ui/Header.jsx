@@ -10,6 +10,7 @@ import { useState } from "react";
 import getFromStorage from "../../Service/getFromStorage";
 import Logo from "./Logo";
 import IconUser from "./Icon_user";
+import styles from "../ui/headerActiveLink.module.css";
 
 function Header() {
   const [isLogged, setIsLogged] = useState(null);
@@ -32,49 +33,82 @@ function Header() {
   return (
     <header className="border border-gray-100 fixed top-0 z-50 w-full bg-white text-gray-600 body-font">
       <div className="container mx-auto flex flex-wrap p-3 flex-col md:flex-row items-center">
-      <NavLink
+        <NavLink
           to="/"
           className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
         >
-        
-        <div className="sm:hidden">
-          <Icon />
-        </div>
-        <div className="hidden sm:block md:hidden">
-          <Logo />
-        </div>
-        <div className="hidden md:block">
-          <Logo />
-        </div>
+          <div className="sm:hidden">
+            <Icon />
+          </div>
+          <div className="hidden sm:block md:hidden">
+            <Logo />
+          </div>
+          <div className="hidden md:block">
+            <Logo />
+          </div>
         </NavLink>
-      
-  
 
         <nav className="md:ml-auto flex flex-wrap items-center text-base justify-between">
-          {token === '' && (
-            <Button  onClick={buttonClick}>
-              Iniciar sesión
-            </Button>
+          {token === "" && (
+            <Button onClick={buttonClick}>Iniciar sesión</Button>
           )}
           {token && (
             <>
-              <NavLink to="/products/new" className="mr-5 hover:text-gray-900">
-                Crear Anuncio
+              <NavLink
+                to="/products/new"
+                className={`mr-5 hover:text-gray-900`}
+                style={({ isActive }) => ({
+                  backgroundColor: isActive ? "#54acb4" : "",
+                  transform: isActive ? "skewX(-4deg)" : "",
+                  color: isActive ? "white" : "",
+                  padding: "3px",
+                  fontWeight: isActive ? "500" : "",
+                })}
+              >
+                Create Ad
               </NavLink>
-              <NavLink to="/products/list/me" className="mr-5 hover:text-gray-900">
-                Mis Anuncios
+              <NavLink
+                to="/products/list/me"
+                className={`mr-5 hover:text-gray-900`}
+                style={({ isActive }) => ({
+                  backgroundColor: isActive ? "#54acb4" : "",
+                  transform: isActive ? "skewX(-4deg)" : "",
+                  color: isActive ? "white" : "",
+                  padding: "3px",
+                  fontWeight: isActive ? "500" : "",
+                })}
+              >
+                My Ads
               </NavLink>
-              <NavLink to={`/${username}/favs`} className="mr-5 hover:text-gray-900">
-                Favoritos
+              <NavLink
+                to={`/${username}/favs`}
+                className={`mr-5 hover:text-gray-900`}
+                style={({ isActive }) => ({
+                  backgroundColor: isActive ? "#54acb4" : "",
+                  transform: isActive ? "skewX(-4deg)" : "",
+                  color: isActive ? "white" : "",
+                  padding: "3px",
+                  fontWeight: isActive ? "500" : "",
+                })}
+              >
+                Favorites
               </NavLink>
-              <NavLink to="/mi-perfil" className="mr-5 hover:text-gray-900 w-14 h-14 border rounded-full p-4">
-                {username ? <span ><IconUser /></span>  : ""}
+              <NavLink
+                to="/mi-perfil"
+                className="mr-5 hover:text-gray-900 w-14 h-14 border rounded-full p-4"
+              >
+                {username ? (
+                  <span>
+                    <IconUser />
+                  </span>
+                ) : (
+                  ""
+                )}
               </NavLink>
             </>
           )}
         </nav>
 
-       
         {/* <Button
           type="submit"
           name={token ? "logout" : "login"}
