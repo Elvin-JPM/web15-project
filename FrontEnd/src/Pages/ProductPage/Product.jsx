@@ -29,7 +29,7 @@ function Product({ product, children }) {
             className="h-64 w-full object-cover rounded-md transition duration-300 group-hover:scale-105 sm:h-72"
           />
           <span className="relative bottom-8 left-2 z-10 px-3 py-1.5 text-xs font-medium bg-primary text-white rounded-full">
-            {product.sale ? "Sell" : "Buy"}
+            {product.sale ? "For Sale" : "Looking to buy"}
           </span>
         </CardTitle>
         <CardContent>

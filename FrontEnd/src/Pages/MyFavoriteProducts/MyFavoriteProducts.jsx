@@ -32,11 +32,9 @@ const MyFavoriteProducts = () => {
 
   return (
     <div>
-      <Layout>
-        {products.map((product) => (
-          <Product key={product._id} product={product} />
-        ))}
-      </Layout>
+      {products.map((product) => (
+        <Product key={product._id} product={product} />
+      ))}
     </div>
   );
 };

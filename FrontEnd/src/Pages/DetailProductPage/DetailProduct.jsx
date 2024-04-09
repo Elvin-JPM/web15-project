@@ -12,6 +12,8 @@ import Chat from "../Chat/Chat";
 import SweetAlert from "../../Components/ui/SweetAlert";
 import Header from "../../Components/ui/Header";
 import styles from "../DetailProductPage/product_chats.module.css";
+import facebookLogo from "../DetailProductPage/facebook.png";
+import twitterLogo from "../DetailProductPage/twitter.png";
 
 function DetailProduct() {
   const navigate = useNavigate();
@@ -131,14 +133,19 @@ function DetailProduct() {
         <section className="mt-4">
           <Product product={product} />
         </section>
-        <div>
+        <div className={styles.share}>
+          <p>Share:</p>
           <FacebookShareButton
             url={`http://localhost:5173/products/${productName}/${productId}`}
-          />
+          >
+            <img src={facebookLogo} className={styles.image}></img>
+          </FacebookShareButton>
           <TwitterShareButton
             url={`http://localhost:5173/products/${productName}/${productId}`}
             text="Check out this product!"
-          />
+          >
+            <img src={twitterLogo} className={styles.image}></img>
+          </TwitterShareButton>
         </div>
         {showSweetAlertProductAdded && (
           <SweetAlert
@@ -149,42 +156,47 @@ function DetailProduct() {
           />
         )}
 
-        <div className={styles.chats}>
-          <h4>Chats for this product</h4>
-          {productChats &&
-            productChats
-              .sort((a, b) => {
-                const dateA =
-                  a.messages.length > 0
-                    ? new Date(a.messages.slice(-1)[0].date)
-                    : null;
-                const dateB =
-                  b.messages.length > 0
-                    ? new Date(b.messages.slice(-1)[0].date)
-                    : null;
+        {loggedUser === product.owner && (
+          <div className={styles.chats}>
+            <h3>Chats for this product</h3>
+            {productChats &&
+              productChats
+                .sort((a, b) => {
+                  const dateA =
+                    a.messages.length > 0
+                      ? new Date(a.messages.slice(-1)[0].date)
+                      : null;
+                  const dateB =
+                    b.messages.length > 0
+                      ? new Date(b.messages.slice(-1)[0].date)
+                      : null;
 
-                return dateB - dateA;
-              })
-              .map((chat) => (
-                <div
-                  className={styles.chat_item}
-                  key={chat._id}
-                  onClick={() =>
-                    openChat(
-                      chat.productId,
-                      chat.owner,
-                      chat.client,
-                      product.name
-                    )
-                  }
-                >
-                  <div>
-                    <p>Chat with: {chat.client}</p>
-                    <p>Last message: {chat.messages.slice(-1)[0].message}</p>
+                  return dateB - dateA;
+                })
+                .map((chat) => (
+                  <div
+                    className={styles.chat_item}
+                    key={chat._id}
+                    onClick={() =>
+                      openChat(
+                        chat.productId,
+                        chat.owner,
+                        chat.client,
+                        product.name
+                      )
+                    }
+                  >
+                    <div>
+                      <p>
+                        Chat with:{" "}
+                        <span className={styles.username}>{chat.client}</span>
+                      </p>
+                      <p>Last message: {chat.messages.slice(-1)[0].message}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
-        </div>
+                ))}
+          </div>
+        )}
       </div>
     )
   );

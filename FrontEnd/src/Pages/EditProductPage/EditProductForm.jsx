@@ -93,7 +93,7 @@ const EditProductForm = () => {
         }
       );
       console.log("Edit product:", response);
-      response && localStorage.setItem('mostrarSweetAlert', 'true')
+      response && localStorage.setItem("mostrarSweetAlert", "true");
       response && navigate(`/products/${values.name}/${productId}`);
     } catch (error) {
       console.log(error.message);
@@ -134,126 +134,124 @@ const EditProductForm = () => {
   ];
 
   return (
-    <Layout>
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <H2>Editar producto</H2>
-        </div>
-
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            {inputs.map((input) => (
-              <div key={input.id}>
-                <Label htmlFor={input.name}>{input.label}</Label>
-                <div className="mt-2">
-                  <Input
-                    id={input.name}
-                    name={input.name}
-                    type={input.type}
-                    placeholder={input.placeholder}
-                    autoComplete={input.name}
-                    value={values[input.name]}
-                    required={input.required}
-                    pattern={input.pattern}
-                    errorMessage={input.errorMessage}
-                    onChange={onChange}
-                  />
-                </div>
-              </div>
-            ))}
-
-            <Label>Previous image: {previousImage}</Label>
-            <Label htmlFor="imageInput">Select an Image:</Label>
-            <Input
-              type="file"
-              id="imageInput"
-              name="photo"
-              required
-              accept="image/*" // Specify that only image files are allowed
-              onChange={handleImageChange}
-            />
-
-            <Label>Selling or buying:</Label>
-            <label>
-              <input
-                type="radio"
-                id="sell"
-                name="sale"
-                value="selling"
-                checked={values.sale === "selling"}
-                onChange={onChange}
-              />
-              For sale
-            </label>
-            <br></br>
-            <label>
-              <input
-                type="radio"
-                id="buy"
-                name="sale"
-                value="buying"
-                checked={values.sale === "buying"}
-                onChange={onChange}
-              />
-              Looking to buy
-            </label>
-
-            <br></br>
-            <label>Tags:</label>
-
-            <div>
-              <input
-                type="checkbox"
-                id="Motor"
-                value="Motor"
-                checked={selectedTags.includes("Motor")}
-                onChange={() => handleTagsChange("Motor")}
-              />
-              <label htmlFor="Motor">Motor</label>
-            </div>
-
-            <div>
-              <input
-                type="checkbox"
-                id="Work"
-                value="Work"
-                checked={selectedTags.includes("Work")}
-                onChange={() => handleTagsChange("Work")}
-              />
-              <label htmlFor="Work">Work</label>
-            </div>
-
-            <div>
-              <input
-                type="checkbox"
-                id="Lifestyle"
-                value="Lifestyle"
-                checked={selectedTags.includes("Lifestyle")}
-                onChange={() => handleTagsChange("Lifestyle")}
-              />
-              <label htmlFor="Lifestyle">Lifestyle</label>
-            </div>
-
-            <div>
-              <input
-                type="checkbox"
-                id="Electronics"
-                value="Electronics"
-                checked={selectedTags.includes("Electronics")}
-                onChange={() => handleTagsChange("Electronics")}
-              />
-              <label htmlFor="Electronics">Electronics</label>
-            </div>
-
-            <div>
-              <Button_large type="submit" onClick={handleSubmit}>
-                Editar producto
-              </Button_large>
-            </div>
-          </form>
-        </div>
+    <div className="flex min-h-full flex-1 flex-col justify-center px-6 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <H2>Editar producto</H2>
       </div>
-      </Layout>
+
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <form className="space-y-6" onSubmit={handleSubmit}>
+          {inputs.map((input) => (
+            <div key={input.id}>
+              <Label htmlFor={input.name}>{input.label}</Label>
+              <div className="mt-2">
+                <Input
+                  id={input.name}
+                  name={input.name}
+                  type={input.type}
+                  placeholder={input.placeholder}
+                  autoComplete={input.name}
+                  value={values[input.name]}
+                  required={input.required}
+                  pattern={input.pattern}
+                  errorMessage={input.errorMessage}
+                  onChange={onChange}
+                />
+              </div>
+            </div>
+          ))}
+
+          <Label>Previous image: {previousImage}</Label>
+          <Label htmlFor="imageInput">Select an Image:</Label>
+          <Input
+            type="file"
+            id="imageInput"
+            name="photo"
+            required
+            accept="image/*" // Specify that only image files are allowed
+            onChange={handleImageChange}
+          />
+
+          <Label>Selling or buying:</Label>
+          <label>
+            <input
+              type="radio"
+              id="sell"
+              name="sale"
+              value="selling"
+              checked={values.sale === "selling"}
+              onChange={onChange}
+            />
+            For sale
+          </label>
+          <br></br>
+          <label>
+            <input
+              type="radio"
+              id="buy"
+              name="sale"
+              value="buying"
+              checked={values.sale === "buying"}
+              onChange={onChange}
+            />
+            Looking to buy
+          </label>
+
+          <br></br>
+          <label>Tags:</label>
+
+          <div>
+            <input
+              type="checkbox"
+              id="Motor"
+              value="Motor"
+              checked={selectedTags.includes("Motor")}
+              onChange={() => handleTagsChange("Motor")}
+            />
+            <label htmlFor="Motor">Motor</label>
+          </div>
+
+          <div>
+            <input
+              type="checkbox"
+              id="Work"
+              value="Work"
+              checked={selectedTags.includes("Work")}
+              onChange={() => handleTagsChange("Work")}
+            />
+            <label htmlFor="Work">Work</label>
+          </div>
+
+          <div>
+            <input
+              type="checkbox"
+              id="Lifestyle"
+              value="Lifestyle"
+              checked={selectedTags.includes("Lifestyle")}
+              onChange={() => handleTagsChange("Lifestyle")}
+            />
+            <label htmlFor="Lifestyle">Lifestyle</label>
+          </div>
+
+          <div>
+            <input
+              type="checkbox"
+              id="Electronics"
+              value="Electronics"
+              checked={selectedTags.includes("Electronics")}
+              onChange={() => handleTagsChange("Electronics")}
+            />
+            <label htmlFor="Electronics">Electronics</label>
+          </div>
+
+          <div>
+            <Button_large type="submit" onClick={handleSubmit}>
+              Editar producto
+            </Button_large>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };
 

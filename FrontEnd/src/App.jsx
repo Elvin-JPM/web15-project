@@ -32,7 +32,9 @@ function App() {
               path="/mi-perfil"
               element={
                 <RequireAuth>
-                  <MyProfile />
+                  <Layout>
+                    <MyProfile />
+                  </Layout>
                 </RequireAuth>
               }
             />
@@ -61,7 +63,9 @@ function App() {
               path="/edit/:productId/:productName"
               element={
                 <RequireAuth>
-                  <EditProduct />
+                  <Layout>
+                    <EditProduct />
+                  </Layout>
                 </RequireAuth>
               }
             />
@@ -69,7 +73,9 @@ function App() {
               path="/:owner/favs"
               element={
                 <RequireAuth>
-                  <MyFavoriteProducts />
+                  <Layout>
+                    <MyFavoriteProducts />
+                  </Layout>
                 </RequireAuth>
               }
             ></Route>
@@ -78,7 +84,9 @@ function App() {
               path="/chat/:owner/:productName/:productId"
               element={
                 <RequireAuth>
-                  <Chat />
+                  <Layout>
+                    <Chat />
+                  </Layout>
                 </RequireAuth>
               }
             ></Route>

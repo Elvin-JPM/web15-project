@@ -91,26 +91,25 @@ function MyProfile() {
 
   console.log(newData);
 
-  const handleReturn = () =>{
-    navigate('/products')
-  }
+  const handleReturn = () => {
+    navigate("/products");
+  };
 
   return (
     <>
-      <Header />
       <div className="max-w-xl mx-auto p-5 mt-24">
         <Icon />
         <H2>Editar Perfil</H2>
         <form>
-        <div className="mb-4">
-          <Label>email: </Label>
-          <Input
-            name="email"
-            value={newData.email}
-            onChange={onDataChange}
-          ></Input>
-            </div>
-            <div className="mb-4">
+          <div className="mb-4">
+            <Label>email: </Label>
+            <Input
+              name="email"
+              value={newData.email}
+              onChange={onDataChange}
+            ></Input>
+          </div>
+          <div className="mb-4">
             <Label>username:</Label>
             <Input
               name="username"
@@ -138,24 +137,24 @@ function MyProfile() {
           </div>
         </form>
         <div className="mb-4">
-        <Button onClick={deleteMyUser}>Delete my user</Button>
+          <Button onClick={deleteMyUser}>Delete my user</Button>
         </div>
         <div className="mb-4">
-        <Button
-          disabled={
-            !(
-              newData.newPassword === newData.confirmNewPassword &&
-              (newData.username !== userData.username ||
-                newData.email !== userData.email)
-            )
-          }
-          onClick={updateMyData}
-        >
-          Update my data
-        </Button>
+          <Button
+            disabled={
+              !(
+                newData.newPassword === newData.confirmNewPassword &&
+                (newData.username !== userData.username ||
+                  newData.email !== userData.email)
+              )
+            }
+            onClick={updateMyData}
+          >
+            Update my data
+          </Button>
         </div>
         <div className="mb-4">
-        <Button onClick={handleReturn}>Volver</Button>
+          <Button onClick={handleReturn}>Volver</Button>
         </div>
       </div>
     </>

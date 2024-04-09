@@ -159,11 +159,11 @@ import getFromStorage from "../../Service/getFromStorage";
 import { getSocket } from "../../Service/socketManager";
 import { useLocation, useParams } from "react-router-dom";
 import { postData, putData } from "../../Api/api";
+import MessageBox from "./MessageBox";
 import styles from "../Chat/chat.module.css";
 import Header from "../../Components/ui/Header";
 import Button from "../../Components/ui/Button";
 import Footer from "../../Components/ui/Footer";
-import getTimeAgo from "../../Service/getTimeAgo";
 
 function Chat() {
   const { owner, productId, productName } = useParams();
@@ -190,6 +190,7 @@ function Chat() {
     socket.emit("chat message", newMessage);
     setNewMessage({ newMessage });
 
+    // After emitting the message, update it on the database
     try {
       const updatedChat = await putData(
         `/chat/${currentChat._id}`,
@@ -210,6 +211,7 @@ function Chat() {
     setInput("");
   }, [socket, input, sender, currentChat, token]);
 
+  // Updating the messages state after receiving a message
   useEffect(() => {
     socket.on("chat message", (msg) => {
       console.log("Recibiendo mensaje para:", loggedUser, msg);
@@ -217,6 +219,7 @@ function Chat() {
     });
   }, [socket, messages, loggedUser]);
 
+  // Find or create the chat as soon as the chat page is open
   useEffect(() => {
     const createChat = async () => {
       try {
@@ -234,6 +237,7 @@ function Chat() {
     createChat();
   }, [newMessage]);
 
+  // Emit an event specifying the sender and receiver of the message for this chat
   useEffect(() => {
     if (owner) {
       socket.emit("setSocketUsername", sender);
@@ -243,11 +247,11 @@ function Chat() {
 
   return (
     <div className={styles.chatPage}>
-      <Header />
-
       <div className={styles.chat}>
         <div className={styles.receiver}>
-          Chat with {receiver} about {productName}
+          <p>
+            Chat with {receiver} about {productName}
+          </p>
         </div>
         <MessageBox messages={messages} loggedUser={loggedUser} />
         <div className={styles.createMessage}>
@@ -261,41 +265,8 @@ function Chat() {
           <Button onClick={sendMessage}>Send</Button>
         </div>
       </div>
-
-      <Footer>Footer</Footer>
     </div>
   );
 }
-
-const MessageBox = ({ messages, loggedUser }) => {
-  const scrollableRef = useRef(null);
-  useEffect(() => {
-    if (scrollableRef.current) {
-      scrollableRef.current.scrollTop = scrollableRef.current.scrollHeight;
-    }
-  }, [messages]);
-
-  return (
-    <div ref={scrollableRef} className={styles.messagesBox}>
-      {messages.length === 0
-        ? "No messages yet..."
-        : messages.map((msg, index) => (
-            <div
-              className={`${
-                msg.from === loggedUser
-                  ? styles["loggedUser-message"]
-                  : styles["receiver-message"]
-              } ${styles["message"]}`}
-              key={index}
-            >
-              <p>{msg.message}</p>
-              <time className={styles.time} dateTime={msg.date}>
-                {getTimeAgo(msg.date)}
-              </time>
-            </div>
-          ))}
-    </div>
-  );
-};
 
 export default Chat;

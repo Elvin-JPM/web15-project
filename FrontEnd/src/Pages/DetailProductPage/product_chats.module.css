@@ -6,8 +6,7 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
-  /* height: fit-content; */
-  background-color: lightgray;
+  background-color: #f5f7f8;
   border-radius: 10px;
   padding: 10px;
   margin-top: 20px;
@@ -17,4 +16,24 @@
   background-color: #54acb4;
   border-radius: 10px;
   padding: 5px;
+  box-shadow: 3px 2px 4px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+
+.username {
+  color: #f5f7f8;
+}
+
+.share {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+}
+
+.image {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
 }

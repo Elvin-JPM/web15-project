@@ -3,6 +3,7 @@
   --secondary-text-color: black;
   --primary-color: #54acb4;
   --secondary-color: #45474b;
+  --chat-background-color: #f5f7f8;
 }
 
 body,
@@ -23,19 +24,18 @@ html {
   flex-direction: column;
   align-self: center;
   border-radius: 10px;
-  border: 1px solid #f5f7f8;
+  border: 1px solid var(--chat-background-color);
   margin-bottom: 20%;
   margin-top: 12rem;
   width: 60%;
-  background-color: #f5f7f8;
+  background-color: var(--chat-background-color);
 }
 
 .messagesBox {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0.5rem;
   height: 300px;
-  color: gray;
   overflow-y: auto;
   padding: 5%;
   margin-top: 0;
@@ -75,8 +75,9 @@ html {
 .time {
   display: flex;
   justify-content: flex-end;
-  font-size: 10px;
+  font-size: 9px;
   align-self: flex-end;
+  color: var(--chat-background-color);
   margin: 0;
   padding: 0;
 }
