@@ -33,6 +33,8 @@ const SendRecommendedProductsEmailController = require("./controllers/EmailRecom
 const GetAllChatsController = require("./controllers/GetAllChatsController");
 const FindOrCreateChatController = require("./controllers/FindOrCreateChatController");
 const InsertChatMessageController = require("./controllers/InsertChatMessageController");
+const CreateNewMessageNotification = require("./controllers/CreateNewMessageNotification");
+const FindUserNotifications = require("./controllers/FindUserNotifications");
 const jwtAuthMiddleware = require("./lib/jwtAuthMiddleware");
 
 const http = require("http");
@@ -106,7 +108,8 @@ const sendRecommendedProductsEmail =
 const getAllChatsController = new GetAllChatsController();
 const findOrCreateChatController = new FindOrCreateChatController();
 const insertChatMessageController = new InsertChatMessageController();
-
+const createNewMessageNotification = new CreateNewMessageNotification();
+const findUserNotifications = new FindUserNotifications();
 // Send emails of recommended products
 cron.schedule(
   "0 9 * * 1,4",
@@ -256,6 +259,9 @@ app.put(
   jwtAuthMiddleware,
   insertChatMessageController.insertChatMessage
 );
+
+app.post("/api/notifications", createNewMessageNotification.createNotification);
+app.get("/api/notifications/:recipient", findUserNotifications.findNotifications);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

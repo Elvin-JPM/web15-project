@@ -153,17 +153,15 @@
 
 // export default Chat;
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import { io } from "socket.io-client";
+import React, { useState, useEffect, useCallback } from "react";
+//import { io } from "socket.io-client";
 import getFromStorage from "../../Service/getFromStorage";
 import { getSocket } from "../../Service/socketManager";
 import { useLocation, useParams } from "react-router-dom";
 import { postData, putData } from "../../Api/api";
 import MessageBox from "./MessageBox";
 import styles from "../Chat/chat.module.css";
-import Header from "../../Components/ui/Header";
 import Button from "../../Components/ui/Button";
-import Footer from "../../Components/ui/Footer";
 
 function Chat() {
   const { owner, productId, productName } = useParams();
@@ -181,7 +179,14 @@ function Chat() {
   const sender = loggedUser;
   const receiver = sender === owner ? client : owner;
 
-  const sendMessage = useCallback(async () => {
+  const handleEnterKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      sendMessage();
+    }
+  };
+
+  const sendMessage = async () => {
     const newMessage = {
       message: input,
       from: sender,
@@ -202,6 +207,13 @@ function Chat() {
         { Authorization: `${token}` }
       );
       if (updatedChat) {
+        await postData("/notifications", {
+          recipient: receiver,
+          sender,
+          productId,
+          message: input,
+        });
+
         setCurrentChat(updatedChat);
         setMessages([...updatedChat.chat.messages]);
       }
@@ -209,7 +221,7 @@ function Chat() {
       console.log(error.message);
     }
     setInput("");
-  }, [socket, input, sender, currentChat, token]);
+  };
 
   // Updating the messages state after receiving a message
   useEffect(() => {
@@ -261,6 +273,7 @@ function Chat() {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleEnterKeyDown}
           />
           <Button onClick={sendMessage}>Send</Button>
         </div>

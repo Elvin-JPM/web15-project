@@ -11,9 +11,9 @@ import SweetAlert from "../../Components/ui/SweetAlert";
 import getFromStorage from "../../Service/getFromStorage";
 import { Skeleton } from "../../Components/skeleton";
 
+
 const Products = () => {
   const navigate = useNavigate();
-
   const [showSweetAlertProductAdded, setShowSweetAlertProductAdded] =
     useState(false);
 

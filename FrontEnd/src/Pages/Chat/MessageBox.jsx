@@ -1,7 +1,8 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, memo } from "react";
 import styles from "../Chat/chat.module.css";
 import getTimeAgo from "../../Service/getTimeAgo";
-const MessageBox = ({ messages, loggedUser }) => {
+
+const MessageBox = memo(({ messages, loggedUser }) => {
   const scrollableRef = useRef(null);
   useEffect(() => {
     if (scrollableRef.current) {
@@ -30,6 +31,6 @@ const MessageBox = ({ messages, loggedUser }) => {
           ))}
     </div>
   );
-};
+});
 
 export default MessageBox;
