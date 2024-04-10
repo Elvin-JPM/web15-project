@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {
     "initialProducts": [
         {
@@ -50,57 +49,4 @@
             "sold": false
         }
     ]
-=======
-{
-    "initialProducts": [
-        {
-            "name": "Bicicleta",
-            "photo": "prueba.png",
-            "description": "Bicicleta de montaña sin estrenar",
-            "sale": true,
-            "price": 50,
-            "tags": [ "lifestyle", "motor"],
-            "date": "02-02-2024",
-            "owner": "user1",
-            "reserved": false,
-            "sold": false
-        },
-        {
-            "name": "Portátil",
-            "photo": "pc.jpg",
-            "description": "Portátil i5",
-            "sale": false,
-            "price":650,
-            "tags": [ "lifestyle","work"],
-            "date": "02-02-2024",
-            "owner": "user1",
-            "reserved": false,
-            "sold": false
-        },
-        {
-            "name": "Aspirador",
-            "photo": "aspirador.jpg",
-            "description": "Aspirador sin cable con 10 horas de autonomía",
-            "sale": true,
-            "price": 150,
-            "tags": ["home"],
-            "date": "02-02-2024",
-            "owner": "user1",
-            "reserved": false,
-            "sold": false
-        },
-        {
-            "name": "Patines",
-            "photo": "patines.jpg",
-            "description": 70,
-            "sale": false,
-            "price": 50,
-            "tags": ["motor"],
-            "date": "02-02-2024",
-            "owner": "user1",
-            "reserved": false,
-            "sold": false
-        }
-    ]
->>>>>>> 5d1f2bc9574fb5efac5b8918a417fbfbe4d99d08
 }
