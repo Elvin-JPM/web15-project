@@ -71,7 +71,6 @@ function Filters({
               placeholder="Min"
               value={minPrice}
               onChange={handlePriceChange}
-              inputmode="numeric"
             />
           </div>
           <div className="">
@@ -82,7 +81,6 @@ function Filters({
               placeholder="Max"
               value={maxPrice}
               onChange={handlePriceChange}
-              inputmode="numeric"
             />
           </div>
         </div>
