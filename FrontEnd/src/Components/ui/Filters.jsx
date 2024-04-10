@@ -1,18 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import Input from "./Input";
 
 function Filters({
   name,
-  minPrice,
-  maxPrice,
+  initialMinPrice,
+  initialMaxPrice,
   selectedTags,
   sale,
   onChange,
   onTagsChange,
 }) {
+  const [minPrice, setMinPrice] = useState(initialMinPrice);
+  const [maxPrice, setMaxPrice] = useState(initialMaxPrice);
+
+  const handlePriceChange = (e) => {
+    const { name, value } = e.target;
+
+    // Convertir el valor a número
+    const newValue = parseFloat(value);
+
+    // Actualizar el estado según el nombre del campo
+    if (name === "minPrice") {
+      setMinPrice(newValue);
+      if (newValue > maxPrice) {
+        setMaxPrice(newValue);
+      }
+    } else if (name === "maxPrice") {
+      setMaxPrice(newValue);
+      if (newValue < minPrice) {
+        setMinPrice(newValue);
+      }
+    }
+
+    // Llamar a la función onChange con los nuevos valores
+    onChange(e, { name, value: newValue });
+  };
+
   const tags = ["Motor", "Electronics", "Lifestyle", "Work"];
   return (
-    
     <div className=" rounded-lg p-2 mb-10">
       <div className="flex flex-wrap place-content-around gap-2">
         <div className="">
@@ -45,18 +70,19 @@ function Filters({
               name="minPrice"
               placeholder="Min"
               value={minPrice}
-              onChange={onChange}
+              onChange={handlePriceChange}
+              inputmode="numeric"
             />
           </div>
           <div className="">
             <Input
-            className="appearance-none w-full rounded-r-full border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-4 focus:ring-inset focus:ring-secondary sm:text-sm sm:leading-6"
+              className="appearance-none w-full rounded-r-full border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-4 focus:ring-inset focus:ring-secondary sm:text-sm sm:leading-6"
               type="number"
               name="maxPrice"
               placeholder="Max"
               value={maxPrice}
-              onChange={onChange}
-              maxLength="5"
+              onChange={handlePriceChange}
+              inputmode="numeric"
             />
           </div>
         </div>
