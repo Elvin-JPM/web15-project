@@ -4,6 +4,8 @@ const notificationsSchema = mongoose.Schema({
   recipient: { type: String, index: true },
   sender: { type: String, index: true },
   productId: { type: String, index: true },
+  productName: { type: String },
+  type: { type: String },
   message: { type: String },
   date: { type: Date, default: Date.now, index: true },
   read: { type: Boolean, default: false, index: true },

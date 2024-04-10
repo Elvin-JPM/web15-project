@@ -1,4 +1,24 @@
-
 .active {
   background-color: red;
+}
+
+.notifications {
+  display: flex;
+  width: auto;
+}
+
+.notification_bubble {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: orangered;
+  color: white;
+  height: 18px;
+  width: 18px;
+  font-size: 12px;
+  border-radius: 50%;
+  font-weight: 500;
+  position: relative;
+  left: -7px;
+  top: -7px;
 }

@@ -211,6 +211,8 @@ function Chat() {
           sender,
           productId,
           message: input,
+          type: "new message",
+          productName
         });
 
         setCurrentChatId(updatedChat._id);

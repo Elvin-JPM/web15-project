@@ -17,6 +17,7 @@ import MyProfile from "./Pages/MyProfile/MyProfile";
 import Chat from "./Pages/Chat/Chat";
 import { ToastContainer } from "react-toastify";
 import "./app.css";
+import Notifications from "./Pages/Notifications/Notifications";
 
 function App() {
   return (
@@ -86,6 +87,16 @@ function App() {
                 <RequireAuth>
                   <Layout>
                     <Chat />
+                  </Layout>
+                </RequireAuth>
+              }
+            ></Route>
+            <Route
+              path="/notifications/:username"
+              element={
+                <RequireAuth>
+                  <Layout>
+                    <Notifications />
                   </Layout>
                 </RequireAuth>
               }
