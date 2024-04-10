@@ -153,7 +153,7 @@
 
 // export default Chat;
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 //import { io } from "socket.io-client";
 import getFromStorage from "../../Service/getFromStorage";
 import { getSocket } from "../../Service/socketManager";
@@ -169,8 +169,9 @@ function Chat() {
   const { client } = location.state;
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-  const [currentChat, setCurrentChat] = useState(null);
+  const [currentChatId, setCurrentChatId] = useState(null);
   const [newMessage, setNewMessage] = useState({});
+  const currentChatIdRef = useRef(null);
   const socket = getSocket();
 
   const loggedUser = getFromStorage("username");
@@ -187,24 +188,22 @@ function Chat() {
   };
 
   const sendMessage = async () => {
-    const newMessage = {
+    const message = {
       message: input,
       from: sender,
       date: new Date(),
     };
-    socket.emit("chat message", newMessage);
-    setNewMessage({ newMessage });
+    socket.emit("chat message", message);
+    setNewMessage({ message });
 
     // After emitting the message, update it on the database
     try {
       const updatedChat = await putData(
-        `/chat/${currentChat._id}`,
+        `/chat/${currentChatIdRef.current}`,
+        message,
         {
-          message: input,
-          from: sender,
-          date: new Date(),
-        },
-        { Authorization: `${token}` }
+          Authorization: `${token}`,
+        }
       );
       if (updatedChat) {
         await postData("/notifications", {
@@ -214,7 +213,7 @@ function Chat() {
           message: input,
         });
 
-        setCurrentChat(updatedChat);
+        setCurrentChatId(updatedChat._id);
         setMessages([...updatedChat.chat.messages]);
       }
     } catch (error) {
@@ -240,14 +239,17 @@ function Chat() {
           { client, owner, productId },
           { Authorization: `${token}` }
         );
-        setCurrentChat(response.data.chat);
+        setCurrentChatId(response.data.chat._id);
         setMessages(response.data.chat.messages);
+        if (!currentChatIdRef.current) {
+          currentChatIdRef.current = response.data.chat._id;
+        }
       } catch (error) {
         console.log(error.message);
       }
     };
     createChat();
-  }, [newMessage]);
+  }, []);
 
   // Emit an event specifying the sender and receiver of the message for this chat
   useEffect(() => {
@@ -256,6 +258,8 @@ function Chat() {
       socket.emit("setReceiverUsername", receiver);
     }
   }, [owner, sender, socket, receiver]);
+
+  const chatId = currentChatId;
 
   return (
     <div className={styles.chatPage}>

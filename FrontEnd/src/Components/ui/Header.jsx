@@ -13,37 +13,37 @@ function Header() {
   const [isLogged, setIsLogged] = useState(null);
   const [notifications, setNotifications] = useState(0);
   const navigate = useNavigate();
-  let socket = null;
+  let socket = getSocket();
 
   const token = getFromStorage("jwt");
   const username = getFromStorage("username");
 
-  if (token && username) socket = getSocket();
-
-  const getNotifications = async () => {
-    try {
-      const newNotifications = await getData(`/notifications/${username}`);
-      console.log("Notifications:", newNotifications);
-      setNotifications(newNotifications.length);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
   useEffect(() => {
     if (token && username) {
-      getNotifications();
-    }
-  }, []);
+      const getNotifications = async () => {
+        try {
+          const newNotifications = await getData(`/notifications/${username}`);
+          console.log("Notifications:", newNotifications.length);
+          setNotifications(newNotifications.length);
+        } catch (error) {
+          console.log(error.message);
+        }
+      };
 
-  useEffect(() => {
-    if (socket) {
+      getNotifications();
+      console.log("Use Effect called");
+
       socket.on("chat message", async (msg) => {
         console.log("Recibiendo en cabecera:", username, msg);
-        //getNotifications();
+
+        setNotifications(newValueNotifications + 1);
+
+        console.log("Notifications after:", notifications);
       });
     }
-  }, [socket, username]);
+  }, [token, username, socket, notifications]);
+
+  const newValueNotifications = notifications;
 
   const buttonClick = (e) => {
     navigate("/login");
