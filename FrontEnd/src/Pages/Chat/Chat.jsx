@@ -193,8 +193,6 @@ function Chat() {
       from: sender,
       date: new Date(),
     };
-    socket.emit("chat message", message);
-    setNewMessage({ message });
 
     // After emitting the message, update it on the database
     try {
@@ -206,15 +204,19 @@ function Chat() {
         }
       );
       if (updatedChat) {
-        await postData("/notifications", {
+        const newNotification = await postData("/notifications", {
           recipient: receiver,
           sender,
           productId,
           message: input,
           type: "new message",
-          productName
+          productName,
+          owner,
         });
 
+        socket.emit("chat message", message);
+        //socket.emit("new notification", newNotification);
+        setNewMessage({ message });
         setCurrentChatId(updatedChat._id);
         setMessages([...updatedChat.chat.messages]);
       }
@@ -255,11 +257,11 @@ function Chat() {
 
   // Emit an event specifying the sender and receiver of the message for this chat
   useEffect(() => {
-    if (owner) {
-      socket.emit("setSocketUsername", sender);
+    if (loggedUser && receiver) {
+      socket.emit("setSocketUsername", loggedUser);
       socket.emit("setReceiverUsername", receiver);
     }
-  }, [owner, sender, socket, receiver]);
+  }, [sender, receiver]);
 
   const chatId = currentChatId;
 

@@ -65,7 +65,7 @@ function Sidebar() {
             name={token ? "logout" : "login"}
             onClick={buttonClick}
           >
-            {token ? "Cerrar sesión" : "Regístrate o inicia sesión"}
+            {token ? "Logout" : "Regístrate o inicia sesión"}
           </Button>
         </div>
       </nav>

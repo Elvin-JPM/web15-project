@@ -16,14 +16,18 @@ function configureSocket(server) {
     socket.on("setSocketUsername", async (username) => {
       socket.username = username;
       await User.findOneAndUpdate({ username }, { activeSocketIO: true });
-      usersSockets.push({ id: socket.id, username: username });
+      usersSockets.push({ id: socket.id, username: socket.username });
+      console.log("Sender: ", socket.id, socket.username);
     });
 
     socket.on("setReceiverUsername", async (receiverUsername) => {
       socket.receiverUsername = receiverUsername;
-      usersSockets.push({ id: socket.id, username: receiverUsername });
-      console.log("Usuario receptor", socket.id, socket.receiverUsername);
-      ownerUsername = receiverUsername;
+      await User.findOneAndUpdate(
+        { username: receiverUsername },
+        { activeSocketIO: true }
+      );
+      usersSockets.push({ id: socket.id, username: socket.receiverUsername });
+      console.log("Receiver: ", socket.id, socket.receiverUsername);
     });
 
     socket.on("setSocketActive", () => {

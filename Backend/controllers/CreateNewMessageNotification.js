@@ -3,8 +3,15 @@ const Notifications = require("../models/Notifications");
 class CreateNewMessageNotification {
   async createNotification(req, res) {
     try {
-      const { recipient, sender, message, productId, type, productName } =
-        req.body;
+      const {
+        recipient,
+        sender,
+        message,
+        productId,
+        type,
+        productName,
+        owner,
+      } = req.body;
 
       // Create a new notification instance
       const newNotification = new Notifications({
@@ -14,6 +21,7 @@ class CreateNewMessageNotification {
         productId,
         type,
         productName,
+        owner,
       });
 
       // Save the new notification to the database

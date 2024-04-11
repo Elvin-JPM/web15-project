@@ -13,35 +13,31 @@ import styles from "./headerActiveLink.module.css";
 function Header() {
   const [notifications, setNotifications] = useState(0);
   const navigate = useNavigate();
-  let socket = getSocket();
 
   const token = getFromStorage("jwt");
   const username = getFromStorage("username");
 
+  let socket = getSocket(username);
+
   useEffect(() => {
-    if (token && username) {
-      const getNotifications = async () => {
-        try {
-          const newNotifications = await getData(`/notifications/${username}`);
-          console.log("Notifications:", newNotifications);
-          setNotifications(newNotifications.length);
-        } catch (error) {
-          console.log(error.message);
-        }
-      };
+    const getNotifications = async () => {
+      try {
+        const newNotifications = await getData(`/notifications/${username}`);
+        console.log("Notifications:", newNotifications);
+        setNotifications(newNotifications.length);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
 
-      getNotifications();
-      console.log("Use Effect called");
+    getNotifications();
 
-      socket.on("chat message", async (msg) => {
-        console.log("Recibiendo en cabecera:", username, msg);
-
-        setNotifications(newValueNotifications + 1);
-
-        console.log("Notifications after:", notifications);
-      });
-    }
-  }, [token, username, socket, notifications]);
+    socket.on("chat message", async (msg) => {
+      console.log("Recibiendo en cabecera:", username, msg);
+      setNotifications(newValueNotifications + 1);
+      console.log("Notifications after:", notifications);
+    });
+  }, [socket, notifications]);
 
   const newValueNotifications = notifications;
 
@@ -171,7 +167,7 @@ function Header() {
 
                   {notifications > 0 && (
                     <div className={styles.notification_bubble}>
-                      {notifications}
+                      {newValueNotifications}
                     </div>
                   )}
                 </div>

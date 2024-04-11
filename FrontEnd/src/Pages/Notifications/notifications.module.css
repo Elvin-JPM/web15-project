@@ -1,0 +1,38 @@
+.notifications_page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  height: 100%;
+}
+
+.notifications_title {
+  align-self: flex-start;
+  color: #54acb4;
+  font-size: 1.5rem;
+  padding-left: 22%;
+}
+
+.notification_item {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  border: 1px solid lightgray;
+  padding: 10px;
+  width: 60%;
+}
+
+.notification_message {
+  color: gray;
+  font-size: 1rem;
+  margin-top: 0.3rem;
+}
+
+.notification_date {
+  align-self: flex-end;
+  font-size: 0.7rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+  border-bottom: 1px solid lightgray;
+}

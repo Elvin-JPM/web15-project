@@ -9,12 +9,12 @@ const chatSchema = mongoose.Schema({
       {
         message: String,
         from: String,
-        date: Date,
+        date: { type: Date, default: Date.now },
       },
     ],
     default: [],
   },
-  date: { type: Date, index: true },
+  date: { type: Date, index: true, default: Date.now },
 });
 
 chatSchema.statics.filters = function (filter, skip, limit) {

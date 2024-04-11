@@ -1,6 +1,6 @@
 import socketIo from "socket.io-client";
-import { toast } from 'react-toastify'; 
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 let socket;
 
@@ -24,9 +24,9 @@ export const initializeSocket = (username) => {
   });
 };
 
-export const getSocket = () => {
+export const getSocket = (username) => {
   if (!socket) {
-    initializeSocket();
+    initializeSocket(username);
   }
   return socket;
 };

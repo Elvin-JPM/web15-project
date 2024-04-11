@@ -13,9 +13,9 @@ function Layout({ children }) {
       <main className={`flex-grow ${token ? "ml-52" : "ml-0"} p-4 pt-24`}>
         {children ? children : <Outlet />}
       </main>
-      <Footer >
+      <Footer>
         <p className="text-sm">Copyright © 2024</p>
-      </Footer >
+      </Footer>
     </div>
   );
 }
