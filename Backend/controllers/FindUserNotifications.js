@@ -4,7 +4,10 @@ class FindUserNotifications {
   async findNotifications(req, res) {
     try {
       const { recipient } = req.params;
-      const notifications = await Notifications.find({ recipient });
+      const notifications = await Notifications.find({
+        recipient,
+        read: false,
+      }).sort({ date: -1 });
 
       res.status(200).json(notifications);
     } catch (error) {
