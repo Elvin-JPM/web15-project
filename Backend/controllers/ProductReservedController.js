@@ -31,9 +31,10 @@ class ProductReservedController {
 
         if ( user.activeSocketIO === false ){
           const userEmail = user.email;
+          const productURL = `http://localhost:5173/products/${product.name}/${product._id}`;
           const emailHTML = 
           `<p>Hola ${user.username},</p>
-          <p>Queríamos informarte que el artículo "<b>${product.name}</b>" que marcaste como favorito ha sido reservado por otro usuario.</p>
+          <p>Queríamos informarte que el artículo <b><a href="${productURL}">${product.name}</a></b> que marcaste como favorito ha sido reservado por otro usuario.</p>
           <p>Te animamos a explorar otros productos similares en nuestro sitio web.</p>
           <p>¡Gracias por tu interés y esperamos que encuentres lo que buscas!</p>
           <p>Atentamente,

@@ -25,10 +25,11 @@ class EditProductController {
       }
 
       // Check user's logged info
-      const username = req.params.owner;
+      const usernameURL = req.params.owner;
+      const { username } = await getUserInfo(req);
 
       // Verificar permisos del usuario
-      if (product.owner !== username) {
+      if (product.owner !== usernameURL | usernameURL !== username ) {
         return res.json("Permisos no válidos");
       }
 
@@ -51,6 +52,7 @@ class EditProductController {
           product.photo = originalName;
         }
         console.log("photo:", originalName);
+
         //If owner is correct update product
         if (name) product.name = name;
         if (description) product.description = description;
@@ -67,12 +69,13 @@ class EditProductController {
 
             if (user.activeSocketIO === false) {
               const userEmail = user.email;
+              const productURL = `http://localhost:5173/products/${product.name}/${product._id}`;
               const emailHTML = `<p>Hola ${user.username},</p>
-              <p>Te informamos que el artículo "<b>${product.name}</b>" que marcaste como favorito ha experimentado un cambio en su precio.
-              Por favor, visita nuestro sitio web para ver los detalles actualizados.</p>
+              <p>Te informamos que el artículo <b><a href="${productURL}">${product.name}</a></b> que marcaste como favorito ha experimentado un cambio en su precio.
+              <p>Por favor, visita nuestro sitio web para ver los detalles actualizados.</p>
               <p>¡Gracias por tu interés!</p>
               <p>Atentamente,
-              Fleapster<p>`;
+              Fleapster</p>`;
 
               sendEmail(
                 userEmail,

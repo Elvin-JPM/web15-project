@@ -6,10 +6,12 @@ const upload = require("../lib/uploadConfigure");
 const path = require("path");
 const fs = require("fs");
 
+const { isAdRelevant } = require('../lib/adRelevant');
+
 class CreateProductController {
   async createProduct(req, res, next) {
     try {
-      // Verificar y crear la carpeta donde se guardarán las imágenes si no existe
+      // Create directory
       const imagePath = path.resolve(
         __dirname,
         "..",
@@ -52,6 +54,8 @@ class CreateProductController {
         const product = new Product(productData);
 
         const savedProduct = await product.save();
+
+        isAdRelevant(savedProduct);
 
         res.json({ result: savedProduct });
       });

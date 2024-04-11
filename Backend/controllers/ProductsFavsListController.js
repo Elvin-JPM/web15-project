@@ -5,7 +5,6 @@ class ProductsFavsListController {
   async listFavouriteProducts(req, res) {
     try {
       const { username } = await getUserInfo(req);
-      //const username = req.body.username;
       const usernameURL = req.params.owner;
 
       if (username !== usernameURL) {
