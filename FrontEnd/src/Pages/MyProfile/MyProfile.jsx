@@ -97,7 +97,7 @@ function MyProfile() {
 
   return (
     <>
-      <div className="max-w-xl mx-auto p-5 mt-24">
+      <div className="max-w-xl mx-auto px-5">
         <Icon />
         <H2>Editar Perfil</H2>
         <form>

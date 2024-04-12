@@ -5,6 +5,7 @@ import { deleteData, getData, putData } from "../../Api/api";
 import Button from "../../Components/ui/Button";
 import getFromStorage from "../../Service/getFromStorage";
 import SweetAlert from "../../Components/ui/SweetAlert";
+import Icon from "../../Components/ui/Icon";
 
 const MyProducts = () => {
   const [showSweetAlert, setShowSweetAlert] = useState(false); 
@@ -12,6 +13,8 @@ const MyProducts = () => {
   const [reloadProducts, setReloadProducts] = useState(false);
   const navigate = useNavigate();
 
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false); // Estado para mostrar el cuadro de diálogo de confirmación
+  const [productIdToDelete, setProductIdToDelete] = useState(null); // Estado para almacenar el ID del producto a eliminar
 
   const username = getFromStorage("username");
   const token = getFromStorage("jwt");
@@ -53,6 +56,12 @@ const MyProducts = () => {
     }
   };
 
+   // Función para mostrar el cuadro de diálogo de confirmación antes de borrar el producto
+   const confirmDeleteProduct = (productId) => {
+    setProductIdToDelete(productId);
+    setShowDeleteConfirmation(true);
+  };
+
   // Opcion
 
   const handleProductAction = async (product, actionType) => {
@@ -84,15 +93,21 @@ const MyProducts = () => {
       {products.map((product) => (
         <Product key={product._id} product={product}>
           <div>
+            {/* colocar iconos de editar eliminar  marcar como reservado marcar como vendido, y paso el mouse sale
+            un popporver con el nombre 
+            */}
             <Button
               id={product._id}
               onClick={() => navigate(`/edit/${product._id}/${product.name}`)}
             >
               Editar producto
             </Button>
-            <Button id={product._id} onClick={() => deleteProduct(product._id)}>
-              Borrar producto
-            </Button>
+            <Button
+                id={product._id}
+                onClick={() => confirmDeleteProduct(product._id)} // Mostrar cuadro de diálogo de confirmación al hacer clic en "Borrar producto"
+              >
+                Borrar producto
+              </Button>
             <Button
               id={product._id}
               onClick={() => handleProductAction(product, "reserve")}
@@ -117,6 +132,18 @@ const MyProducts = () => {
           text="El producto ha sido borrado exitosamente."
           onConfirm={() => setShowSweetAlert(false)}
         />
+      )}
+         {/* Cuadro de diálogo de confirmación */}
+         {showDeleteConfirmation && (
+            <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+            <div className="bg-white p-6 rounded-lg">
+              <p>¿Estás seguro que deseas eliminar este producto?</p>
+              <div className="mt-4 flex justify-end">
+                <button className="mr-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600" onClick={() => deleteProduct(productIdToDelete)}>Confirmar</button>
+                <button className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400" onClick={() => setShowDeleteConfirmation(false)}>Cancelar</button>
+              </div>
+            </div>
+          </div>
       )}
     </section>
   );
