@@ -131,7 +131,7 @@ function DetailProduct() {
           </Button>
         )}
         <section className="mt-4">
-          <Product product={product} />
+          <Product product={product}>{product.tags}</Product>
         </section>
         <div className={styles.share}>
           <p>Share:</p>
