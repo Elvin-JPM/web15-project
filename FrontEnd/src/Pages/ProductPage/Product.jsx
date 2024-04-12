@@ -34,13 +34,15 @@ function Product({ product, children }) {
         </CardTitle>
         <CardContent>
           <div className="relative bg-white p-6 rounded-md">
+            <p>by: {product.owner}</p>
+            <p>{product.description}</p>
             <h3 className="mt-4 text-lg font-medium text-gray-900">
               {product.price}€
             </h3>
             <p className="mt-1.5 text-sm text-gray-700">{product.name}</p>
+            {children}
           </div>
         </CardContent>
-        {children}
       </Card>
     </div>
   );
