@@ -1,5 +1,13 @@
+.detail_page{
+  display: flex;
+  justify-content: center;
+}
+
 .product_detail_page {
-  height: 100%;
+  width: 55%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .chats {
@@ -36,4 +44,23 @@
   width: 40px;
   height: 40px;
   cursor: pointer;
+}
+
+.tags_box {
+  display: flex;
+  gap: 1rem;
+  margin: 0.6rem;
+}
+
+.tag{
+  background-color: #54acb4;
+  padding: 0 0.4rem;
+  border-radius: 16px;
+  color: white;
+}
+
+.detail_buttons{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
 }

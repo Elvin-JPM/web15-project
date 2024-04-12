@@ -1,6 +1,9 @@
-function Footer(props) {
+import styles from '../ui/footer.module.css'
+
+function Footer(props)
+{
 	return (
-    <footer className="bg-gray-500 text-white py-3 text-center w-full z-40"
+    <footer className={styles.footer}
     {...props}
     >
       {props.children}

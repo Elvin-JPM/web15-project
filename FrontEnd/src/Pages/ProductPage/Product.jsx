@@ -9,7 +9,7 @@ import placeholder from "../../Assets/placeholder.png";
 
 const IMAGE_BASE_URL = import.meta.env.VITE_APP_IMAGES_URL;
 
-function Product({ product, children }) {
+function Product({ product, styles, children }) {
   const loggedUser = getFromStorage("username");
   const imageUrl = product.photo
     ? `${IMAGE_BASE_URL}${product.photo}`
@@ -19,29 +19,29 @@ function Product({ product, children }) {
     event.target.src = placeholder; // Set placeholder if image fails to load
   };
   return (
-    <div className="">
+    <div className={styles.card}>
       <Card key="1">
-        <CardTitle>
+        <CardTitle className={styles.card_title}>
           <img
             src={imageUrl}
             alt={product.name}
             onError={handleImageError}
-            className="h-64 w-full object-cover rounded-md transition duration-300 group-hover:scale-105 sm:h-72"
+            className={styles.product_image}
           />
-          <span className="relative bottom-8 left-2 z-10 px-3 py-1.5 text-xs font-medium bg-primary text-white rounded-full">
+          <span className={styles.sale}>
             {product.sale ? "For Sale" : "Looking to buy"}
           </span>
         </CardTitle>
-        <CardContent>
-          <div className="relative bg-white p-6 rounded-md">
-            <p>by: {product.owner}</p>
-            <p>{product.description}</p>
-            <h3 className="mt-4 text-lg font-medium text-gray-900">
-              {product.price}€
-            </h3>
-            <p className="mt-1.5 text-sm text-gray-700">{product.name}</p>
-            {children}
-          </div>
+        <CardContent className={styles.card_content}>
+          <p>by: {product.owner}</p>
+
+          <p className={styles.descriptionText}>{product.description}</p>
+
+          <h3 className="mt-4 text-lg font-medium text-gray-900">
+            {product.price}€
+          </h3>
+          <p className="mt-1.5 text-sm text-gray-700">{product.name}</p>
+          {children}
         </CardContent>
       </Card>
     </div>

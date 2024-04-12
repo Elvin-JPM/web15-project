@@ -12,6 +12,8 @@ import Chat from "../Chat/Chat";
 import SweetAlert from "../../Components/ui/SweetAlert";
 import Header from "../../Components/ui/Header";
 import styles from "../DetailProductPage/product_chats.module.css";
+import cardStyles from "../DetailProductPage/product_detail.module.css";
+
 import facebookLogo from "../DetailProductPage/facebook.png";
 import twitterLogo from "../DetailProductPage/twitter.png";
 
@@ -99,104 +101,129 @@ function DetailProduct() {
 
   return (
     product && (
-      <div className={`${styles.product_detail_page} max-w-xl  mx-auto p-5`}>
-        {/* Nombre del propietario del anuncio */}
-        {
-          <p>
-            Anunciante:{" "}
-            <Link to={`/products/list/${product.owner}`}>
-              {product.owner === loggedUser ? "Yo" : product.owner}
-            </Link>
-          </p>
-        }
-        {/* Boton de agreagar/quitar favorito */}
-        {loggedUser === product.owner
-          ? ""
-          : loggedUser && (
-              <Button id={product._id} onClick={favoriteClick}>
-                {favoriteStatus ? "Quitar Favorito" : "Agregar Favorito"}
+      <div className={styles.detail_page}>
+        <div className={`${styles.product_detail_page} `}>
+          {/* Nombre del propietario del anuncio */}
+          {
+            <p>
+              Anunciante:{" "}
+              <Link
+                to={`/products/list/${product.owner}`}
+                style={{
+                  color: "#2c7d85",
+                  textDecoration: "underline",
+                  textDecorationColor: "#2c7d85",
+                }}
+              >
+                {product.owner === loggedUser ? "Yo" : product.owner}
+              </Link>
+            </p>
+          }
+          <div className={styles.detail_buttons}>
+            {/* Boton de agreagar/quitar favorito */}
+            {loggedUser === product.owner
+              ? ""
+              : loggedUser && (
+                  <Button
+                    id={product._id}
+                    onClick={favoriteClick}
+                    style={{ backgroundColor: favoriteStatus && "#FA7070" }}
+                  >
+                    {favoriteStatus ? "Quitar Favorito" : "Agregar Favorito"}
+                  </Button>
+                )}
+            {/* Boton para iniciar un chat con el propietario del producto */}
+
+            {loggedUser === product.owner ? (
+              ""
+            ) : (
+              <Button
+                onClick={() =>
+                  openChat(product._id, product.owner, loggedUser, product.name)
+                }
+              >
+                Chat
               </Button>
             )}
-        {/* Boton para iniciar un chat con el propietario del producto */}
-
-        {loggedUser === product.owner ? (
-          ""
-        ) : (
-          <Button
-            onClick={() =>
-              openChat(product._id, product.owner, loggedUser, product.name)
-            }
-          >
-            Chat
-          </Button>
-        )}
-        <section className="mt-4">
-          <Product product={product}>{product.tags}</Product>
-        </section>
-        <div className={styles.share}>
-          <p>Share:</p>
-          <FacebookShareButton
-            url={`http://localhost:5173/products/${productName}/${productId}`}
-          >
-            <img src={facebookLogo} className={styles.image}></img>
-          </FacebookShareButton>
-          <TwitterShareButton
-            url={`http://localhost:5173/products/${productName}/${productId}`}
-            text="Check out this product!"
-          >
-            <img src={twitterLogo} className={styles.image}></img>
-          </TwitterShareButton>
-        </div>
-        {showSweetAlertProductAdded && (
-          <SweetAlert
-            title="Producto Editado"
-            text="Cambios guardados exitosamente."
-            succeeded={true}
-            onConfirm={() => setShowSweetAlertProductAdded(false)}
-          />
-        )}
-
-        {loggedUser === product.owner && (
-          <div className={styles.chats}>
-            <h3>Chats for this product</h3>
-            {productChats &&
-              productChats
-                .sort((a, b) => {
-                  const dateA =
-                    a.messages.length > 0
-                      ? new Date(a.messages.slice(-1)[0].date)
-                      : null;
-                  const dateB =
-                    b.messages.length > 0
-                      ? new Date(b.messages.slice(-1)[0].date)
-                      : null;
-
-                  return dateB - dateA;
-                })
-                .map((chat) => (
-                  <div
-                    className={styles.chat_item}
-                    key={chat._id}
-                    onClick={() =>
-                      openChat(
-                        chat.productId,
-                        chat.owner,
-                        chat.client,
-                        product.name
-                      )
-                    }
-                  >
-                    <div>
-                      <p>
-                        Chat with:{" "}
-                        <span className={styles.username}>{chat.client}</span>
-                      </p>
-                      <p>Last message: {chat.messages.slice(-1)[0].message}</p>
-                    </div>
+          </div>
+          <section className="mt-4">
+            <Product product={product} styles={cardStyles}>
+              <div className={styles.tags_box}>
+                {product.tags.map((tag, index) => (
+                  <div key={index} className={styles.tag}>
+                    {tag}
                   </div>
                 ))}
+              </div>
+            </Product>
+          </section>
+          <div className={styles.share}>
+            <p>Share:</p>
+            <FacebookShareButton
+              url={`http://localhost:5173/products/${productName}/${productId}`}
+            >
+              <img src={facebookLogo} className={styles.image}></img>
+            </FacebookShareButton>
+            <TwitterShareButton
+              url={`http://localhost:5173/products/${productName}/${productId}`}
+              text="Check out this product!"
+            >
+              <img src={twitterLogo} className={styles.image}></img>
+            </TwitterShareButton>
           </div>
-        )}
+          {showSweetAlertProductAdded && (
+            <SweetAlert
+              title="Producto Editado"
+              text="Cambios guardados exitosamente."
+              succeeded={true}
+              onConfirm={() => setShowSweetAlertProductAdded(false)}
+            />
+          )}
+
+          {loggedUser === product.owner && (
+            <div className={styles.chats}>
+              <h3>Chats for this product</h3>
+              {productChats &&
+                productChats
+                  .sort((a, b) => {
+                    const dateA =
+                      a.messages.length > 0
+                        ? new Date(a.messages.slice(-1)[0].date)
+                        : null;
+                    const dateB =
+                      b.messages.length > 0
+                        ? new Date(b.messages.slice(-1)[0].date)
+                        : null;
+
+                    return dateB - dateA;
+                  })
+                  .map((chat) => (
+                    <div
+                      className={styles.chat_item}
+                      key={chat._id}
+                      onClick={() =>
+                        openChat(
+                          chat.productId,
+                          chat.owner,
+                          chat.client,
+                          product.name
+                        )
+                      }
+                    >
+                      <div>
+                        <p>
+                          Chat with:{" "}
+                          <span className={styles.username}>{chat.client}</span>
+                        </p>
+                        <p>
+                          Last message: {chat.messages.slice(-1)[0].message}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+            </div>
+          )}
+        </div>
       </div>
     )
   );

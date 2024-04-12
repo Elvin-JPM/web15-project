@@ -5,13 +5,13 @@ import { deleteData, getData, putData } from "../../Api/api";
 import Button from "../../Components/ui/Button";
 import getFromStorage from "../../Service/getFromStorage";
 import SweetAlert from "../../Components/ui/SweetAlert";
+import cardStyles from "../MyProducts/my_products.module.css";
 
 const MyProducts = () => {
-  const [showSweetAlert, setShowSweetAlert] = useState(false); 
+  const [showSweetAlert, setShowSweetAlert] = useState(false);
   const [products, setProducts] = useState([]);
   const [reloadProducts, setReloadProducts] = useState(false);
   const navigate = useNavigate();
-
 
   const username = getFromStorage("username");
   const token = getFromStorage("jwt");
@@ -34,11 +34,11 @@ const MyProducts = () => {
   }, [reloadProducts]);
 
   useEffect(() => {
-    if (localStorage.getItem('mostrarSweetAlert') === 'true') {
-      setShowSweetAlert(true)
-      localStorage.removeItem('mostrarSweetAlert')
+    if (localStorage.getItem("mostrarSweetAlert") === "true") {
+      setShowSweetAlert(true);
+      localStorage.removeItem("mostrarSweetAlert");
     }
-  }, [])
+  }, []);
 
   // Handler para borrar un producto
   const deleteProduct = async (productId) => {
@@ -46,7 +46,7 @@ const MyProducts = () => {
       const response = await deleteData(`/products/${username}/${productId}`, {
         Authorization: `${token}`,
       });
-      response && localStorage.setItem('mostrarSweetAlert', 'true')
+      response && localStorage.setItem("mostrarSweetAlert", "true");
       navigate(0);
     } catch (error) {
       console.log(error.message);
@@ -80,38 +80,44 @@ const MyProducts = () => {
 
   return (
     <section className="container mx-auto font-sans antialiased pt-2">
-    <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-      {products.map((product) => (
-        <Product key={product._id} product={product}>
-          <div>
-            <Button
-              id={product._id}
-              onClick={() => navigate(`/edit/${product._id}/${product.name}`)}
-            >
-              Editar producto
-            </Button>
-            <Button id={product._id} onClick={() => deleteProduct(product._id)}>
-              Borrar producto
-            </Button>
-            <Button
-              id={product._id}
-              onClick={() => handleProductAction(product, "reserve")}
-            >
-              {product.reserved
-                ? "Desmarcar como reservado"
-                : "Marcar como reservado"}
-            </Button>
-            <Button
-              id={product._id}
-              onClick={() => handleProductAction(product, "sold")}
-            >
-              {product.sold ? "Desmarcar como vendido" : "Marcar como vendido"}
-            </Button>
-          </div>
-        </Product>
-      ))}
-    </div>
-    {showSweetAlert && (
+      <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+        {products.map((product) => (
+          <Product key={product._id} product={product} styles={cardStyles}>
+            <div className={cardStyles.buttons}>
+              <Button
+                id={product._id}
+                onClick={() => navigate(`/edit/${product._id}/${product.name}`)}
+              >
+                Editar producto
+              </Button>
+              <Button
+                id={product._id}
+                onClick={() => handleProductAction(product, "reserve")}
+              >
+                {product.reserved
+                  ? "Desmarcar como reservado"
+                  : "Marcar como reservado"}
+              </Button>
+              <Button
+                id={product._id}
+                onClick={() => handleProductAction(product, "sold")}
+              >
+                {product.sold
+                  ? "Desmarcar como vendido"
+                  : "Marcar como vendido"}
+              </Button>
+              <Button
+                id={product._id}
+                onClick={() => deleteProduct(product._id)}
+                style={{ backgroundColor: "#FA7070" }}
+              >
+                Borrar producto
+              </Button>
+            </div>
+          </Product>
+        ))}
+      </div>
+      {showSweetAlert && (
         <SweetAlert
           title="Producto Borrado"
           text="El producto ha sido borrado exitosamente."

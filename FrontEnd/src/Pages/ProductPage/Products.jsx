@@ -10,7 +10,7 @@ import useProductSearch from "../../Hooks/useProductSearch";
 import SweetAlert from "../../Components/ui/SweetAlert";
 import getFromStorage from "../../Service/getFromStorage";
 import { Skeleton } from "../../Components/skeleton";
-
+import cardStyles from "./product.module.css";
 
 const Products = () => {
   const navigate = useNavigate();
@@ -122,7 +122,7 @@ const Products = () => {
             return (
               <div ref={lastProductRef} key={product._id}>
                 <Link to={`/products/${product.name}/${product._id}`}>
-                  <Product product={product} />
+                  <Product product={product} styles={cardStyles} />
                 </Link>
               </div>
             );
@@ -130,7 +130,7 @@ const Products = () => {
             return (
               <div key={product._id}>
                 <Link to={`/products/${product.name}/${product._id}`}>
-                  <Product product={product} />
+                  <Product product={product} styles={cardStyles} />
                 </Link>
               </div>
             );

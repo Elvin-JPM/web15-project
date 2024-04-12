@@ -1,0 +1,35 @@
+.card {
+  width: 100%;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product_image {
+  width:100%;
+  border-bottom: 1px solid lightgray;
+  padding-bottom: 1rem;
+}
+
+.card_title {
+  position: relative;
+}
+
+.sale {
+  background-color: black;
+  position: absolute;
+  bottom: 0.6rem;
+  color: white;
+  font-size: 0.8rem;
+  border-radius: 12px;
+  padding: 0.3rem;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.8);
+}
+
+.descriptionText {
+  overflow: hidden;
+  font-size: 0.7rem;
+  color: gray;
+}
