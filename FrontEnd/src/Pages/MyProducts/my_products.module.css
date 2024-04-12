@@ -45,7 +45,7 @@
   font-size: 0.7rem;
   border-radius: 12px;
   padding: 0.3rem;
-  z-index: 1000;
+  /* z-index: 1000; */
   box-shadow: 0 4px 8px rgba(1, 1, 1, 0.3);
 }
 
@@ -64,11 +64,9 @@
   padding: 10px;
 }
 
-.buttons{
+.buttons {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   margin-top: 0.5rem;
 }
-
-

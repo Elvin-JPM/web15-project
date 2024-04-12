@@ -45,7 +45,7 @@
   font-size: 0.7rem;
   border-radius: 12px;
   padding: 0.3rem;
-  z-index: 1000;
+  /* z-index: 1000; */
   box-shadow: 0 4px 8px rgba(1, 1, 1, 0.3);
 }
 
@@ -63,4 +63,3 @@
 .card_content {
   padding: 10px;
 }
-
