@@ -25,9 +25,7 @@ const NewProductForm = () => {
         Authorization: `${token}`,
         "Content-Type": "multipart/form-data",
       });
-   
-      !response === 'undefined' && localStorage.setItem('mostrarSweetAlert', 'true')
-
+      localStorage.setItem('mostrarSweetAlert', 'true')
       console.log("New product:", response);
       navigate("/products");
     } catch (error) {
@@ -43,7 +41,7 @@ const NewProductForm = () => {
       placeholder: 'Nombre de producto',
       errorMessage: 'Nombre no disponible',
       label: 'Nombre del producto',
-      pattern: '^[A-Za-z0-9]{3,16}$',
+      //pattern: '^[A-Za-z0-9]{3,16}$',
       required: true,
     },
     {
@@ -97,16 +95,16 @@ const NewProductForm = () => {
   ];
 
   return (
+
+    <div className="flex justify-center items-center h-full">
     <Card>
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <CardTitle>Nuevo producto</CardTitle>
-        </div>
-        <CardContent>
+      <CardTitle className=''>Nuevo producto</CardTitle>
+      <CardContent>
         <Form inputs={inputs} onSubmit={handleSubmit} />
-        </CardContent>
-      </div>
+      </CardContent>
     </Card>
+  </div>
+
   );
 };
 
