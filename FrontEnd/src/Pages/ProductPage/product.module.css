@@ -29,16 +29,18 @@
 }
 
 .sale {
-  background-color: black;
   position: absolute;
   bottom: 0.1rem;
   left: 0.2rem;
-  color: white;
-  font-size: 0.7rem;
+  color: whitesmoke;
+  background-image: linear-gradient(-45deg, #003c43, #54acb4);
+  font-size: 0.8rem;
+  font-weight: 500;
   border-radius: 12px;
   padding: 0.3rem;
   /* z-index: 0; */
   box-shadow: 0 4px 8px rgba(1, 1, 1, 0.3);
+  border: 1px solid #54acb4;
 }
 
 .descriptionText {
@@ -55,3 +57,21 @@
 .card_content {
   padding: 10px;
 }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  justify-items: center;
+  align-items: center;
+  row-gap: 1.5rem;
+  column-gap: 2rem;
+}
+
+/* .filters {
+  position: sticky;
+  background-color: white;
+  top: 15%;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+} */

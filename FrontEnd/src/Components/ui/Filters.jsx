@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Input from "./Input";
 
 function Filters({
+  styles,
   name,
   initialMinPrice,
   initialMaxPrice,
@@ -64,7 +65,7 @@ function Filters({
         </div>
         <div className="flex block max-w-40">
           <div className="">
-            <Input 
+            <Input
               className=" appearance-none text-right w-full rounded-l-full border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-4 focus:ring-inset focus:ring-secondary sm:text-sm sm:leading-6"
               type="number"
               name="minPrice"

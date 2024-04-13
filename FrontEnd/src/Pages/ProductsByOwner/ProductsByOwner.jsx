@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Product from "../ProductPage/Product";
 import { useParams } from "react-router";
 import { getData } from "../../Api/api";
-
+import cardStyles from "../ProductsByOwner/products_by_owner.module.css";
 const ProductsByOwner = () => {
   const [products, setProducts] = useState([]);
   const { owner } = useParams();
@@ -22,9 +22,9 @@ const ProductsByOwner = () => {
   }, [owner]);
 
   return (
-    <div>
+    <div className={cardStyles.grid}>
       {products.map((product) => (
-        <Product key={product._id} product={product} />
+        <Product styles={cardStyles} key={product._id} product={product} />
       ))}
     </div>
   );

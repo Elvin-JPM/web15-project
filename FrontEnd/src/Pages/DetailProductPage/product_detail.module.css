@@ -7,7 +7,7 @@
 }
 
 .product_image {
-  width:100%;
+  width: 100%;
   border-bottom: 1px solid lightgray;
   padding-bottom: 1rem;
 }
@@ -17,11 +17,13 @@
 }
 
 .sale {
-  background-color: black;
+  background-image: linear-gradient(-45deg, #003c43, #54acb4);
+  border: 1px solid #54acb4;
   position: absolute;
-  bottom: 0.6rem;
+  bottom: 0.5rem;
+  left: 0.3rem;
   color: white;
-  font-size: 0.8rem;
+  font-size: 1rem;
   border-radius: 12px;
   padding: 0.3rem;
   z-index: 1000;

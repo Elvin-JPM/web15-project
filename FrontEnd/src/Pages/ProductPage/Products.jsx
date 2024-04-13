@@ -106,6 +106,7 @@ const Products = () => {
   return (
     <section className="container mx-auto font-sans antialiased">
       <Filters
+        styles={cardStyles.filters}
         name={filterValues.name}
         minPrice={filterValues.minPrice}
         maxPrice={filterValues.maxPrice}
@@ -116,7 +117,7 @@ const Products = () => {
       />
       {token ? "" : <ProductTitle />}
 
-      <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+      <div className={cardStyles.grid}>
         {products.map((product, index) => {
           if (products.length === index + 1) {
             return (

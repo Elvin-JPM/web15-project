@@ -37,7 +37,8 @@
 }
 
 .sale {
-  background-color: black;
+  background-image: linear-gradient(-45deg, #003c43, #54acb4);
+  border: 1px solid #54acb4;
   position: absolute;
   bottom: 0.1rem;
   left: 0.2rem;

@@ -48,7 +48,7 @@ const MyFavoriteProducts = () => {
   };
 
   return (
-    <div>
+    <div className={cardStyles.grid}>
       {products.map((product) => (
         <Product key={product._id} product={product} styles={cardStyles}>
           <Button

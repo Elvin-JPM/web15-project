@@ -1,4 +1,42 @@
 .footer {
-  background-image: linear-gradient(-45deg,#003C43, #2c7d85, #54acb4);
-  height: 10rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-image: linear-gradient(-45deg, #2c7d85, #003c43);
+  height: fit-content;
+  margin-top: 3rem;
+}
+
+.logo {
+  margin-top: 2rem;
+}
+
+.social {
+  display: flex;
+  gap: 2rem;
+  margin: 1.5rem;
+}
+.social_icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+.categories_title {
+  font-size: 1.5rem;
+}
+
+.subscribe {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.subscribe_title {
+  color: whitesmoke;
+  font-size: 1.5rem;
+}
+
+.subscribe_form {
+  display: flex;
+  gap: 0.5rem;
 }

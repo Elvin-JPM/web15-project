@@ -9,9 +9,11 @@ import IconUser from "./Icon_user";
 import { getSocket } from "../../Service/socketManager";
 import { getData } from "../../Api/api";
 import styles from "./headerActiveLink.module.css";
+import logout from "../../Service/logout";
 
 function Header() {
   const [notifications, setNotifications] = useState(0);
+  const [isLogged, setIsLogged] = useState(null);
   const navigate = useNavigate();
 
   const token = getFromStorage("jwt");
@@ -42,14 +44,13 @@ function Header() {
   const newValueNotifications = notifications;
 
   const buttonClick = (e) => {
-    navigate("/login");
-    // if (e.target.getAttribute("name") === "login") {
-    //   navigate("/login");
-    // } else {
-    //   logout();
-    //   setIsLogged(false);
-    //   navigate("/");
-    // }
+    if (e.target.getAttribute("name") === "login") {
+      navigate("/login");
+    } else {
+      logout();
+      setIsLogged(false);
+      navigate("/");
+    }
   };
 
   return (
@@ -71,9 +72,6 @@ function Header() {
         </NavLink>
 
         <nav className="md:ml-auto flex flex-wrap items-center text-base justify-between">
-          {token === "" && (
-            <Button onClick={buttonClick}>Iniciar sesión</Button>
-          )}
           {token && (
             <>
               <NavLink
@@ -188,13 +186,13 @@ function Header() {
           )}
         </nav>
 
-        {/* <Button
+        <Button
           type="submit"
           name={token ? "logout" : "login"}
           onClick={buttonClick}
         >
           {token ? "Cerrar sesión" : "Regístrate o inicia sesión"}
-        </Button> */}
+        </Button>
       </div>
     </header>
   );
