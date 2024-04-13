@@ -1,6 +1,10 @@
+import Label from "../Label";
+
+
+
 const RadioInput = ({ input, value, formSubmitted, onChange }) => (
     <div>
-      <label>{input.label}</label>
+         <Label>{input.label}</Label>  
       {input.options.map((option) => (
         <div key={option.value}>
           <input

@@ -3,6 +3,7 @@ import TextInput from './TextInput';
 import CheckboxInput from './CheckboxInput';
 import FileInput from './FileInput';
 import RadioInput from './RadioInput';
+import TextArea from './TextArea';
 import {Button_large} from "../Index";
 
 
@@ -17,15 +18,28 @@ const Form = ({ inputs, values: initialValues, onSubmit }) => {
   }, [initialValues]);
 
   const onChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    const newValue = type === 'checkbox' ? (checked ? [...(values[name] || []), value] : values[name].filter(v => v !== value)) : value;
-    setValues({ ...values, [name]: newValue });
+    if (e.target.type === 'file') {
+      const file = e.target.files[0];
+      setValues({ ...values, [e.target.name]: file });
+    } else {
+      const { name, value, type, checked } = e.target;
+      const newValue = type === 'checkbox' ? 
+        (checked ? [...(values[name] || []), value] : values[name].filter(v => v !== value)) 
+        : value;
+      setValues({ ...values, [name]: newValue });
+    }
+
+
+
+    // const { name, value, type, checked } = e.target;
+    // const newValue = type === 'checkbox' ? (checked ? [...(values[name] || []), value] : values[name].filter(v => v !== value)) : value;
+    // setValues({ ...values, [name]: newValue });
   };
 
-  const handleChange = (event) => {
-    const file = event.target.files[0];
-    setValues({ ...values, [event.target.name]: file });
-  };
+  // const handleChange = (event) => {
+  //   const file = event.target.files[0];
+  //   setValues({ ...values, [event.target.name]: file });
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -44,12 +58,23 @@ const Form = ({ inputs, values: initialValues, onSubmit }) => {
             return (
               <TextInput
                 key={input.id}
+                className={input.className}
                 input={input}
                 value={values[input.name] || ''}
                 onChange={onChange}
                 formSubmitted={formSubmitted}
               />
             );
+            case 'textArea':
+              return (
+                <TextArea
+                  key={input.id}
+                  input={input}
+                  value={values[input.name] || ''}
+                  onChange={onChange}
+                  formSubmitted={formSubmitted}
+                />
+              );
           case 'checkbox':
             return (
               <CheckboxInput
@@ -65,7 +90,7 @@ const Form = ({ inputs, values: initialValues, onSubmit }) => {
                   <FileInput
                     key={input.id}
                     input={input}
-                    onChange={handleChange}
+                    onChange={onChange}
                     formSubmitted={formSubmitted}
                   />
                 );

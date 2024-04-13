@@ -1,9 +1,12 @@
+import Label from "../Label";
+
+
 const TextInput = ({ input, value, onChange, formSubmitted }) => (
     <div>
-      <label htmlFor={input.name}>{input.label}</label>
+       <Label>{input.label}</Label>  
       <div>
         <input
-         className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-4 focus:ring-inset focus:ring-secondary sm:text-sm sm:leading-6"
+         className="col-span-12 block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-4 focus:ring-inset focus:ring-secondary sm:text-sm sm:leading-6"
           id={input.name}
           name={input.name}
           type={input.type}

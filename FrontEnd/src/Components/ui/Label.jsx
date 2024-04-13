@@ -1,7 +1,7 @@
 function Label(props) {
 	return (
 		<label
-			className='block text-xs font-medium leading-6 text-gray-500'
+			className='block text-sm font-medium leading-6 text-slate-500'
 			{...props}
 		>
 			{props.children}

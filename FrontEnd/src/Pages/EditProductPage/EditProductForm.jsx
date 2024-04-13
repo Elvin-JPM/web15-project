@@ -83,7 +83,7 @@ const EditProductForm = () => {
     {
       id: 2,
       name: 'description',
-      type: 'text',
+      type: 'textArea',
       placeholder: 'Descripción del producto',
       errorMessage: 'Información del producto no disponible',
       label: 'Información del producto',
@@ -124,20 +124,22 @@ const EditProductForm = () => {
       type: 'radio',
       label: 'Tipo de venta',
       options: [
-        { value: 'selling', label: 'Para vender' },
-        { value: 'buying', label: 'Para comprar' }
+        { value: 'selling', label: ' For sale' },
+        { value: 'buying', label: ' Looking to buy' }
       ]
     },
   ];
 
   return (
     <div className="flex justify-center items-center h-full">
-      <Card>
+     <div className="w-full max-w-lg">
+        <Card className='border rounded-xl'>
         <CardTitle className=''><H2>Editar producto</H2></CardTitle>
         <CardContent>
           <Form inputs={inputs} values={values} onSubmit={handleSubmit} />
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 };

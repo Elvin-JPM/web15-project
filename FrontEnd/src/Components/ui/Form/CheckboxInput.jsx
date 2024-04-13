@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Label from '../Label';
 const CheckboxInput = ({ input, value, onChange }) => {
   const handleChange = (event) => {
     const { checked, value: checkboxValue } = event.target;
@@ -11,7 +11,7 @@ const CheckboxInput = ({ input, value, onChange }) => {
 
   return (
     <div>
-      <label>{input.label}</label>
+       <Label>{input.label}</Label>  
       {input.values.map((option) => (
         <div key={option.value}>
           <input

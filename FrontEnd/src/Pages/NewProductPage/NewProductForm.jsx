@@ -16,7 +16,8 @@ const NewProductForm = () => {
   const navigate = useNavigate();
   const token = getFromStorage("jwt");
   const [errors, setErrors] = useState({});
-console.log('error', errors)
+
+
   const handleSubmit = async (values) => {
     const formErrors = {};
     if (!values.name) {
@@ -32,7 +33,7 @@ console.log('error', errors)
       formErrors.photo = "La foto es requerida";
     }
     if (!values.sale) {
-      formErrors.sale = "Se necesita un tipo de venta";
+      formErrors.sale = "Tipo de venta requerido";
     }
 
     if (Object.keys(formErrors).length > 0) {
@@ -44,6 +45,7 @@ console.log('error', errors)
       ...values,
       sale: values.sale == "selling" ? true : false,
     };
+    console.log(requestBody)
 
     try {
       console.log(token);
@@ -69,15 +71,7 @@ console.log('error', errors)
       label: 'Nombre del producto',
       pattern: '^[A-Za-z0-9]{3,16}$',
       required: true,
-    },
-    {
-      id: 2,
-      name: 'description',
-      type: 'text',
-      placeholder: 'Descripción del producto',
-      errorMessage: errors.description,
-      label: 'Información del producto',
-      required: true,
+      className: 'w-full md:w-1/2'
     },
     {
       id: 3,
@@ -87,6 +81,16 @@ console.log('error', errors)
       errorMessage: errors.price,
       label: 'Precio',
       required: true,
+      className: 'w-full md:w-1/2',
+    },
+    {
+      id: 2,
+      name: 'description',
+      type: 'textArea',
+      placeholder: 'Descripción del producto',
+      errorMessage: errors.description,
+      label: 'Información del producto',
+      required: true,
     },
     {
       id: 4,
@@ -94,17 +98,17 @@ console.log('error', errors)
       type: 'checkbox',
       label: 'Tags',
       values: [
-        { value: 'Motor', label: 'Motor' },
-        { value: 'Work', label: 'Work' },
-        { value: 'Lifestyle', label: 'Lifestyle' },
-        { value: 'Electronics', label: 'Electronics' }
+        { value: 'Motor', label: ' Motor' },
+        { value: 'Work', label: ' Work' },
+        { value: 'Lifestyle', label: ' Lifestyle' },
+        { value: 'Electronics', label: ' Electronics' }
       ]
     },
     {
       id: 5,
       name: 'photo',
       type: 'file',
-      label: 'Seleeccione una imagen',
+      label: 'Seleccione una imagen',
       accept: 'image/*',
       required: true,
       errorMessage: errors.photo,
@@ -117,8 +121,8 @@ console.log('error', errors)
       errorMessage: errors.sale,
       required: true,
       options: [
-        { value: 'selling', label: 'Para vender' },
-        { value: 'buying', label: 'Para comprar' }
+        { value: 'selling', label: ' For sale' },
+        { value: 'buying', label: ' Looking to buy' }
       ]
     },
   ];
@@ -126,12 +130,14 @@ console.log('error', errors)
   return (
 
     <div className="flex justify-center items-center h-full">
-    <Card>
-      <CardTitle className=''><H2>Crear producto</H2></CardTitle>
-      <CardContent>
-        <Form inputs={inputs}  onSubmit={handleSubmit} />
-      </CardContent>
-    </Card>
+      <div className="w-full max-w-lg">
+        <Card className='border rounded-xl'>
+          <CardTitle className=''><H2>Crear producto</H2></CardTitle>
+          <CardContent>
+            <Form inputs={inputs}  onSubmit={handleSubmit} />
+          </CardContent>
+        </Card>
+    </div>
   </div>
 
   );
