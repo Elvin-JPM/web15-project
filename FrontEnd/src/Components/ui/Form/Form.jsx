@@ -15,6 +15,11 @@ const Form = ({ inputs, onSubmit }) => {
     setValues({ ...values, [name]: newValue });
   };
 
+  const handleChange = (event) => {
+    const file = event.target.files[0];
+    setValues({ ...values, [event.target.name]: file });
+  };
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -53,7 +58,7 @@ const Form = ({ inputs, onSubmit }) => {
                   <FileInput
                     key={input.id}
                     input={input}
-                    onChange={onChange}
+                    onChange={handleChange}
                   />
                 );
                 case 'radio':
