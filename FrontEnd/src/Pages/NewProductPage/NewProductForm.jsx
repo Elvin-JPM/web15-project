@@ -1,6 +1,9 @@
 import { useState } from "react";
 import Form from '../../Components/ui/Form/Form'
 import {
+  H2,
+} from "../../Components/ui/Index";
+import {
   Card,
   CardTitle,
   CardContent,
@@ -98,9 +101,9 @@ const NewProductForm = () => {
 
     <div className="flex justify-center items-center h-full">
     <Card>
-      <CardTitle className=''>Nuevo producto</CardTitle>
+      <CardTitle className=''> <H2>Crear producto</H2></CardTitle>
       <CardContent>
-        <Form inputs={inputs} onSubmit={handleSubmit} />
+        <Form inputs={inputs}  onSubmit={handleSubmit} />
       </CardContent>
     </Card>
   </div>

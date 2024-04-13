@@ -1,13 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TextInput from './TextInput';
 import CheckboxInput from './CheckboxInput';
 import FileInput from './FileInput';
 import RadioInput from './RadioInput';
+import {Button_large} from "../Index";
 
 
-const Form = ({ inputs, onSubmit }) => {
-  const [values, setValues] = useState({});
-  const [formSubmitted, setFormSubmitted] = useState(false);
+const Form = ({ inputs, values: initialValues, onSubmit }) => {
+  const [values, setValues] = useState(initialValues || {});
+  //const [formSubmitted, setFormSubmitted] = useState(false);
+  
+  useEffect(() => {
+    if (initialValues) {
+      setValues(initialValues);
+    }
+  }, [initialValues]);
 
   const onChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -20,12 +27,12 @@ const Form = ({ inputs, onSubmit }) => {
     setValues({ ...values, [event.target.name]: file });
   };
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    setFormSubmitted(true);
+   // setFormSubmitted(true);
     onSubmit(values);
   };
+  console.log('desde form', values)
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
@@ -40,7 +47,7 @@ const Form = ({ inputs, onSubmit }) => {
                 input={input}
                 value={values[input.name] || ''}
                 onChange={onChange}
-                formSubmitted={formSubmitted}
+                //formSubmitted={formSubmitted}
               />
             );
           case 'checkbox':
@@ -74,7 +81,7 @@ const Form = ({ inputs, onSubmit }) => {
             return null;
         }
       })}
-      <button type="submit">Submit</button>
+        <Button_large type="submit" onClick={handleSubmit}>Submit</Button_large>
     </form>
   );
 };

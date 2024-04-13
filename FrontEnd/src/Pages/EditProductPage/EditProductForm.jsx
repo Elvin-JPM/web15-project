@@ -1,40 +1,43 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Form from '../../Components/ui/Form/Form';
 import {
-  Label,
-  Input,
-  Icon,
   H2,
-  Button_large,
 } from "../../Components/ui/Index";
-import { useNavigate } from "react-router-dom";
-import { postData, putData } from "../../Api/api";
+import { Card, CardTitle, CardContent } from "../../Components/ui/CardComponent";
+import { useNavigate, useParams } from "react-router-dom";
+import { putData, getData } from "../../Api/api";
 import getFromStorage from "../../Service/getFromStorage";
-import { useEffect } from "react";
-import { useParams } from "react-router";
-import { getData } from "../../Api/api";
-import Layout from "../../Components/ui/Layout";
+
 const EditProductForm = () => {
   const navigate = useNavigate();
   const { productId, productName } = useParams();
-  const [product, setProduct] = useState(null);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [selectedTags, setSelectedTags] = useState([]); // tags
-  const [previousImage, setPreviousImage] = useState("");
+  const token = getFromStorage("jwt");
+  const username = getFromStorage("username");
 
+  const [values, setValues] = useState({
+    name: '',
+    description: '',
+    price: '',
+    sale: 'selling',
+  });
+
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [previousImage, setPreviousImage] = useState('');
+  
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const response = await getData(`/products/${productId}/${productName}`);
         console.log("Producto a editar:", response);
-        setProduct(response);
         setValues({
-          name: `${response.name}`,
-          description: `${response.description}`,
-          //price: `${response.price}`,
-          sale: `${response.sale ? "selling" : "buying"}`,
+          name: response.name || '',
+          description: response.description || '',
+          price: response.price || '',
+          sale: response.sale ? 'selling' : 'buying',
+          tags: response.tags,
+          photo: response.photo
         });
-        setSelectedTags(response.tags);
-        setPreviousImage(response.photo);
+        setPreviousImage(response.photo || '');
       } catch (error) {
         console.log(error.message);
       }
@@ -43,46 +46,14 @@ const EditProductForm = () => {
     fetchProduct();
   }, [productId]);
 
-  const [values, setValues] = useState({
-    name: ``,
-    description: "",
-    price: "",
-    sale: "selling",
-  });
+  const handleSubmit = async (values) => {
+    const requestBody = {
+      ...values,
+      sale: values.sale === "selling",
+      //photo: selectedImage || previousImage,
+      //tags: selectedTags,
+    };
 
-  const token = getFromStorage("jwt");
-  const username = getFromStorage("username");
-
-  // Handler functions
-  const onChange = (e) => {
-    setValues({ ...values, [e.target.getAttribute("name")]: e.target.value });
-  };
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedImage(file);
-  };
-
-  const handleTagsChange = (value) => {
-    if (selectedTags.includes(value)) {
-      // If the option is already selected, remove it from the array
-      setSelectedTags(selectedTags.filter((option) => option !== value));
-    } else {
-      // If the option is not selected, add it to the array
-      setSelectedTags([...selectedTags, value]);
-    }
-  };
-
-  const requestBody = {
-    ...values,
-    sale: values.sale == "selling" ? true : false,
-    photo: selectedImage || previousImage,
-    tags: selectedTags,
-  };
-
-  console.log("Request Body: ", requestBody);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
     try {
       const response = await putData(
         `/products/${username}/${productId}`,
@@ -103,154 +74,72 @@ const EditProductForm = () => {
   const inputs = [
     {
       id: 1,
-      name: "name",
-      type: "text",
-      placeholder: "Nombre de producto",
-      errorMessage: "Nombre not available",
-      label: "Nombre del producto",
-      pattern: "^[A-Za-z0-9]{3,16}$",
+      name: 'name',
+      type: 'text',
+      placeholder: 'Nombre de producto',
+      errorMessage: 'Nombre no disponible',
+      label: 'Nombre del producto',
+      pattern: '^[A-Za-z0-9]{3,16}$',
       required: true,
-      value: ``,
     },
     {
       id: 2,
-      name: "description",
-      type: "text",
-      placeholder: "Describe del producto",
-      errorMessage: "Información del producto not available",
-      label: "Información del producto",
-      // pattern: "^[A-Za-z0-9]{3,16}$",
+      name: 'description',
+      type: 'text',
+      placeholder: 'Descripción del producto',
+      errorMessage: 'Información del producto no disponible',
+      label: 'Información del producto',
       required: true,
     },
     {
       id: 3,
-      name: "price",
-      type: "number",
-      placeholder: "Precio",
-      errorMessage: "Formato no corresponde",
-      label: "Precio",
+      name: 'price',
+      type: 'number',
+      placeholder: 'Precio',
+      errorMessage: 'Formato de precio incorrecto',
+      label: 'Precio',
       required: true,
+    },
+    {
+      id: 4,
+      name: 'tags',
+      type: 'checkbox',
+      label: 'Tags',
+      values: [
+        { value: 'Motor', label: 'Motor' },
+        { value: 'Work', label: 'Work' },
+        { value: 'Lifestyle', label: 'Lifestyle' },
+        { value: 'Electronics', label: 'Electronics' }
+      ]
+    },
+    {
+      id: 5,
+      name: 'photo',
+      type: 'file',
+      label: 'Seleeccione una imagen',
+      accept: 'image/*',
+      required: true,
+    },
+    {
+      id: 6,
+      name: 'sale',
+      type: 'radio',
+      label: 'Tipo de venta',
+      options: [
+        { value: 'selling', label: 'Para vender' },
+        { value: 'buying', label: 'Para comprar' }
+      ]
     },
   ];
 
   return (
-    <div className="flex min-h-full flex-1 flex-col justify-center px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <H2>Editar producto</H2>
-      </div>
-
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-6" onSubmit={handleSubmit}>
-          {inputs.map((input) => (
-            <div key={input.id}>
-              <Label htmlFor={input.name}>{input.label}</Label>
-              <div className="mt-2">
-                <Input
-                  id={input.name}
-                  name={input.name}
-                  type={input.type}
-                  placeholder={input.placeholder}
-                  autoComplete={input.name}
-                  value={values[input.name]}
-                  required={input.required}
-                  pattern={input.pattern}
-                  errorMessage={input.errorMessage}
-                  onChange={onChange}
-                />
-              </div>
-            </div>
-          ))}
-
-          <Label>Previous image: {previousImage}</Label>
-          <Label htmlFor="imageInput">Select an Image:</Label>
-          <Input
-            type="file"
-            id="imageInput"
-            name="photo"
-            required
-            accept="image/*" // Specify that only image files are allowed
-            onChange={handleImageChange}
-          />
-
-          <Label>Selling or buying:</Label>
-          <label>
-            <input
-              type="radio"
-              id="sell"
-              name="sale"
-              value="selling"
-              checked={values.sale === "selling"}
-              onChange={onChange}
-            />
-            For sale
-          </label>
-          <br></br>
-          <label>
-            <input
-              type="radio"
-              id="buy"
-              name="sale"
-              value="buying"
-              checked={values.sale === "buying"}
-              onChange={onChange}
-            />
-            Looking to buy
-          </label>
-
-          <br></br>
-          <label>Tags:</label>
-
-          <div>
-            <input
-              type="checkbox"
-              id="Motor"
-              value="Motor"
-              checked={selectedTags.includes("Motor")}
-              onChange={() => handleTagsChange("Motor")}
-            />
-            <label htmlFor="Motor">Motor</label>
-          </div>
-
-          <div>
-            <input
-              type="checkbox"
-              id="Work"
-              value="Work"
-              checked={selectedTags.includes("Work")}
-              onChange={() => handleTagsChange("Work")}
-            />
-            <label htmlFor="Work">Work</label>
-          </div>
-
-          <div>
-            <input
-              type="checkbox"
-              id="Lifestyle"
-              value="Lifestyle"
-              checked={selectedTags.includes("Lifestyle")}
-              onChange={() => handleTagsChange("Lifestyle")}
-            />
-            <label htmlFor="Lifestyle">Lifestyle</label>
-          </div>
-
-          <div>
-            <input
-              type="checkbox"
-              id="Electronics"
-              value="Electronics"
-              checked={selectedTags.includes("Electronics")}
-              onChange={() => handleTagsChange("Electronics")}
-            />
-            <label htmlFor="Electronics">Electronics</label>
-          </div>
-
-          <div>
-            <Button_large type="submit" onClick={handleSubmit}>
-              Editar producto
-            </Button_large>
-          </div>
-        </form>
-      </div>
+    <div className="flex justify-center items-center h-full">
+      <Card>
+        <CardTitle className=''><H2>Editar producto</H2></CardTitle>
+        <CardContent>
+          <Form inputs={inputs} values={values} onSubmit={handleSubmit} />
+        </CardContent>
+      </Card>
     </div>
   );
 };
