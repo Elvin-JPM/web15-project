@@ -11,11 +11,10 @@ import Button_large from './Button_large';
 //import Card from './Card';
 import Icon_product from './Icon_product';
 import IconUser from './Icon_user'
-import { Modal } from './Modal';
-//import {AlertDialog} from './AlertDialog';
+import AlertDialog from './AlertDialog';
 
 export {
-	//AlertDialog,
+	AlertDialog,
 	Button,
 	Label,
 	Input,
@@ -29,7 +28,6 @@ export {
 	//Card,
 	Icon_product,
 	IconUser,
-	Modal
 };
 
 export {

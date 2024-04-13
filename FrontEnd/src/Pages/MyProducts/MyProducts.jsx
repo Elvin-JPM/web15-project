@@ -6,17 +6,15 @@ import Button from "../../Components/ui/Button";
 import getFromStorage from "../../Service/getFromStorage";
 import SweetAlert from "../../Components/ui/SweetAlert";
 import cardStyles from "../MyProducts/my_products.module.css";
-import Icon from "../../Components/ui/Icon";
+import AlertDialog from "../../Components/ui/AlertDialog";
 
 const MyProducts = () => {
   const [showSweetAlert, setShowSweetAlert] = useState(false);
   const [products, setProducts] = useState([]);
   const [reloadProducts, setReloadProducts] = useState(false);
+  const [productIdToDelete, setProductIdToDelete] = useState(null);
+
   const navigate = useNavigate();
-
-  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false); // Estado para mostrar el cuadro de diálogo de confirmación
-  const [productIdToDelete, setProductIdToDelete] = useState(null); // Estado para almacenar el ID del producto a eliminar
-
   const username = getFromStorage("username");
   const token = getFromStorage("jwt");
 
@@ -55,12 +53,6 @@ const MyProducts = () => {
     } catch (error) {
       console.log(error.message);
     }
-  };
-
-  // Función para mostrar el cuadro de diálogo de confirmación antes de borrar el producto
-  const confirmDeleteProduct = (productId) => {
-    setProductIdToDelete(productId);
-    setShowDeleteConfirmation(true);
   };
 
   // Opcion
@@ -118,7 +110,7 @@ const MyProducts = () => {
               </Button>
               <Button
                 id={product._id}
-                onClick={() => confirmDeleteProduct(product._id)}
+                onClick={() => setProductIdToDelete(product._id)}
                 style={{ backgroundColor: "#FA7070" }}
               >
                 Borrar producto
@@ -135,26 +127,15 @@ const MyProducts = () => {
         />
       )}
       {/* Cuadro de diálogo de confirmación */}
-      {showDeleteConfirmation && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-10">
-          <div className="bg-white p-6 rounded-lg">
-            <p>¿Estás seguro que deseas eliminar este producto?</p>
-            <div className="mt-4 flex justify-end">
-              <button
-                className="mr-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-                onClick={() => deleteProduct(productIdToDelete)}
-              >
-                Confirmar
-              </button>
-              <button
-                className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400"
-                onClick={() => setShowDeleteConfirmation(false)}
-              >
-                Cancelar
-              </button>
-            </div>
-          </div>
-        </div>
+      {productIdToDelete && (
+        <AlertDialog
+        text="¿Estás seguro que deseas eliminar este producto?"
+          onConfirm={() => {
+            deleteProduct(productIdToDelete);
+            setProductIdToDelete(null); // Limpiar el productIdToDelete después de confirmar
+          }}
+          onCancel={() => setProductIdToDelete(null)} // Limpiar el productIdToDelete si se cancela
+        />
       )}
     </section>
   );
