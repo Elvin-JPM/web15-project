@@ -4,9 +4,9 @@ const CheckboxInput = ({ input, value, onChange }) => {
   const handleChange = (event) => {
     const { checked, value: checkboxValue } = event.target;
     const updatedValue = checked
-      ? [...value, checkboxValue] // Agrega el valor seleccionado a la lista
-      : value.filter((val) => val !== checkboxValue); // Filtra el valor deseleccionado de la lista
-    onChange({ target: { name: input.name, value: updatedValue } }); // Llama a la función onChange con el nuevo valor
+      ? [...value, checkboxValue] 
+      : value.filter((val) => val !== checkboxValue); 
+    onChange({ target: { name: input.name, value: updatedValue } }); 
   };
 
   return (
@@ -19,10 +19,10 @@ const CheckboxInput = ({ input, value, onChange }) => {
             id={option.value}
             name={input.name}
             value={option.value}
-            checked={value.includes(option.value)} // Verifica si el valor está en la lista de valores seleccionados
-            onChange={handleChange} // Usa la función handleChange para manejar los cambios en los checkboxes
+            checked={value.includes(option.value)} 
+            onChange={handleChange}
           />
-          <label htmlFor={option.value}>{option.label}</label>
+          <label className='text-gray-500' htmlFor={option.value}>{option.label}</label>
         </div>
       ))}
     </div>

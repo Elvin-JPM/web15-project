@@ -90,6 +90,7 @@ const Form = ({ inputs, values: initialValues, onSubmit }) => {
                   <FileInput
                     key={input.id}
                     input={input}
+                    value={values[input.name] || ''}
                     onChange={onChange}
                     formSubmitted={formSubmitted}
                   />

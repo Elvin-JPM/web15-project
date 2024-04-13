@@ -102,17 +102,17 @@ const EditProductForm = () => {
       type: 'checkbox',
       label: 'Tags',
       values: [
-        { value: 'Motor', label: 'Motor' },
-        { value: 'Work', label: 'Work' },
-        { value: 'Lifestyle', label: 'Lifestyle' },
-        { value: 'Electronics', label: 'Electronics' }
+        { value: 'Motor', label: ' Motor' },
+        { value: 'Work', label: ' Work' },
+        { value: 'Lifestyle', label: ' Lifestyle' },
+        { value: 'Electronics', label: ' Electronics' }
       ]
     },
     {
       id: 5,
       name: 'photo',
       type: 'file',
-      label: 'Seleeccione una imagen',
+      label: 'Seleccione una imagen',
       accept: 'image/*',
       required: true,
     },

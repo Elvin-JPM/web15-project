@@ -15,7 +15,7 @@ const RadioInput = ({ input, value, formSubmitted, onChange }) => (
             checked={value === option.value}
             onChange={onChange}
           />
-          <label htmlFor={option.value}>{option.label}</label>
+          <label className='text-gray-500' htmlFor={option.value}>{option.label}</label>
         </div>
       ))}
        {input.required && formSubmitted && !value && (
