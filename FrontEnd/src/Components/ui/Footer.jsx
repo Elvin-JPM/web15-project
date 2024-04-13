@@ -1,12 +1,11 @@
 import styles from '../ui/footer.module.css'
+import Icon from './Icon';
 
 function Footer(props)
 {
 	return (
-    <footer className={styles.footer}
-    {...props}
-    >
-      {props.children}
+    <footer className={styles.footer}>
+     
     </footer>
 	);
 }
