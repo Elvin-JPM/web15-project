@@ -21,8 +21,7 @@ const EditProductForm = () => {
     sale: 'selling',
   });
 
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [previousImage, setPreviousImage] = useState('');
+ 
   
   useEffect(() => {
     const fetchProduct = async () => {
@@ -37,7 +36,6 @@ const EditProductForm = () => {
           tags: response.tags,
           photo: response.photo
         });
-        setPreviousImage(response.photo || '');
       } catch (error) {
         console.log(error.message);
       }
