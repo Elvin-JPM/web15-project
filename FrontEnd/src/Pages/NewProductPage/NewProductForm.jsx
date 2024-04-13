@@ -15,8 +15,31 @@ import getFromStorage from "../../Service/getFromStorage";
 const NewProductForm = () => {
   const navigate = useNavigate();
   const token = getFromStorage("jwt");
-
+  const [errors, setErrors] = useState({});
+console.log('error', errors)
   const handleSubmit = async (values) => {
+    const formErrors = {};
+    if (!values.name) {
+      formErrors.name = "Nombre es requerido";
+    }
+    if (!values.description) {
+      formErrors.description = "Descripción es requerida";
+    }
+    if (!values.price) {
+      formErrors.price = "Precio es requerido";
+    }
+    if (!values.photo) {
+      formErrors.photo = "La foto es requerida";
+    }
+    if (!values.sale) {
+      formErrors.sale = "Se necesita un tipo de venta";
+    }
+
+    if (Object.keys(formErrors).length > 0) {
+      setErrors(formErrors);
+      return;
+    }
+
     const requestBody = {
       ...values,
       sale: values.sale == "selling" ? true : false,
@@ -42,9 +65,9 @@ const NewProductForm = () => {
       name: 'name',
       type: 'text',
       placeholder: 'Nombre de producto',
-      errorMessage: 'Nombre no disponible',
+      errorMessage: errors.name, 
       label: 'Nombre del producto',
-      //pattern: '^[A-Za-z0-9]{3,16}$',
+      pattern: '^[A-Za-z0-9]{3,16}$',
       required: true,
     },
     {
@@ -52,7 +75,7 @@ const NewProductForm = () => {
       name: 'description',
       type: 'text',
       placeholder: 'Descripción del producto',
-      errorMessage: 'Información del producto no disponible',
+      errorMessage: errors.description,
       label: 'Información del producto',
       required: true,
     },
@@ -61,7 +84,7 @@ const NewProductForm = () => {
       name: 'price',
       type: 'number',
       placeholder: 'Precio',
-      errorMessage: 'Formato de precio incorrecto',
+      errorMessage: errors.price,
       label: 'Precio',
       required: true,
     },
@@ -84,12 +107,15 @@ const NewProductForm = () => {
       label: 'Seleeccione una imagen',
       accept: 'image/*',
       required: true,
+      errorMessage: errors.photo,
     },
     {
       id: 6,
       name: 'sale',
       type: 'radio',
       label: 'Tipo de venta',
+      errorMessage: errors.sale,
+      required: true,
       options: [
         { value: 'selling', label: 'Para vender' },
         { value: 'buying', label: 'Para comprar' }
@@ -101,7 +127,7 @@ const NewProductForm = () => {
 
     <div className="flex justify-center items-center h-full">
     <Card>
-      <CardTitle className=''> <H2>Crear producto</H2></CardTitle>
+      <CardTitle className=''><H2>Crear producto</H2></CardTitle>
       <CardContent>
         <Form inputs={inputs}  onSubmit={handleSubmit} />
       </CardContent>

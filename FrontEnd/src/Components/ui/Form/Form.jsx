@@ -8,7 +8,7 @@ import {Button_large} from "../Index";
 
 const Form = ({ inputs, values: initialValues, onSubmit }) => {
   const [values, setValues] = useState(initialValues || {});
-  //const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
   
   useEffect(() => {
     if (initialValues) {
@@ -29,7 +29,7 @@ const Form = ({ inputs, values: initialValues, onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-   // setFormSubmitted(true);
+    setFormSubmitted(true);
     onSubmit(values);
   };
   console.log('desde form', values)
@@ -47,7 +47,7 @@ const Form = ({ inputs, values: initialValues, onSubmit }) => {
                 input={input}
                 value={values[input.name] || ''}
                 onChange={onChange}
-                //formSubmitted={formSubmitted}
+                formSubmitted={formSubmitted}
               />
             );
           case 'checkbox':
@@ -57,7 +57,7 @@ const Form = ({ inputs, values: initialValues, onSubmit }) => {
                 input={input}
                 value={values[input.name] || []} 
                 onChange={onChange}
-               // formSubmitted={formSubmitted}
+                formSubmitted={formSubmitted}
               />
             );
             case 'file':
@@ -66,6 +66,7 @@ const Form = ({ inputs, values: initialValues, onSubmit }) => {
                     key={input.id}
                     input={input}
                     onChange={handleChange}
+                    formSubmitted={formSubmitted}
                   />
                 );
                 case 'radio':
@@ -75,6 +76,7 @@ const Form = ({ inputs, values: initialValues, onSubmit }) => {
                         input={input}
                         value={values[input.name] || ''}
                         onChange={onChange}
+                        formSubmitted={formSubmitted}
                       />
                     );
           default:

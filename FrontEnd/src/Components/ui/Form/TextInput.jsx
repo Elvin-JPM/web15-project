@@ -15,7 +15,7 @@ const TextInput = ({ input, value, onChange, formSubmitted }) => (
           pattern={input.pattern}
         />
         {input.required && formSubmitted && !value && (
-          <span>{input.errorMessage}</span>
+          <span className="text-red-500 text-sm">{input.errorMessage}</span>
         )}
       </div>
     </div>

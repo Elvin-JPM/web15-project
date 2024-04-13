@@ -50,8 +50,6 @@ const EditProductForm = () => {
     const requestBody = {
       ...values,
       sale: values.sale === "selling",
-      //photo: selectedImage || previousImage,
-      //tags: selectedTags,
     };
 
     try {

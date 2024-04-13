@@ -1,4 +1,4 @@
-const RadioInput = ({ input, value, onChange }) => (
+const RadioInput = ({ input, value, formSubmitted, onChange }) => (
     <div>
       <label>{input.label}</label>
       {input.options.map((option) => (
@@ -14,6 +14,9 @@ const RadioInput = ({ input, value, onChange }) => (
           <label htmlFor={option.value}>{option.label}</label>
         </div>
       ))}
+       {input.required && formSubmitted && !value && (
+          <span className="text-red-500 text-sm">{input.errorMessage}</span>
+        )}
     </div>
   );
 
