@@ -38,7 +38,7 @@ const FileInput = ({ input, value, onChange, formSubmitted }) => {
         {selectedImage ? ( // Si hay una imagen temporal seleccionada, mostrarla
           <>
             <Label>Previous image</Label>
-            <img className='w-full h-52 my-1' src={selectedImage} alt="Selected" />
+            <img className='w-full my-1' src={selectedImage} alt="Selected" />
             <button className='border border-red-600 font-bold bg-red-600 text-xs rounded text-white p-2' onClick={handleClearImage}>Clear</button>
           </>
         ) : (
