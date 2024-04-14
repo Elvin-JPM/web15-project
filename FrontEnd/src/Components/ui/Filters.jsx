@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import Input from "./Input";
-
+import styles from "../ui/filters.module.css";
 function Filters({
-  styles,
   name,
   initialMinPrice,
   initialMaxPrice,
@@ -39,7 +38,7 @@ function Filters({
 
   const tags = ["Motor", "Electronics", "Lifestyle", "Work"];
   return (
-    <div className=" rounded-lg p-2 mb-10">
+    <div className={styles.filters}>
       <div className="flex flex-wrap place-content-around gap-2">
         <div className="">
           <select

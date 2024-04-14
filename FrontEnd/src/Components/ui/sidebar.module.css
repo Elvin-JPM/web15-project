@@ -1,0 +1,26 @@
+.sidebar {
+  width: 13rem;
+  height: 100vh;
+  position: fixed;
+  top: 5.1rem;
+  /* bottom: 14rem; */
+  background-color: #f0f0f0;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  z-index: 1;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  /* z-index: 0; */
+  margin-top: 2rem;
+}
+
+@media screen and (max-width: 768px) {
+  .sidebar {
+    top: 10rem;
+  }
+}

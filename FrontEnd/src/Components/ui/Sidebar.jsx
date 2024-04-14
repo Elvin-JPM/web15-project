@@ -6,6 +6,7 @@ import logout from "../../Service/logout";
 import { useNavigate } from "react-router";
 import { useState } from "react";
 import getFromStorage from "../../Service/getFromStorage";
+import styles from "../ui/sidebar.module.css";
 
 function Sidebar() {
   const [isLogged, setIsLogged] = useState(null);
@@ -25,41 +26,56 @@ function Sidebar() {
   };
 
   return (
-    <aside
-      id="sidebar"
-      className="fixed border left-0 top-0 z-20 h-full bg-white border-color-gray w-30 px-10"
-      aria-label="Sidebar"
-    >
-      <nav
-        role="navigation"
-        className="m-1 flex h-full flex-col  gap-2 pb-4 pt-20"
-      >
-        <div className="flex items-center px-1">
-          <Button
-            //variant="ghost"
-            className="inline-flex items-center rounded-lg p-2 text-sm"
-            //onClick={() => dispatchMenu({ type: "TOOGLE_MENU" })}
-          >
-            <span className="sr-only">open</span>
-          </Button>
-        </div>
+    <aside className={styles.sidebar}>
+      <nav role="navigation" className={styles.nav}>
         <Label className="text-md text-gray-500 pb-5">
           {username ? ` Hello ${username}` : ""}
         </Label>
-        <NavLink to="/products/new" className="mr-5 hover:text-gray-900">
-          Create Ad{" "}
+
+        <NavLink
+          to="/products/new"
+          // className={`mr-5 hover:text-gray-900`}
+          style={({ isActive }) => ({
+            borderBottom: isActive ? "4px solid #54acb4" : "",
+            //backgroundColor: isActive ? "#54acb4" : "",
+            transform: isActive ? "skewX(-4deg)" : "",
+            //color: isActive ? "white" : "",
+            padding: "3px",
+            fontWeight: isActive ? "500" : "",
+          })}
+        >
+          Create Ad
         </NavLink>
-        <NavLink to="/products/list/me" className="mr-5 hover:text-gray-900">
+        <NavLink
+          to="/products/list/me"
+          className={`mr-5 hover:text-gray-900`}
+          style={({ isActive }) => ({
+            borderBottom: isActive ? "4px solid #54acb4" : "",
+            //backgroundColor: isActive ? "#54acb4" : "",
+            transform: isActive ? "skewX(-4deg)" : "",
+            //color: isActive ? "white" : "",
+            padding: "3px",
+            fontWeight: isActive ? "500" : "",
+          })}
+        >
           My Ads
         </NavLink>
-        <NavLink to={`/${username}/favs`} className="mr-5 hover:text-gray-900">
+        <NavLink
+          to={`/${username}/favs`}
+          className={`mr-5 hover:text-gray-900`}
+          style={({ isActive }) => ({
+            borderBottom: isActive ? "4px solid #54acb4" : "",
+            //backgroundColor: isActive ? "#54acb4" : "",
+            transform: isActive ? "skewX(-4deg)" : "",
+            //color: isActive ? "white" : "",
+            padding: "3px",
+            fontWeight: isActive ? "500" : "",
+          })}
+        >
           Favorites
         </NavLink>
-        <NavLink to="/mi-perfil" className="mr-5 hover:text-gray-900">
-          My Profile
-        </NavLink>
 
-        <div className="absolute bottom-20 flex items-center px-1">
+        <div className="">
           <Button
             type="submit"
             name={token ? "logout" : "login"}

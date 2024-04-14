@@ -11,11 +11,14 @@ import SweetAlert from "../../Components/ui/SweetAlert";
 import getFromStorage from "../../Service/getFromStorage";
 import { Skeleton } from "../../Components/skeleton";
 import cardStyles from "./product.module.css";
+import Sidebar from "../../Components/ui/Sidebar";
 
 const Products = () => {
   const navigate = useNavigate();
   const [showSweetAlertProductAdded, setShowSweetAlertProductAdded] =
     useState(false);
+
+  const username = getFromStorage("username");
 
   useEffect(() => {
     if (localStorage.getItem("mostrarSweetAlert") === "true") {
@@ -104,64 +107,54 @@ const Products = () => {
   // }, [pageNumber, getData]);
   const token = getFromStorage("jwt");
   return (
-    <section className="container mx-auto font-sans antialiased">
-      <Filters
-        styles={cardStyles.filters}
-        name={filterValues.name}
-        minPrice={filterValues.minPrice}
-        maxPrice={filterValues.maxPrice}
-        sale={filterValues.sale}
-        selectedTags={selectedTags}
-        onChange={onFilterChange}
-        onTagsChange={handleTagsChange}
-      />
-      {token ? "" : <ProductTitle />}
+    <section className={cardStyles.main_section}>
+      <div className={cardStyles.main_product_area}>
+        <Filters
+          styles={cardStyles.filters}
+          name={filterValues.name}
+          minPrice={filterValues.minPrice}
+          maxPrice={filterValues.maxPrice}
+          sale={filterValues.sale}
+          selectedTags={selectedTags}
+          onChange={onFilterChange}
+          onTagsChange={handleTagsChange}
+        />
+        {token ? "" : <ProductTitle />}
 
-      <div className={cardStyles.grid}>
-        {products.map((product, index) => {
-          if (products.length === index + 1) {
-            return (
-              <div ref={lastProductRef} key={product._id}>
-                <Link to={`/products/${product.name}/${product._id}`}>
-                  <Product product={product} styles={cardStyles} />
-                </Link>
-              </div>
-            );
-          } else {
-            return (
-              <div key={product._id}>
-                <Link to={`/products/${product.name}/${product._id}`}>
-                  <Product product={product} styles={cardStyles} />
-                </Link>
-              </div>
-            );
-          }
-        })}
+        <div className={cardStyles.grid}>
+          {products.map((product, index) => {
+            if (products.length === index + 1) {
+              return (
+                <div ref={lastProductRef} key={product._id}>
+                  <Link to={`/products/${product.name}/${product._id}`}>
+                    <Product product={product} styles={cardStyles} />
+                  </Link>
+                </div>
+              );
+            } else {
+              return (
+                <div key={product._id}>
+                  <Link to={`/products/${product.name}/${product._id}`}>
+                    <Product product={product} styles={cardStyles} />
+                  </Link>
+                </div>
+              );
+            }
+          })}
+        </div>
+        <Skeleton loading={loading}></Skeleton>
+        {/* <div>{loading && "Loading..."}</div> */}
+        <div>{error && "Error..."}</div>
+
+        {showSweetAlertProductAdded && (
+          <SweetAlert
+            title="Nuevo producto creado"
+            text="Cambios guardados exitosamente."
+            succeeded={true}
+            onConfirm={() => setShowSweetAlertProductAdded(false)}
+          />
+        )}
       </div>
-      <Skeleton loading={loading}></Skeleton>
-      {/* <div>{loading && "Loading..."}</div> */}
-      <div>{error && "Error..."}</div>
-
-      {/* {products.length > 0 ? (
-        <FilteredProducts
-          productsList={products}
-          filterName={filterValues.name}
-          filterMinPrice={filterValues.minPrice}
-          filterMaxPrice={filterValues.maxPrice}
-          filterSale={filterValues.sale}
-          filterSelectedTags={selectedTags}
-        />
-      ) : (
-        <EmptyList />
-      )} */}
-      {showSweetAlertProductAdded && (
-        <SweetAlert
-          title="Nuevo producto creado"
-          text="Cambios guardados exitosamente."
-          succeeded={true}
-          onConfirm={() => setShowSweetAlertProductAdded(false)}
-        />
-      )}
     </section>
   );
 };

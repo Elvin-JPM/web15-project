@@ -9,13 +9,12 @@ function Layout({ children }) {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      {/* {token && <Sidebar />} */}
+      {token && <Sidebar />}
       <main className={`flex-grow  p-4 pt-24`}>
+        {/* <Sidebar /> */}
         {children ? children : <Outlet />}
       </main>
-      <Footer>
-        {/* <p className="text-sm">Copyright © 2024</p> */}
-      </Footer>
+      <Footer>{/* <p className="text-sm">Copyright © 2024</p> */}</Footer>
     </div>
   );
 }

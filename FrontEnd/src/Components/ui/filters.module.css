@@ -1,0 +1,10 @@
+.filters {
+  margin-top: 0.1rem;
+  margin-bottom: 3rem;
+}
+
+@media screen and (max-width: 768px) {
+  .filters {
+    margin-top: 6.5rem;
+  }
+}

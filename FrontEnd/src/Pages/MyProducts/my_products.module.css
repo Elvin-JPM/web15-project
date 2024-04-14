@@ -71,3 +71,28 @@
   gap: 0.5rem;
   margin-top: 0.5rem;
 }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  justify-items: center;
+  align-items: center;
+  row-gap: 1.5rem;
+  column-gap: 2rem;
+}
+
+.main_section {
+  position: relative;
+  display: flex;
+  margin-top: 1rem;
+}
+.main_product_area {
+  flex: 1;
+  padding-left: 14rem;
+}
+
+@media screen and (max-width: 768px) {
+  .main_section {
+    margin-top: 6.5rem;
+  }
+}
