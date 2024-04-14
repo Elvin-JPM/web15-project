@@ -123,7 +123,7 @@ function MyProfile() {
               name="newPassword"
               onChange={onDataChange}
               value={newData.newPassword}
-              placeholder="In case you want to change it..."
+              placeholder="********"
             />
           </div>
           <div className="mb-4">
@@ -132,7 +132,7 @@ function MyProfile() {
               name="confirmNewPassword"
               onChange={onDataChange}
               value={newData.confirmNewPassword}
-              placeholder="Confirm your new password"
+              placeholder="********"
             />
           </div>
         </form>
