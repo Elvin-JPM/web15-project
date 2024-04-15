@@ -7,7 +7,8 @@ let socket;
 const SOCKET_IO_URL = import.meta.env.VITE_APP_SOCKET_IO_URL;
 
 export const initializeSocket = (username) => {
-  socket = socketIo(SOCKET_IO_URL);
+  console.log(SOCKET_IO_URL);
+  socket = socketIo(`${SOCKET_IO_URL}`);
   socket.emit("setSocketUsername", username);
   socket.emit("setSocketActive");
 

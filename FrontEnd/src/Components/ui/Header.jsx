@@ -124,7 +124,7 @@ function Header() {
                 </NavLink>
               </div>
 
-              <div class={styles.menu_icon} onClick={toggleBurgerMenu}>
+              <div className={styles.menu_icon} onClick={toggleBurgerMenu}>
                 <span></span>
                 <span></span>
                 <span></span>
