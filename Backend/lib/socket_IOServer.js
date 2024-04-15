@@ -7,22 +7,10 @@ function configureSocket(server) {
     cors: {
       origin: "*",
       methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-      allowedHeaders: [
-        "Content-Type",
-        "Authorization",
-        "Accept",
-        "Cache-Control",
-        "X-Requested-With",
-        "User-Agent",
-        "Origin",
-        "X-CSRF-Token",
-        "headers",
-      ],
       credentials: true,
       maxAge: 3600, // Value is in seconds
     },
   });
-
 
   // Create a listener for Sockets.IO's events
   io.on("connection", (socket) => {
