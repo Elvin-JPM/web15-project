@@ -14,6 +14,7 @@ import logout from "../../Service/logout";
 function Header() {
   const [notifications, setNotifications] = useState(0);
   const [isLogged, setIsLogged] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
   const token = getFromStorage("jwt");
@@ -53,6 +54,10 @@ function Header() {
     }
   };
 
+  const toggleBurgerMenu = () => {
+    setIsOpen((open) => !open);
+  };
+
   return (
     <header className="border border-gray-100 fixed top-0 z-50 w-full bg-white text-gray-600 body-font">
       <div className="container mx-auto flex flex-wrap p-3 flex-col md:flex-row items-center">
@@ -71,51 +76,111 @@ function Header() {
           </div>
         </NavLink>
 
-        <nav className="md:ml-auto flex flex-wrap items-center text-base justify-between">
+        <nav className="md:ml-auto flex flex-wrap gap-4 items-center text-base justify-between">
           {token && (
             <>
-              <NavLink
-                to="/products/new"
-                className={`mr-5 hover:text-gray-900`}
-                style={({ isActive }) => ({
-                  borderBottom: isActive ? "4px solid #54acb4" : "",
-                  //backgroundColor: isActive ? "#54acb4" : "",
-                  transform: isActive ? "skewX(-4deg)" : "",
-                  //color: isActive ? "white" : "",
-                  padding: "3px",
-                  fontWeight: isActive ? "500" : "",
-                })}
+              <div className={styles.nav_bar_list}>
+                <NavLink
+                  to="/products/new"
+                  className={`mr-5 hover:text-gray-900`}
+                  style={({ isActive }) => ({
+                    borderBottom: isActive ? "4px solid #54acb4" : "",
+                    //backgroundColor: isActive ? "#54acb4" : "",
+                    transform: isActive ? "skewX(-4deg)" : "",
+                    //color: isActive ? "white" : "",
+                    padding: "3px",
+                    fontWeight: isActive ? "500" : "",
+                  })}
+                >
+                  Create Ad
+                </NavLink>
+                <NavLink
+                  to="/products/list/me"
+                  className={`mr-5 hover:text-gray-900`}
+                  style={({ isActive }) => ({
+                    borderBottom: isActive ? "4px solid #54acb4" : "",
+                    //backgroundColor: isActive ? "#54acb4" : "",
+                    transform: isActive ? "skewX(-4deg)" : "",
+                    //color: isActive ? "white" : "",
+                    padding: "3px",
+                    fontWeight: isActive ? "500" : "",
+                  })}
+                >
+                  My Ads
+                </NavLink>
+                <NavLink
+                  to={`/${username}/favs`}
+                  className={`mr-5 hover:text-gray-900`}
+                  style={({ isActive }) => ({
+                    borderBottom: isActive ? "4px solid #54acb4" : "",
+                    //backgroundColor: isActive ? "#54acb4" : "",
+                    transform: isActive ? "skewX(-4deg)" : "",
+                    //color: isActive ? "white" : "",
+                    padding: "3px",
+                    fontWeight: isActive ? "500" : "",
+                  })}
+                >
+                  Favorites
+                </NavLink>
+              </div>
+
+              <div class={styles.menu_icon} onClick={toggleBurgerMenu}>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+
+              <div
+                className={
+                  isOpen ? styles.burger_menu_open : styles.burger_menu_close
+                }
               >
-                Create Ad
-              </NavLink>
-              <NavLink
-                to="/products/list/me"
-                className={`mr-5 hover:text-gray-900`}
-                style={({ isActive }) => ({
-                  borderBottom: isActive ? "4px solid #54acb4" : "",
-                  //backgroundColor: isActive ? "#54acb4" : "",
-                  transform: isActive ? "skewX(-4deg)" : "",
-                  //color: isActive ? "white" : "",
-                  padding: "3px",
-                  fontWeight: isActive ? "500" : "",
-                })}
-              >
-                My Ads
-              </NavLink>
-              <NavLink
-                to={`/${username}/favs`}
-                className={`mr-5 hover:text-gray-900`}
-                style={({ isActive }) => ({
-                  borderBottom: isActive ? "4px solid #54acb4" : "",
-                  //backgroundColor: isActive ? "#54acb4" : "",
-                  transform: isActive ? "skewX(-4deg)" : "",
-                  //color: isActive ? "white" : "",
-                  padding: "3px",
-                  fontWeight: isActive ? "500" : "",
-                })}
-              >
-                Favorites
-              </NavLink>
+                <NavLink
+                  to="/products/new"
+                  className={`mr-5 hover:text-gray-900`}
+                  onClick={toggleBurgerMenu}
+                  style={({ isActive }) => ({
+                    borderBottom: isActive ? "4px solid #54acb4" : "",
+                    //backgroundColor: isActive ? "#54acb4" : "",
+                    transform: isActive ? "skewX(-4deg)" : "",
+                    //color: isActive ? "white" : "",
+                    padding: "3px",
+                    fontWeight: isActive ? "500" : "",
+                  })}
+                >
+                  Create Ad
+                </NavLink>
+                <NavLink
+                  to="/products/list/me"
+                  className={`mr-5 hover:text-gray-900`}
+                  onClick={toggleBurgerMenu}
+                  style={({ isActive }) => ({
+                    borderBottom: isActive ? "4px solid #54acb4" : "",
+                    //backgroundColor: isActive ? "#54acb4" : "",
+                    transform: isActive ? "skewX(-4deg)" : "",
+                    //color: isActive ? "white" : "",
+                    padding: "3px",
+                    fontWeight: isActive ? "500" : "",
+                  })}
+                >
+                  My Ads
+                </NavLink>
+                <NavLink
+                  to={`/${username}/favs`}
+                  className={`mr-5 hover:text-gray-900`}
+                  onClick={toggleBurgerMenu}
+                  style={({ isActive }) => ({
+                    borderBottom: isActive ? "4px solid #54acb4" : "",
+                    //backgroundColor: isActive ? "#54acb4" : "",
+                    transform: isActive ? "skewX(-4deg)" : "",
+                    //color: isActive ? "white" : "",
+                    padding: "3px",
+                    fontWeight: isActive ? "500" : "",
+                  })}
+                >
+                  Favorites
+                </NavLink>
+              </div>
 
               <NavLink
                 to={`/notifications/${username}`}
@@ -184,15 +249,15 @@ function Header() {
               </NavLink>
             </>
           )}
-        </nav>
 
-        <Button
-          type="submit"
-          name={token ? "logout" : "login"}
-          onClick={buttonClick}
-        >
-          {token ? "Cerrar sesión" : "Regístrate o inicia sesión"}
-        </Button>
+          <Button
+            type="submit"
+            name={token ? "logout" : "login"}
+            onClick={buttonClick}
+          >
+            {token ? "Logout" : "Log in or Sign in"}
+          </Button>
+        </nav>
       </div>
     </header>
   );

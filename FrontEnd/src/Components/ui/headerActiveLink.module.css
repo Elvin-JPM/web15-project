@@ -22,3 +22,51 @@
   left: -7px;
   top: -7px;
 }
+
+.nav_bar_list {
+  display: none;
+}
+
+.menu_icon {
+  display: none;
+  cursor: pointer;
+}
+.menu_icon span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  margin-bottom: 5px;
+  background-color: #333;
+}
+
+.burger_menu_open {
+  position: absolute;
+  top: 8.5rem;
+  left: 8;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  background-color: aliceblue;
+}
+
+.burger_menu_close {
+  display: none;
+}
+
+@media screen and (max-width: 800px) {
+  .nav_bar_list {
+    display: flex;
+  }
+}
+
+@media screen and (max-width: 572px) {
+  .nav_bar_list {
+    display: none;
+  }
+
+  .menu_icon {
+    display: inline-block;
+  }
+}

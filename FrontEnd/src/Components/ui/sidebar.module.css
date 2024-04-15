@@ -1,5 +1,5 @@
 .sidebar {
-  width: 13rem;
+  width: 10rem;
   height: 100vh;
   position: fixed;
   top: 5.1rem;
@@ -19,8 +19,8 @@
   margin-top: 2rem;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 800px) {
   .sidebar {
-    top: 10rem;
+    display: none;
   }
 }
