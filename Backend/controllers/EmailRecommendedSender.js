@@ -34,7 +34,8 @@ class SendRecommendedProductsEmail {
                            <p>Basándonos en tus productos favoritos, hemos preparado algunas recomendaciones para ti:</p>
                            <ul>`;
               recommendedProducts.forEach(product => {
-              const productURL = `http://localhost:5173/products/${product.name}/${product._id}`;
+              ///const productURL = `http://localhost:5173/products/${product.name}/${product._id}`;
+              const productURL = `http://ec2-44-203-155-213.compute-1.amazonaws.com/products/${product.name}/${product._id}`;
               emailHTML += `<li><a href="${productURL}">${product.name}</a></li>`;
           });
           emailHTML += `</ul>

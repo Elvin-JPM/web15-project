@@ -29,7 +29,8 @@ class ProductSoldController {
 
         if ( user.activeSocketIO === false ){
           const userEmail = user.email;
-          const productURL = `http://localhost:5173/products/${product.name}/${product._id}`;
+          //const productURL = `http://localhost:5173/products/${product.name}/${product._id}`;
+          const productURL = `http://ec2-44-203-155-213.compute-1.amazonaws.com/products/${product.name}/${product._id}`;
           const emailHTML = 
           `<p>Hola ${user.username},</p>
           <p>Queríamos informarte que el artículo <b><a href="${productURL}">${product.name}</a></b> que marcaste como favorito ha sido vendido recientemente.</p>

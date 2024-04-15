@@ -20,7 +20,8 @@ class ResetUserController {
       user.resetPasswordToken = token;
       await user.save();
 
-      const verificationLink = `http://localhost:5173/reset-password/${token}`;
+      //const verificationLink = `http://localhost:5173/reset-password/${token}`;
+      const verificationLink = `http://ec2-44-203-155-213.compute-1.amazonaws.com/reset-password/${token}`;
 
       // HTML content for email
       const emailHTML = `<p>Hola ${user.username},</p>
