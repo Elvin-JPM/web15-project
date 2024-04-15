@@ -50,7 +50,7 @@ global.io = io;
 
 app.use(
   cors({
-    origin: "http://ec2-44-203-155-213.compute-1.amazonaws.com",
+    origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: [
       "Content-Type",
@@ -64,6 +64,7 @@ app.use(
       "headers",
     ],
     credentials: true,
+    maxAge: 3600, // Value is in seconds
   })
 );
 
