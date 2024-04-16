@@ -58,6 +58,13 @@ function Header() {
     setIsOpen((open) => !open);
   };
 
+  const isActiveStyle = ({ isActive }) => ({
+    borderBottom: isActive ? "4px solid #54acb4" : "",
+    transform: isActive ? "skewX(-4deg)" : "",
+    padding: "3px",
+    fontWeight: isActive ? "500" : "",
+  });
+
   return (
     <header className="border border-gray-100 fixed top-0 z-50 w-full bg-white text-gray-600 body-font">
       <div className="container mx-auto flex flex-wrap p-3 flex-col md:flex-row items-center">
@@ -83,14 +90,7 @@ function Header() {
                 <NavLink
                   to="/products/new"
                   className={`mr-5 hover:text-gray-900`}
-                  style={({ isActive }) => ({
-                    borderBottom: isActive ? "4px solid #54acb4" : "",
-                    //backgroundColor: isActive ? "#54acb4" : "",
-                    transform: isActive ? "skewX(-4deg)" : "",
-                    //color: isActive ? "white" : "",
-                    padding: "3px",
-                    fontWeight: isActive ? "500" : "",
-                  })}
+                  style={isActiveStyle}
                 >
                   Create Ad
                 </NavLink>
@@ -98,28 +98,14 @@ function Header() {
                 <NavLink
                   to="/products/list/me"
                   className={`mr-5 hover:text-gray-900`}
-                  style={({ isActive }) => ({
-                    borderBottom: isActive ? "4px solid #54acb4" : "",
-                    //backgroundColor: isActive ? "#54acb4" : "",
-                    transform: isActive ? "skewX(-4deg)" : "",
-                    //color: isActive ? "white" : "",
-                    padding: "3px",
-                    fontWeight: isActive ? "500" : "",
-                  })}
+                  style={isActiveStyle}
                 >
                   My Ads
                 </NavLink>
                 <NavLink
                   to={`/${username}/favs`}
                   className={`mr-5 hover:text-gray-900`}
-                  style={({ isActive }) => ({
-                    borderBottom: isActive ? "4px solid #54acb4" : "",
-                    //backgroundColor: isActive ? "#54acb4" : "",
-                    transform: isActive ? "skewX(-4deg)" : "",
-                    //color: isActive ? "white" : "",
-                    padding: "3px",
-                    fontWeight: isActive ? "500" : "",
-                  })}
+                  style={isActiveStyle}
                 >
                   Favorites
                 </NavLink>
@@ -146,14 +132,7 @@ function Header() {
                   to="/"
                   className={`${styles.nav_link} mr-5 hover:text-gray-900`}
                   onClick={toggleBurgerMenu}
-                  style={({ isActive }) => ({
-                    borderBottom: isActive ? "4px solid #54acb4" : "",
-                    //backgroundColor: isActive ? "#54acb4" : "",
-                    transform: isActive ? "skewX(-4deg)" : "",
-                    //color: isActive ? "white" : "",
-                    padding: "3px",
-                    fontWeight: isActive ? "500" : "",
-                  })}
+                  style={isActiveStyle}
                 >
                   Products
                 </NavLink>
@@ -161,14 +140,7 @@ function Header() {
                   to="/products/new"
                   className={`${styles.nav_link} mr-5 hover:text-gray-900`}
                   onClick={toggleBurgerMenu}
-                  style={({ isActive }) => ({
-                    borderBottom: isActive ? "4px solid #54acb4" : "",
-                    //backgroundColor: isActive ? "#54acb4" : "",
-                    transform: isActive ? "skewX(-4deg)" : "",
-                    //color: isActive ? "white" : "",
-                    padding: "3px",
-                    fontWeight: isActive ? "500" : "",
-                  })}
+                  style={isActiveStyle}
                 >
                   Create Ad
                 </NavLink>
@@ -176,14 +148,7 @@ function Header() {
                   to="/products/list/me"
                   className={`${styles.nav_link} mr-5 hover:text-gray-900`}
                   onClick={toggleBurgerMenu}
-                  style={({ isActive }) => ({
-                    borderBottom: isActive ? "4px solid #54acb4" : "",
-                    //backgroundColor: isActive ? "#54acb4" : "",
-                    transform: isActive ? "skewX(-4deg)" : "",
-                    //color: isActive ? "white" : "",
-                    padding: "3px",
-                    fontWeight: isActive ? "500" : "",
-                  })}
+                  style={isActiveStyle}
                 >
                   My Ads
                 </NavLink>
@@ -191,14 +156,7 @@ function Header() {
                   to={`/${username}/favs`}
                   className={`${styles.nav_link} mr-5 hover:text-gray-900`}
                   onClick={toggleBurgerMenu}
-                  style={({ isActive }) => ({
-                    borderBottom: isActive ? "4px solid #54acb4" : "",
-                    //backgroundColor: isActive ? "#54acb4" : "",
-                    transform: isActive ? "skewX(-4deg)" : "",
-                    //color: isActive ? "white" : "",
-                    padding: "3px",
-                    fontWeight: isActive ? "500" : "",
-                  })}
+                  style={isActiveStyle}
                 >
                   Favorites
                 </NavLink>
@@ -268,7 +226,7 @@ function Header() {
             type="submit"
             name={token ? "logout" : "login"}
             onClick={buttonClick}
-            className={styles.logout_button_navbar}
+            // className={styles.logout_button_navbar}
           >
             {token ? "Logout" : "Log in or Sign in"}
           </Button>
