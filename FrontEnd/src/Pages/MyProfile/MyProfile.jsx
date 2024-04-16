@@ -10,6 +10,7 @@ import Input from "../../Components/ui/Input";
 import H2 from "../../Components/ui/H2";
 import { useNavigate } from "react-router";
 import logout from "../../Service/logout";
+import styles from "../MyProfile/my_profile.module.css";
 function MyProfile() {
   const navigate = useNavigate();
 
@@ -97,7 +98,7 @@ function MyProfile() {
 
   return (
     <>
-      <div className="max-w-xl mx-auto px-5">
+      <div className={`${styles.profile_form} max-w-xl mx-auto px-5`}>
         <Icon />
         <H2>Editar Perfil</H2>
         <form>

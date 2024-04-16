@@ -94,6 +94,7 @@ function Header() {
                 >
                   Create Ad
                 </NavLink>
+
                 <NavLink
                   to="/products/list/me"
                   className={`mr-5 hover:text-gray-900`}
@@ -135,9 +136,30 @@ function Header() {
                   isOpen ? styles.burger_menu_open : styles.burger_menu_close
                 }
               >
+                <div
+                  className={styles.close_menu_icon}
+                  onClick={toggleBurgerMenu}
+                >
+                  X
+                </div>
+                <NavLink
+                  to="/"
+                  className={`${styles.nav_link} mr-5 hover:text-gray-900`}
+                  onClick={toggleBurgerMenu}
+                  style={({ isActive }) => ({
+                    borderBottom: isActive ? "4px solid #54acb4" : "",
+                    //backgroundColor: isActive ? "#54acb4" : "",
+                    transform: isActive ? "skewX(-4deg)" : "",
+                    //color: isActive ? "white" : "",
+                    padding: "3px",
+                    fontWeight: isActive ? "500" : "",
+                  })}
+                >
+                  Products
+                </NavLink>
                 <NavLink
                   to="/products/new"
-                  className={`mr-5 hover:text-gray-900`}
+                  className={`${styles.nav_link} mr-5 hover:text-gray-900`}
                   onClick={toggleBurgerMenu}
                   style={({ isActive }) => ({
                     borderBottom: isActive ? "4px solid #54acb4" : "",
@@ -152,7 +174,7 @@ function Header() {
                 </NavLink>
                 <NavLink
                   to="/products/list/me"
-                  className={`mr-5 hover:text-gray-900`}
+                  className={`${styles.nav_link} mr-5 hover:text-gray-900`}
                   onClick={toggleBurgerMenu}
                   style={({ isActive }) => ({
                     borderBottom: isActive ? "4px solid #54acb4" : "",
@@ -167,7 +189,7 @@ function Header() {
                 </NavLink>
                 <NavLink
                   to={`/${username}/favs`}
-                  className={`mr-5 hover:text-gray-900`}
+                  className={`${styles.nav_link} mr-5 hover:text-gray-900`}
                   onClick={toggleBurgerMenu}
                   style={({ isActive }) => ({
                     borderBottom: isActive ? "4px solid #54acb4" : "",
@@ -184,15 +206,7 @@ function Header() {
 
               <NavLink
                 to={`/notifications/${username}`}
-                className={`mr-5 hover:text-gray-900`}
-                style={({ isActive }) => ({
-                  borderBottom: isActive ? "4px solid #54acb4" : "",
-                  //backgroundColor: isActive ? "#54acb4" : "",
-                  transform: isActive ? "skewX(-4deg)" : "",
-                  //color: isActive ? "white" : "",
-                  padding: "3px",
-                  fontWeight: isActive ? "500" : "",
-                })}
+                className={`${styles.nav_link} mr-5 hover:text-gray-900`}
               >
                 <div className={styles.notifications}>
                   <svg
@@ -254,6 +268,7 @@ function Header() {
             type="submit"
             name={token ? "logout" : "login"}
             onClick={buttonClick}
+            className={styles.logout_button_navbar}
           >
             {token ? "Logout" : "Log in or Sign in"}
           </Button>

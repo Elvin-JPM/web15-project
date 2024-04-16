@@ -48,18 +48,20 @@ const MyFavoriteProducts = () => {
   };
 
   return (
-    <div className={cardStyles.grid}>
-      {products.map((product) => (
-        <Product key={product._id} product={product} styles={cardStyles}>
-          <Button
-            id={product._id}
-            onClick={favoriteClick}
-            style={{ backgroundColor: "#FA7070", marginTop: "1rem" }}
-          >
-            {"Quitar Favorito"}
-          </Button>
-        </Product>
-      ))}
+    <div className={cardStyles.main_product_area}>
+      <div className={cardStyles.grid}>
+        {products.map((product) => (
+          <Product key={product._id} product={product} styles={cardStyles}>
+            <Button
+              id={product._id}
+              onClick={favoriteClick}
+              style={{ backgroundColor: "#FA7070", marginTop: "1rem" }}
+            >
+              {"Quitar Favorito"}
+            </Button>
+          </Product>
+        ))}
+      </div>
     </div>
   );
 };

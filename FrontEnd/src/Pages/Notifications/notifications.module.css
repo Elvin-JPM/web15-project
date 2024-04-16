@@ -20,7 +20,7 @@
   border-radius: 10px;
   border: 1px solid lightgray;
   padding: 10px;
-  width: 70%;
+  width: 60%;
 }
 
 .notification_message {
@@ -56,4 +56,14 @@
   fill: white;
   stroke: black;
   cursor: pointer;
+}
+
+@media screen and (max-width: 766px) {
+  .notifications_page {
+    margin-top: 3rem;
+  }
+
+  .notification_item {
+    width: 70%;
+  }
 }

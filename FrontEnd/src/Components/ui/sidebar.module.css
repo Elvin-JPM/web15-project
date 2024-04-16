@@ -4,7 +4,7 @@
   position: fixed;
   top: 5.1rem;
   /* bottom: 14rem; */
-  background-color: #f0f0f0;
+  background-color: whitesmoke;
   overflow-y: auto;
   display: flex;
   justify-content: center;
@@ -19,7 +19,7 @@
   margin-top: 2rem;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 828px) {
   .sidebar {
     display: none;
   }

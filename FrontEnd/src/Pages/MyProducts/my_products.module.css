@@ -93,6 +93,12 @@
 
 @media screen and (max-width: 768px) {
   .main_section {
-    margin-top: 6.5rem;
+    margin-top: 4.5rem;
+  }
+}
+
+@media screen and (max-width: 828px) {
+  .main_product_area {
+    padding-left: 0rem;
   }
 }

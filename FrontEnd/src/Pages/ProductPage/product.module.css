@@ -76,8 +76,14 @@
   padding-left: 14rem;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 828px) {
   .main_product_area {
     padding-left: 0;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .main_product_area {
+    margin-top: -2rem;
   }
 }
