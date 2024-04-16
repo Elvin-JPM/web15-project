@@ -48,13 +48,6 @@ const server = http.createServer(app);
 const io = configureSocket(server);
 global.io = io;
 
-// Initialazing Socket.IO Server
-const PORT = 3000;
-server.listen(PORT, () => {
-  console.log(`Servidor de SocketIO corriendo en el puerto ${PORT}`);
-});
-
-// view engine setup
 app.use(
   cors({
     origin: "*",
@@ -71,8 +64,18 @@ app.use(
       "headers",
     ],
     credentials: true,
+    maxAge: 3600, // Value is in seconds
   })
 );
+
+// Initialazing Socket.IO Server
+const PORT = 3000;
+server.listen(PORT, () => {
+  console.log(`Servidor de SocketIO corriendo en el puerto ${PORT}`);
+});
+
+// view engine setup
+
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
