@@ -1,7 +1,7 @@
 ## INSTALLATION ##
 npm install
 
-## INITIAL DATABASE DATA ##
+## INITIALIZING DATABASE DATA ##
 node init-db.js 
 
 ## APP RUN ##
