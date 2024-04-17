@@ -10,7 +10,9 @@ class SignUpController {
             const existingEmail = await User.findOne({ email });
             const existingUsername = await User.findOne({ username });
             if (existingEmail || existingUsername ) {
-                return res.json('El usuario ya está dado de alta');
+                return res
+                .status(403)
+                .json({ error: "Usuario ya está dado de alta" });
             }
 
             // If user doesnt exit create it

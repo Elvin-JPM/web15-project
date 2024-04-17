@@ -33,11 +33,16 @@ const Signup = () => {
     try {
       const response = await postData('/signup', values);
       console.log('From signup component:', response);
-      navigate('/login');
+      if(response.status === 403){
+        console.log('Usuario o contraseña no válidos')
+      }
+      navigate('/login'); // Redirigir al login solo si no hay errores
     } catch (error) {
-      console.log(error.message);
+      console.log('Error')
+      alert('Usuario o contraseña incorrecto')
     }
   };
+
 
   const inputs = [
     {
