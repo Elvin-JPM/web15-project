@@ -2,8 +2,11 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { postData } from '../Api/api';
 import { Label, Input, H2, Button_large } from '../Components/ui/Index';
+import SweetAlert from "../Components/ui/SweetAlert";
 
 const Signup = () => {
+  const [showSweetAlert, setShowSweetAlert] = useState(false);
+
   const [values, setValues] = useState({
     username: '',
     email: '',
@@ -14,6 +17,13 @@ const Signup = () => {
   const [confirmPasswordPattern, setConfirmPasswordPattern] = useState(() => new RegExp(`^<span class="math-inline">\{values\.password\}</span>`));
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("mostrarSweetAlert") === "true") {
+      setShowSweetAlert(true);
+      localStorage.removeItem("mostrarSweetAlert");
+    }
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,7 +49,7 @@ const Signup = () => {
       navigate('/login'); // Redirigir al login solo si no hay errores
     } catch (error) {
       console.log('Error')
-      alert('Usuario o contraseña incorrecto')
+      setShowSweetAlert(true); 
     }
   };
 
@@ -114,7 +124,13 @@ const Signup = () => {
                 </div>
               </div>
             ))}
-
+            {showSweetAlert && (
+          <SweetAlert
+            title = "Credenciales no válidas"
+            text="El username o el email ya están en uso."
+            onConfirm={() => setShowSweetAlert(false)}
+          />
+        )}
             <div>
               <Button_large type='submit'>Sign up</Button_large>
             </div>
