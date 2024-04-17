@@ -51,21 +51,22 @@ function MyProfile() {
     setNewData({ ...newData, [e.target.getAttribute("name")]: e.target.value });
   };
 
-  const requestBody = {
+  let requestBody = {
     email: newData.email === userData.email ? userData.email : newData.email,
-    username:
-      newData.username === userData.username
-        ? userData.email
-        : newData.username,
-    password: newData.password === "" ? "" : newData.password,
+    username: newData.username === userData.username ? userData.username : newData.username,
   };
+
+  if (newData.newPassword !== "") {
+    requestBody.password = newData.newPassword;
+  }
 
   const updateMyData = async () => {
     try {
       const response = await putData(`/updateuser/${username}`, requestBody, {
         Authorization: `${token}`,
       });
-      console.log(response);
+      console.log(requestBody);
+      
       if (response.ok) {
         logout();
         navigate("/login");
@@ -142,13 +143,13 @@ function MyProfile() {
         </div>
         <div className="mb-4">
           <Button
-            disabled={
+            /*disabled={
               !(
                 newData.newPassword === newData.confirmNewPassword &&
                 (newData.username !== userData.username ||
                   newData.email !== userData.email)
               )
-            }
+            }*/
             onClick={updateMyData}
           >
             Update my data

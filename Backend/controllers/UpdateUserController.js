@@ -9,15 +9,16 @@ class UpdateUserController {
       const { username } = await getUserInfo(req);
       const userURL = req.params.username;
       const newData = req.body;
+      console.log(newData)
 
-      // Verificar si el usuario actual tiene permiso para realizar la acción
+      // Check if the current user has permission to perform the action
       if (username !== userURL) {
         return res
           .status(403)
           .json({ error: "No tienes permisos para realizar esta acción." });
       }
 
-      // Validar datos de entrada (correo electrónico y nombre de usuario)
+      // Validate input data (email and username)
       if (newData.email || newData.username) {
         const existingEmail = await User.findOne({ email: newData.email });
         const existingUsername = await User.findOne({
@@ -35,18 +36,18 @@ class UpdateUserController {
         }
       }
 
-      // Encriptar nueva contraseña si se proporciona
+      // Encrypt new password if provided
       if (newData.password) {
         const hashedPassword = await bcrypt.hash(newData.password, 7);
         newData.password = hashedPassword;
       }
 
-      // Actualizar información del usuario
+      // Update user information
       const updatedUser = await User.findOneAndUpdate({ username }, newData, {
         new: true,
       });
 
-      // Si el usuario actualizó su nombre de usuario, actualizar productos y favoritos
+      // If the user updated their username, update products and favorites
       if (newData.username) {
         await Product.updateMany(
           { owner: username },
