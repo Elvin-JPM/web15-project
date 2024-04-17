@@ -65,7 +65,6 @@ function MyProfile() {
       const response = await putData(`/updateuser/${username}`, requestBody, {
         Authorization: `${token}`,
       });
-      console.log(requestBody);
       
       if (response.ok) {
         logout();
