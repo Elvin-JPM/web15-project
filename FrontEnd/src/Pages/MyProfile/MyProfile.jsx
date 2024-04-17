@@ -122,6 +122,7 @@ function MyProfile() {
             <Label>New Password:</Label>
             <Input
               name="newPassword"
+              type="password"
               onChange={onDataChange}
               value={newData.newPassword}
               placeholder="********"
@@ -131,6 +132,7 @@ function MyProfile() {
             <Label>Confirm New Password:</Label>
             <Input
               name="confirmNewPassword"
+              type="password"
               onChange={onDataChange}
               value={newData.confirmNewPassword}
               placeholder="********"
@@ -141,18 +143,7 @@ function MyProfile() {
           <Button onClick={deleteMyUser}>Delete my user</Button>
         </div>
         <div className="mb-4">
-          <Button
-            /*disabled={
-              !(
-                newData.newPassword === newData.confirmNewPassword &&
-                (newData.username !== userData.username ||
-                  newData.email !== userData.email)
-              )
-            }*/
-            onClick={updateMyData}
-          >
-            Update my data
-          </Button>
+          <Button onClick={updateMyData}>Update my data</Button>
         </div>
         <div className="mb-4">
           <Button onClick={handleReturn}>Volver</Button>
