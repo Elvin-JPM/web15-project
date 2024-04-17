@@ -7,6 +7,7 @@ import Product from "../ProductPage/Product";
 import Layout from "../../Components/ui/Layout";
 import Button from "../../Components/ui/Button";
 import cardStyles from "../MyFavoriteProducts/favorite_products.module.css";
+import { NoData } from "../../Components/ui/NoData";
 
 const MyFavoriteProducts = () => {
   const [products, setProducts] = useState([]);
@@ -50,7 +51,7 @@ const MyFavoriteProducts = () => {
   return (
     <div className={cardStyles.main_product_area}>
       <div className={cardStyles.grid}>
-        {products.map((product) => (
+        {products.length ? products.map((product) => (
           <Product key={product._id} product={product} styles={cardStyles}>
             <Button
               id={product._id}
@@ -60,7 +61,9 @@ const MyFavoriteProducts = () => {
               {"Quitar Favorito"}
             </Button>
           </Product>
-        ))}
+        ) ):  <div className="flex min-h-[500px] items-center justify-center">
+        <NoData description='No data to display' />
+      </div>}
       </div>
     </div>
   );

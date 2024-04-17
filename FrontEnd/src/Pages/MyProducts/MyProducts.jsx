@@ -7,6 +7,7 @@ import getFromStorage from "../../Service/getFromStorage";
 import SweetAlert from "../../Components/ui/SweetAlert";
 import cardStyles from "../MyProducts/my_products.module.css";
 import AlertDialog from "../../Components/ui/AlertDialog";
+import { NoData } from "../../Components/ui/NoData";
 
 const MyProducts = () => {
   const [showSweetAlert, setShowSweetAlert] = useState(false);
@@ -84,7 +85,7 @@ const MyProducts = () => {
     <section className={cardStyles.main_section}>
       <div className={cardStyles.main_product_area}>
         <div className={cardStyles.grid}>
-          {products.map((product) => (
+          { products.length ? products.map((product) => (
             <Product key={product._id} product={product} styles={cardStyles}>
               <div className={cardStyles.buttons}>
                 <Button
@@ -120,7 +121,10 @@ const MyProducts = () => {
                 </Button>
               </div>
             </Product>
-          ))}
+          )) : <div className="flex min-h-[500px] items-center justify-center">
+          <NoData  description='No data to display' />
+        </div>
+        }
         </div>
         {showSweetAlert && (
           <SweetAlert

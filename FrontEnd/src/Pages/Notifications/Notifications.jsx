@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import styles from "./notifications.module.css";
 import getTimeAgo from "../../Service/getTimeAgo";
 import Button from "../../Components/ui/Button";
+import { NoData } from "../../Components/ui/NoData";
 
 function Notifications() {
   const [notifications, setNotifications] = useState([]);
@@ -63,7 +64,7 @@ function Notifications() {
   return (
     <div className={styles.notifications_page}>
       <h2 className={styles.notifications_title}>Notifications</h2>
-      {notifications.map((notification) => {
+      {notifications.length ? notifications.map((notification) => {
         return (
           <div className={styles.notification_item} key={notification._id}>
             {notification.type === "new message" ? (
@@ -133,7 +134,9 @@ function Notifications() {
             </div>
           </div>
         );
-      })}
+      }) : <div className="flex min-h-[500px] items-center justify-center">
+      <NoData description='No data to display' />
+    </div>}
     </div>
   );
 }
