@@ -51,9 +51,12 @@ const NewProductForm = () => {
         Authorization: `${token}`,
         "Content-Type": "multipart/form-data",
       });
-      localStorage.setItem("mostrarSweetAlert", "true");
-      console.log("New product:", response);
-      navigate("/products");
+
+      if (response) {
+        localStorage.setItem("mostrarSweetAlert", "true");
+        console.log("New product:", response);
+        navigate("/products");
+      }
     } catch (error) {
       console.log(error.message);
     }
