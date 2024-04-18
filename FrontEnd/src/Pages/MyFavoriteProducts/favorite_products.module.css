@@ -2,7 +2,6 @@
   width: 15rem;
   border: 1px solid lightgray;
   border-radius: 10px;
-  /* padding: 10px; */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease;
 }
@@ -15,7 +14,6 @@
   position: relative;
   height: 12rem;
   width: 100%;
-  /* border-bottom: 1px solid lightgray; */
   padding-bottom: 1rem;
   padding: 0 0 0.8rem 0;
   border-top-left-radius: 10px;

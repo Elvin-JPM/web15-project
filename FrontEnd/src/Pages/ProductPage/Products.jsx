@@ -1,18 +1,13 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import EmptyList from "./EmptyList";
 import ProductTitle from "./ProducTitle";
-import { getData } from "../../Api/api";
 import Product from "./Product";
 import Filters from "../../Components/ui/Filters";
-//import FilteredProducts from "./FilteredProducts";
 import useProductSearch from "../../Hooks/useProductSearch";
 import SweetAlert from "../../Components/ui/SweetAlert";
 import getFromStorage from "../../Service/getFromStorage";
 import { Skeleton } from "../../Components/skeleton";
 import cardStyles from "./product.module.css";
-import Sidebar from "../../Components/ui/Sidebar";
-
 const Products = () => {
   const navigate = useNavigate();
   const [showSweetAlertProductAdded, setShowSweetAlertProductAdded] =
@@ -27,7 +22,6 @@ const Products = () => {
     }
   }, []);
 
-  //const [products, setProducts] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [selectedTags, setSelectedTags] = useState([]);
   const [filterValues, setFilterValues] = useState({
@@ -85,26 +79,6 @@ const Products = () => {
     setPageNumber(1);
   };
 
-  // useEffect(() => {
-  //   const getProducts = async () => {
-  //     try {
-  //       setLoading(true);
-  //       setError(false);
-  //       const response = await getData(`/products?page=${pageNumber}`);
-  //       console.log(response.data);
-  //       setProducts((prevProducts) => {
-  //         return [...new Set([...prevProducts, ...response.data])];
-  //       });
-  //       setLoading(false);
-  //     } catch (error) {
-  //       console.log("Error fetching data:", error.message);
-  //       setLoading(false);
-  //       setError(true);
-  //     }
-  //   };
-
-  //   getProducts();
-  // }, [pageNumber, getData]);
   const token = getFromStorage("jwt");
   return (
     <section className={cardStyles.main_section}>

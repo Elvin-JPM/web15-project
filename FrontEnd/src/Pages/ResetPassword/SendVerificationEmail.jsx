@@ -1,10 +1,8 @@
 import Icon from "../../Components/ui/Icon";
-import H2 from "../../Components/ui/H2";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import Label from "../../Components/ui/Label";
 import Input from "../../Components/ui/Input";
-import Button from "../../Components/ui/Button";
 import Button_large from "../../Components/ui/Button_large";
 import { postData } from "../../Api/api";
 const SendVerificationEmail = () => {

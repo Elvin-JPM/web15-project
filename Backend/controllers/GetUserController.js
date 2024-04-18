@@ -12,14 +12,6 @@ class GetUserController {
         return res.status(404).json("El usuarion no existe.");
       }
 
-      // Replace hyphens from the product name for ' '
-      //const productNameWithoutHyphens = productName.replace(/-/g, " ");
-
-      // Check if name is correct
-      //   if (product.name !== productNameWithoutHyphens) {
-      //     return res.status(404).json("Producto no encontrado");
-      //   }
-
       console.log(user);
       res.status(200).json(user);
     } catch (err) {

@@ -11,7 +11,6 @@ function Layout({ children }) {
       <Header />
       {token && <Sidebar />}
       <main className={`flex-grow  p-4 pt-24`}>
-        {/* <Sidebar /> */}
         {children ? children : <Outlet />}
       </main>
       <Footer>{/* <p className="text-sm">Copyright © 2024</p> */}</Footer>

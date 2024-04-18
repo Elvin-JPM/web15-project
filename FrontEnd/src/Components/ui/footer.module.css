@@ -14,16 +14,38 @@
 
 .social {
   display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.social p {
+  color: whitesmoke;
+  font-size: 1.1rem;
+}
+
+.social_links {
+  display: flex;
   gap: 2rem;
-  margin: 1.5rem;
+  margin-top: 0.5rem;
 }
 .social_icon {
   width: 2rem;
   height: 2rem;
+  margin-top: 0.5rem;
 }
 
+.categories p {
+  color: lightgray;
+}
 .categories_title {
   font-size: 1.5rem;
+  color: whitesmoke;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 .subscribe {

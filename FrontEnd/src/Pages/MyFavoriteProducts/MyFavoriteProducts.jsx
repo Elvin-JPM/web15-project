@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { getData, deleteData } from "../../Api/api";
-import Header from "../../Components/ui/Header";
 import getFromStorage from "../../Service/getFromStorage";
 import Product from "../ProductPage/Product";
-import Layout from "../../Components/ui/Layout";
 import Button from "../../Components/ui/Button";
 import cardStyles from "../MyFavoriteProducts/favorite_products.module.css";
 import { NoData } from "../../Components/ui/NoData";
@@ -51,19 +49,23 @@ const MyFavoriteProducts = () => {
   return (
     <div className={cardStyles.main_product_area}>
       <div className={cardStyles.grid}>
-        {products.length ? products.map((product) => (
-          <Product key={product._id} product={product} styles={cardStyles}>
-            <Button
-              id={product._id}
-              onClick={favoriteClick}
-              style={{ backgroundColor: "#FA7070", marginTop: "1rem" }}
-            >
-              {"Quitar Favorito"}
-            </Button>
-          </Product>
-        ) ):  <div className="flex min-h-[500px] items-center justify-center">
-        <NoData description='No data to display' />
-      </div>}
+        {products.length ? (
+          products.map((product) => (
+            <Product key={product._id} product={product} styles={cardStyles}>
+              <Button
+                id={product._id}
+                onClick={favoriteClick}
+                style={{ backgroundColor: "#FA7070", marginTop: "1rem" }}
+              >
+                {"Quitar Favorito"}
+              </Button>
+            </Product>
+          ))
+        ) : (
+          <div className="flex min-h-[500px] items-center justify-center">
+            <NoData description="No data to display" />
+          </div>
+        )}
       </div>
     </div>
   );

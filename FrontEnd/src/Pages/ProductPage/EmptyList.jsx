@@ -1,14 +1,13 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 function EmptyList() {
   return (
     <div>
-      <p>No ha creado un producto!</p>
-        <Link to="new">Crea tu primer producto aqui</Link>
+      <p>No products created yet!</p>
+      <Link to="new">Create your first product here</Link>
     </div>
   );
 }
-
 
 export default EmptyList;

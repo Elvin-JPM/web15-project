@@ -1,4 +1,3 @@
-import Icon from "./Icon";
 import Button from "./Button";
 import Label from "./Label";
 import { NavLink } from "react-router-dom";
@@ -34,12 +33,9 @@ function Sidebar() {
 
         <NavLink
           to="/products/new"
-          // className={`mr-5 hover:text-gray-900`}
           style={({ isActive }) => ({
             borderBottom: isActive ? "4px solid #54acb4" : "",
-            //backgroundColor: isActive ? "#54acb4" : "",
             transform: isActive ? "skewX(-4deg)" : "",
-            //color: isActive ? "white" : "",
             padding: "3px",
             fontWeight: isActive ? "500" : "",
           })}
@@ -51,9 +47,7 @@ function Sidebar() {
           className={`mr-5 hover:text-gray-900`}
           style={({ isActive }) => ({
             borderBottom: isActive ? "4px solid #54acb4" : "",
-            //backgroundColor: isActive ? "#54acb4" : "",
             transform: isActive ? "skewX(-4deg)" : "",
-            //color: isActive ? "white" : "",
             padding: "3px",
             fontWeight: isActive ? "500" : "",
           })}
@@ -65,9 +59,7 @@ function Sidebar() {
           className={`mr-5 hover:text-gray-900`}
           style={({ isActive }) => ({
             borderBottom: isActive ? "4px solid #54acb4" : "",
-            //backgroundColor: isActive ? "#54acb4" : "",
             transform: isActive ? "skewX(-4deg)" : "",
-            //color: isActive ? "white" : "",
             padding: "3px",
             fontWeight: isActive ? "500" : "",
           })}

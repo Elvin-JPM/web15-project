@@ -1,12 +1,12 @@
 const Product = require("../models/Product");
 const ObjectId = require("mongodb").ObjectId;
 const User = require("../models/User");
-const Jimp = require("jimp"); // Importar Jimp
+const Jimp = require("jimp");
 const upload = require("../lib/uploadConfigure");
 const path = require("path");
 const fs = require("fs");
 
-const { isAdRelevant } = require('../lib/adRelevant');
+const { isAdRelevant } = require("../lib/adRelevant");
 
 class CreateProductController {
   async createProduct(req, res, next) {

@@ -25,7 +25,7 @@ const NewProductForm = () => {
       formErrors.description = "Description is required";
     }
     if (!values.price) {
-      formErrors.price = "Price is requuired";
+      formErrors.price = "Price is required";
     }
     if (!values.photo) {
       formErrors.photo = "Photo is required";

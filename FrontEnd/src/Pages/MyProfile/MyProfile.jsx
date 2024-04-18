@@ -1,7 +1,6 @@
 import Button from "../../Components/ui/Button";
 import Label from "../../Components/ui/Label";
 import Icon from "../../Components/ui/Icon";
-import Header from "../../Components/ui/Header";
 import { useEffect } from "react";
 import { deleteData, getData, putData } from "../../Api/api";
 import { useState } from "react";
@@ -53,7 +52,10 @@ function MyProfile() {
 
   let requestBody = {
     email: newData.email === userData.email ? userData.email : newData.email,
-    username: newData.username === userData.username ? userData.username : newData.username,
+    username:
+      newData.username === userData.username
+        ? userData.username
+        : newData.username,
   };
 
   if (newData.newPassword !== "") {
@@ -65,7 +67,7 @@ function MyProfile() {
       const response = await putData(`/updateuser/${username}`, requestBody, {
         Authorization: `${token}`,
       });
-      
+
       if (response.ok) {
         logout();
         navigate("/login");

@@ -1,6 +1,5 @@
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import DetailProductForm from "./DetailProductForm";
 import { deleteData, getData, putData } from "../../Api/api";
 import Product from "../ProductPage/Product";
 import getFromStorage from "../../Service/getFromStorage";
@@ -8,14 +7,14 @@ import Button from "../../Components/ui/Button";
 import { useNavigate } from "react-router-dom";
 import FacebookShareButton from "../../Components/FacebookShare";
 import TwitterShareButton from "../../Components/TwitterShare";
-import Chat from "../Chat/Chat";
 import SweetAlert from "../../Components/ui/SweetAlert";
-import Header from "../../Components/ui/Header";
 import styles from "../DetailProductPage/product_chats.module.css";
 import cardStyles from "../DetailProductPage/product_detail.module.css";
 
 import facebookLogo from "../DetailProductPage/facebook.png";
 import twitterLogo from "../DetailProductPage/twitter.png";
+
+const SHARE_URL = import.meta.env.VITE_APP_SHARE_LINK;
 
 function DetailProduct() {
   const navigate = useNavigate();
@@ -160,12 +159,12 @@ function DetailProduct() {
           <div className={styles.share}>
             <p>Share:</p>
             <FacebookShareButton
-              url={`http://localhost:5173/products/${productName}/${productId}`}
+              url={`${SHARE_URL}/${productName}/${productId}`}
             >
               <img src={facebookLogo} className={styles.image}></img>
             </FacebookShareButton>
             <TwitterShareButton
-              url={`http://localhost:5173/products/${productName}/${productId}`}
+              url={`${SHARE_URL}/${productName}/${productId}`}
               text="Check out this product!"
             >
               <img src={twitterLogo} className={styles.image}></img>

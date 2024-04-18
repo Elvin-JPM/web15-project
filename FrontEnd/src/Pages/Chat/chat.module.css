@@ -14,8 +14,7 @@ html {
 .chatPage {
   display: flex;
   flex-direction: column;
-  /* justify-content: flex-start; */
-  justify-content: center; 
+  justify-content: center;
   align-items: center;
   height: 100vh;
   margin: 0;
@@ -24,12 +23,9 @@ html {
 .chat {
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-self: center;
   border-radius: 10px;
   border: 1px solid var(--chat-background-color);
-  /* margin-bottom: 20%; */
-  /* margin-top: 12rem; */
   width: 60%;
   background-color: var(--chat-background-color);
 }
@@ -95,20 +91,12 @@ html {
   color: var(--primary-text-color);
 }
 
-/* .sendIcon {
-  height: 35px;
-  display: block;
-  background-color: black;
-} */
-
 .createMessage {
   display: flex;
   background-color: var(--secondary-color);
   width: 100%;
   justify-content: space-between;
   align-items: stretch;
-  /* margin: 10px; */
   margin: 10px 0;
   border-radius: 10px;
-  /* border: 10px solid #f5f7f8; */
 }

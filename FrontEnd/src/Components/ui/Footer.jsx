@@ -13,33 +13,31 @@ function Footer(props) {
     <footer className={styles.footer}>
       <div>
         <div className={styles.logo}>
-          <Icon />
           <Logo />
         </div>
+
         <div className={styles.social}>
-          <Link>
-            <img src={facebook} className={styles.social_icon} />
-          </Link>
-          <Link>
-            <img src={instagram} className={styles.social_icon} />
-          </Link>
-          <Link>
-            <img src={twitter} className={styles.social_icon} />
-          </Link>
+          <p>Follow us on social media:</p>
+          <div className={styles.social_links}>
+            <a href="http://www.facebook.com" target="_blank">
+              <img src={facebook} className={styles.social_icon} />
+            </a>
+            <a href="http://www.instagram.com" target="_blank">
+              <img src={instagram} className={styles.social_icon} />
+            </a>
+            <a href="http://www.twitter.com" target="_blank">
+              <img src={twitter} className={styles.social_icon} />
+            </a>
+          </div>
         </div>
       </div>
 
-      <div>
+      <div className={styles.categories}>
         <h3 className={styles.categories_title}>Categories</h3>
-        <div>Available categories</div>
-      </div>
-
-      <div className={styles.subscribe}>
-        <h3 className={styles.subscribe_title}>Keep in touch</h3>
-        <div className={styles.subscribe_form}>
-          <Input />
-          <Button>Subscribe</Button>
-        </div>
+        <p>Lifestyle</p>
+        <p>Motor</p>
+        <p>Electronics</p>
+        <p>Work</p>
       </div>
     </footer>
   );
