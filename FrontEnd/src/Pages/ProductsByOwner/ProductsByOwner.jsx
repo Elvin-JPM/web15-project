@@ -22,11 +22,15 @@ const ProductsByOwner = () => {
   }, [owner]);
 
   return (
-    <div className={cardStyles.grid}>
-      {products.map((product) => (
-        <Product styles={cardStyles} key={product._id} product={product} />
-      ))}
-    </div>
+    <section className={cardStyles.main_section}>
+      <div className={cardStyles.main_product_area}>
+        <div className={cardStyles.grid}>
+          {products.map((product) => (
+            <Product styles={cardStyles} key={product._id} product={product} />
+          ))}
+        </div>
+      </div>
+    </section>
   );
 };
 

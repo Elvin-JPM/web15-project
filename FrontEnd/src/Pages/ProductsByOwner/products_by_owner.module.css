@@ -70,3 +70,25 @@
   row-gap: 1.5rem;
   column-gap: 2rem;
 }
+
+.main_section {
+  position: relative;
+  display: flex;
+  margin-top: 1rem;
+}
+.main_product_area {
+  flex: 1;
+  padding-left: 14rem;
+}
+
+@media screen and (max-width: 768px) {
+  .main_section {
+    margin-top: 4.5rem;
+  }
+}
+
+@media screen and (max-width: 828px) {
+  .main_product_area {
+    padding-left: 0rem;
+  }
+}
