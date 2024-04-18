@@ -102,7 +102,7 @@ function MyProfile() {
     <>
       <div className={`${styles.profile_form} max-w-xl mx-auto px-5`}>
         <Icon />
-        <H2>Editar Perfil</H2>
+        <H2>Edit Profile</H2>
         <form>
           <div className="mb-4">
             <Label>email: </Label>
@@ -148,7 +148,7 @@ function MyProfile() {
           <Button onClick={updateMyData}>Update my data</Button>
         </div>
         <div className="mb-4">
-          <Button onClick={handleReturn}>Volver</Button>
+          <Button onClick={handleReturn}>Go Back</Button>
         </div>
       </div>
     </>

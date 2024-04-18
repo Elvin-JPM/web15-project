@@ -69,7 +69,7 @@ const NewProductForm = () => {
       type: "text",
       placeholder: "Product's name",
       errorMessage: errors.name,
-      label: "Nombre del producto",
+      label: "Product's name",
       pattern: "^[A-Za-z0-9]{3,16}$",
       required: true,
       className: "w-full md:w-1/2",
@@ -80,7 +80,7 @@ const NewProductForm = () => {
       type: "number",
       placeholder: "Price",
       errorMessage: errors.price,
-      label: "Precio",
+      label: "Price",
       required: true,
       className: "w-full md:w-1/2",
     },
@@ -90,7 +90,7 @@ const NewProductForm = () => {
       type: "textArea",
       placeholder: "Product's description",
       errorMessage: errors.description,
-      label: "Información del producto",
+      label: "Product's description",
       required: true,
     },
     {
@@ -135,7 +135,7 @@ const NewProductForm = () => {
       <div className="w-full max-w-lg">
         <Card className="border rounded-xl">
           <CardTitle className="">
-            <H2>Crear producto</H2>
+            <H2>Create Product</H2>
           </CardTitle>
           <CardContent>
             <Form inputs={inputs} onSubmit={handleSubmit} />

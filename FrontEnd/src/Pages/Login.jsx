@@ -114,7 +114,7 @@ const Login = () => {
               Remember me
             </Label>
           </div>
-          <Link to={"/verification-email"}>Olvidaste tu contraseña?</Link>
+          <Link to={"/verification-email"}>Forgot password?</Link>
 
           {values.error && (
             <div className="text-red-700 text-sm inline-block w-full h6">

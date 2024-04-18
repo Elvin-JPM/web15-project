@@ -57,7 +57,7 @@ const MyFavoriteProducts = () => {
                 onClick={favoriteClick}
                 style={{ backgroundColor: "#FA7070", marginTop: "1rem" }}
               >
-                {"Quitar Favorito"}
+                {"Unmark Favorite"}
               </Button>
             </Product>
           ))

@@ -82,7 +82,13 @@ const Products = () => {
   const token = getFromStorage("jwt");
   return (
     <section className={cardStyles.main_section}>
-      <div className={cardStyles.main_product_area}>
+      <div
+        className={
+          username
+            ? cardStyles.main_product_area_logged
+            : cardStyles.main_product_area_not_logged
+        }
+      >
         <Filters
           styles={cardStyles.filters}
           name={filterValues.name}

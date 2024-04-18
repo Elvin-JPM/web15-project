@@ -68,9 +68,14 @@
   position: relative;
   display: flex;
 }
-.main_product_area {
+.main_product_area_logged {
   flex: 1;
   padding-left: 14rem;
+}
+
+.main_product_area_not_logged {
+  flex: 1;
+  padding-left: 0rem;
 }
 
 @media screen and (max-width: 828px) {

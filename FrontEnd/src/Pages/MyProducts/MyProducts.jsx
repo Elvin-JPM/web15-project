@@ -85,46 +85,47 @@ const MyProducts = () => {
     <section className={cardStyles.main_section}>
       <div className={cardStyles.main_product_area}>
         <div className={cardStyles.grid}>
-          { products.length ? products.map((product) => (
-            <Product key={product._id} product={product} styles={cardStyles}>
-              <div className={cardStyles.buttons}>
-                <Button
-                  id={product._id}
-                  onClick={() =>
-                    navigate(`/edit/${product._id}/${product.name}`)
-                  }
-                >
-                  Editar producto
-                </Button>
-                <Button
-                  id={product._id}
-                  onClick={() => handleProductAction(product, "reserve")}
-                >
-                  {product.reserved
-                    ? "Desmarcar como reservado"
-                    : "Marcar como reservado"}
-                </Button>
-                <Button
-                  id={product._id}
-                  onClick={() => handleProductAction(product, "sold")}
-                >
-                  {product.sold
-                    ? "Desmarcar como vendido"
-                    : "Marcar como vendido"}
-                </Button>
-                <Button
-                  id={product._id}
-                  onClick={() => setProductIdToDelete(product._id)}
-                  style={{ backgroundColor: "#FA7070" }}
-                >
-                  Borrar producto
-                </Button>
-              </div>
-            </Product>
-          )) : <div className="flex min-h-[500px] items-center justify-center">
-          <NoData  description='No data to display' />
-        </div>
-        }
+          {products.length ? (
+            products.map((product) => (
+              <Product key={product._id} product={product} styles={cardStyles}>
+                <div className={cardStyles.buttons}>
+                  <Button
+                    id={product._id}
+                    onClick={() =>
+                      navigate(`/edit/${product._id}/${product.name}`)
+                    }
+                  >
+                    Edit Product
+                  </Button>
+                  <Button
+                    id={product._id}
+                    onClick={() => handleProductAction(product, "reserve")}
+                  >
+                    {product.reserved
+                      ? "Unmark as reserved"
+                      : "Mark as reserved"}
+                  </Button>
+                  <Button
+                    id={product._id}
+                    onClick={() => handleProductAction(product, "sold")}
+                  >
+                    {product.sold ? "Unmark as sold" : "Mark as sold"}
+                  </Button>
+                  <Button
+                    id={product._id}
+                    onClick={() => setProductIdToDelete(product._id)}
+                    style={{ backgroundColor: "#FA7070" }}
+                  >
+                    Delete Product
+                  </Button>
+                </div>
+              </Product>
+            ))
+          ) : (
+            <div className="flex min-h-[500px] items-center justify-center">
+              <NoData description="No data to display" />
+            </div>
+          )}
         </div>
         {showSweetAlert && (
           <SweetAlert
